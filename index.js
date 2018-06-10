@@ -75,7 +75,10 @@ function draw() {
     title.goToFrame(1);
   }
 
-  drawGrid();
+  fill(22, 22, 22);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 - 100, 1000, 100)
+  // drawGrid();
   animation(title, width / 2, height / 2 - 100);
 
 }
