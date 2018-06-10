@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Play with Traumagotchi</title>
+
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/flexbox.css">
+
+	<!-- <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anonymous+Pro"> -->
+	<link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+	<script src="libraries/p5.js"></script>
+	<script src="libraries/p5.dom.js"></script>
+	<script src="libraries/p5.sound.js"></script>
+	<!-- <script src="libraries/p5.play.js"></script> -->
+	<script src="decisionTree.js"></script>
+	<script src="gameManager.js"></script>
+	<script src="play.js"></script>
+	<script src="graphics.js"></script>
+	<script src="firebase.js"></script>
+	<!-- <script src="spriteClass.js"></script> -->
+
+	<script src="libraries/spritoon.js"></script>
+	<script src="libraries/matter.min.js"></script>
+
+	<script src="games/p5Template/P5templateSketch.js"></script>
+	<script src="games/wackymole/wackymole.js"></script>
+	<script src="games/schmup/schmup.js"></script>
+	<script src="games/breakout/breakoutGame.js"></script>
+	<script src="games/collapseGame/game.js"></script>
+	<script src="games/platformDrop/game.js"></script>
+	<!-- add this game init script to p5 code -->
+	<!-- <script>
+		document.addEventListener("DOMContentLoaded", function(event){
+			const collapseGame = new Game();
+			window.collapseGame = collapseGame;
+		});
+	</script> -->
+
+</head>
+
+<body>
+	<ul class="topMenu">
+		<li id="loginStatus">not logged in</li>
+		<li id="pointStats"></li>
+		<li id="logout"><a href="index.html" class="chartreuseLink">logout</a></li>
+	</ul>
+	<div class="main-content">
+		<!-- <div class="container" id="header">
+			<img class="image margin-bottom" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" style="max-width: 600px;">
+		</div> -->
+		<div class="container" id="gameArea">
+			<div class="" id="leftColumn">
+				<div class="" id="traumagotchiTitle">
+					<a href="index.html"><img class="image center" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" ></a>
+				</div>
+				<div id="canvasDiv">
+					<canvas id="collapseGameCanvas" class="gameCanvas" width="600" height="450" style="z-index: 5;">Your browser does not support canvas. Please try again with a different browser.</canvas>
+					<canvas id="platformDropGameCanvas" class="gameCanvas" width="600" height="450" style="z-index: 5;"></canvas>
+					<div id="gameIntroOverlay">
+						<h1 id="gameTitle">
+
+						</h1>
+						<button type="button" id="playButton">play</button>
+
+						<p id="playInstructions">
+
+						</p>
+					</div>
+				</div>
+
+				<!-- <div class="five-sixths consoleDiv"> -->
+				<div id="consoleDiv">
+					<span id="consoleText"></span>
+					<span id="consoleNext"></span>
+				</div>
+			</div>
+			<div class="" id="rightColumn">
+				<div id="loginMenu">
+					<!-- <p>login</p> -->
+					<p>traumagotchi name: <input type="text" name="tname" id="name" placeholder="｡.｡:+♡*♥"></p>
+					<p>password: <input type="text" name="password" id="password" placeholder="♩♪♩♬"></p>
+					<button type="button" id="login">login</button>
+				</div>
+				<div class="buttonMenu" id="careMenu">
+					<button type="button" id="menuTitle" style="display: none;"></button>
+					<button type="button" id="menuItem0">eat</button>
+					<button type="button" id="menuItem1">rest</button>
+					<button type="button" id="menuItem2">bathe</button>
+					<button type="button" id="menuItem3">play</button>
+				</div>
+				<div class="blackDiv" id="gameMenu">
+					<!-- <div id="playInstructions">
+
+					</div>
+					<button type="button" id="playButton">play</button> -->
+					<h1 id="timer">10</h1>
+				</div>
+				<div class="greenDiv" id="alertMenu">
+					<p>Sorry you need more points for that!</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer>
+	<p>Traumagotchi (at) gmail.com</p>
+</footer>
+
+</html>
