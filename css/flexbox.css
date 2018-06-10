@@ -1,0 +1,170 @@
+/* flexbox containers */
+
+.container {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  /* flexyy-flow: row wrap; */
+  /* color: #161616; */
+  /* background-color: rgba(255, 255, 255, 0.15); */
+  /* padding: 20px; */
+  margin: auto;
+  /* margin-top: 60px; */
+  align-content: space-around;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ?? when using this? */
+.container-column {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-flow: column nowrap;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  margin: 10px 10px 20px 10px;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.left {
+  margin-right: auto;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.full {
+  width: 100%;
+  /* IE */
+  flex: 0 1 100%;
+}
+
+.two-thirds {
+  width: 65%;
+  /* IE */
+  flex: 1 1 calc(66% - 25px);
+}
+
+.half {
+  width: 49%;
+  /* IE */
+  flex: 1 2 420px;
+}
+
+.third {
+  width: 32.2%;
+  /* IE */
+  flex: 1 1 calc(33.333333% - 25px);
+}
+
+.fourth {
+  width: 24%;
+  /* IE */
+  flex: 0 1 calc(25% - 25px);
+}
+
+.fifth {
+  width: 19.5%;
+  /* IE */
+  flex: 0 1 calc(20% - 25px);
+}
+
+.sixth {
+  width: 15.7%;
+  /* IE */
+  flex: 0 1 calc(16.666666% - 25px);
+}
+
+.two-thirds-fixed {
+  width: 65%;
+  /* IE */
+  flex: 0 1 calc(66% - 25px);
+}
+
+.half-fixed {
+  width: 49%;
+  /* IE */
+  flex: 0 2 calc(50% - 25px);
+}
+
+.third-fixed {
+  width: 32.2%;
+  /* IE */
+  flex: 0 1 calc(33.333333% - 25px);
+}
+
+.fourth-fixed {
+  width: 24%;
+  /* IE */
+  flex: 0 1 calc(25% - 25px);
+}
+
+.fifth-fixed {
+  width: 19.5%;
+  /* IE */
+  flex: 0 1 calc(20% - 25px);
+}
+
+.sixth-fixed {
+  width: 15.7%;
+  /* IE */
+  flex: 0 1 calc(16.666666% - 25px);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.align-right {
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.align-left {
+  justify-content: flex-start;
+  align-self: flex-start;
+  text-align: left;
+}
+
+
+
+/*flexbox for setting sticky footer*/
+
+.main-content {
+  /* margin: 0 8%; */
+  margin: 0;
+  /* By setting flex-grow to 1, the main content will take up
+     all of the remaining space on the page.
+     The other elements have flex-grow: 0 and won't contest the free space. */
+  /* 1 flex-grow, 0 flex-shrink, auto flex-basis */
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  /* Like the header, the footer will have a static height - it shouldn't grow or shrink.  */
+  /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+  display: none;
+  flex: 0 0 auto;
+  align-self: flex-end;
+  width: 100%;
+  text-align: right;
+  padding: 10px 10px 10px 0px;
+  font-size: 12px;
+}
+
+/* match media for large screens */
+@media (min-width: 500px) and (min-height: 500px) {
+
+.container {
+  margin-top: 60px;
+}
+ }

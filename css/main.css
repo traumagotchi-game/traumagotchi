@@ -1,0 +1,387 @@
+@font-face {
+  font-family: "Gamegirl";
+  src: url("../assets/_fonts/Gamegirl.ttf");
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* font-family: 'modes', "Courier", monospace; */
+  /* font-family: 'Anonymous Pro', "Courier", monospace; */
+  /* font-family: 'Press Start 2P', "Courier", monospace; */
+  font-family: "Aldrich", "Courier", monospace;
+  /* font-family: "Share Tech Mono", "Courier", monospace; */
+  font-size: 20px;
+  /* letter-spacing: 3px; */
+  line-height: 1.5;
+  text-align: center;
+  color: #00ff00;
+  /* background: linear-gradient(to bottom right, black, green); */
+  /* background-image: url(../assets/bgTest.png); */
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  border-bottom: none;
+  /*display: block;*/
+}
+
+
+/* styling inputs  */
+
+
+/* angelabelle: trying to figure out how to turn off text appearing in input field for the js.color inputs  */
+
+
+/* all inputs */
+
+input {
+  padding: 10px;
+  border-color: #00ff00;
+  border-style: ridge;
+  background: #000;
+  color: #00ff00;
+}
+
+
+/* jscolor class */
+
+.jscolor {
+  padding: 10px;
+  border-color: #00ff00;
+  border-style: ridge;
+}
+
+#divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #careMenu, #gameMenu, #gameIntroOverlay, #timer, #pointStats {
+  display: none;
+}
+
+#alertMenu {
+  display: none;
+  /* if menu is placed above others in html and position is absolute, it will cover other menus like pop-up */
+  /* position: absolute;
+  max-width: 250px; */
+  /* visibility: hidden; */
+}
+
+
+/* div inside .mainContent that contains game content */
+
+#gameArea {
+  width: 1200px;
+  height: 675px;
+  padding: 20px;
+  /* background-color: black; */
+
+    /* background: linear-gradient(to bottom right, black, green); */
+    /* border: 5px solid #00ff00; */
+}
+
+#leftColumn {
+  width: 610px;
+  height: 675px;
+  margin: auto;
+}
+
+#rightColumn {
+  width: 400px;
+  height: 530px;
+  margin: 75px auto auto 10px;
+  /* border: 5px dotted #00ff00; */
+  padding: 20px;
+}
+
+#traumagotchiTitle {
+  max-height: 75px;
+  max-width: 600px;
+}
+
+#consoleDiv {
+  margin: 20px auto;
+  width: 610px;
+  height: 130px;
+  text-align: left;
+}
+
+canvas {
+  /* margin: auto; */
+}
+
+.gameCanvas {
+  border: 5px solid #00ff00;
+  outline-offset: -5px;
+  /* width and height are set to fill parent div */
+  /* width: 100%;
+  height: auto; */
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  /* width: 600px;
+  height: 450px; */
+}
+
+#gameIntroOverlay {
+  font-family: 'Gamegirl', 'Aldrich', "Courier", monospace;
+  z-index: 10;
+  width: 600px;
+  height: 450px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+#gameTitle {
+  margin: 40px auto auto auto;
+}
+
+#playButton {
+  position: absolute;
+  top: 200px;
+  left: 280px;
+  /* margin: 220px auto auto auto; */
+}
+
+#playInstructions {
+  max-width: 500px;
+  margin: 200px auto auto auto;
+}
+
+#canvasDiv {
+  position: relative;
+  /* min-width: 480px;
+  min-height: 360px; */
+  /* width: 600px;
+  height: 450px; */
+}
+
+#canvasDiv>canvas {
+  /* width and height are set to fill parent div */
+  /* width: 100%;
+  height: auto; */
+  /* width: 600px;
+  height: 450px; */
+}
+
+#collapseGame {
+  z-index: 1;
+}
+
+#canvasFullScreen {
+  /* sets canvas to be aligned to top right of screen
+  position absolute will stop it from scrolling */
+  margin: auto;
+  top: 0;
+  left: 0;
+  position: absolute;
+  /* uncomment next line to position the canvas BEHIND the HTML */
+  z-index: -1;
+}
+
+#header {
+  padding: 30px 0 0 0;
+  margin: 0;
+}
+
+#consoleText {
+  font-size: 16px;
+  font-family: 'Courier New', 'Courier';
+}
+
+.consoleDiv a {
+  color: #00ff00;
+  background-color: #00aa00;
+  /* color: #000000;
+  background-color: #00ff00; */
+}
+
+#consoleNext:hover {
+  color: #00ff00;
+  background-color: #00aa00;
+  cursor: pointer;
+}
+
+
+/* menu at top right with login status */
+
+.topMenu {
+  list-style-type: none;
+  text-align: right;
+  right: 20px;
+  top: 10px;
+  font-size: 20px;
+  z-index: 2;
+  position: fixed;
+}
+
+
+/* choices on homepage: load or new traumagotchi */
+
+.homepageLink {
+  /* font-family: "Share Tech Mono", "Courier", monospace; */
+  /* font-family: "Press Start 2P", "Courier", monospace; */
+  /* font-family: "Nosifer", "Courier", monospace; */
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.8;
+  padding: .5em;
+}
+
+.greenLink {
+  color: #00ff00;
+  background-color: #161616;
+  /* padding: .5em .5em .5em 1.5em; */
+}
+
+.greenLink:hover {
+  background-color: #00ff00;
+  color: #161616;
+  padding: .5em .5em .5em 1.5em;
+}
+
+.chartreuseLink {
+  color: #ACD02D;
+  background-color: #161616;
+  /* padding: .5em .5em .5em 1.5em; */
+}
+
+.chartreusLink {
+  color: #ACD02D;
+  background-color: #161616;
+  /* padding: .5em .5em .5em 1.5em; */
+}
+
+.chartreuseLink:hover {
+  background-color: #ACD02D;
+  color: #161616;
+  padding: .5em .5em .5em 1.5em;
+}
+
+
+/* customization of new traumagotchi */
+
+.customizationMenu .slider {
+  display: block;
+  margin: auto;
+}
+
+.customizationMenu p {
+  padding-top: 15px;
+}
+
+
+/* for radio button images */
+
+label>input {
+  /* HIDE RADIO */
+  visibility: hidden;
+  /* Makes input not-clickable */
+  position: absolute;
+  /* Remove input from document flow */
+}
+
+label>input+img {
+  /* IMAGE STYLES */
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+label>input:checked+img {
+  /* (RADIO CHECKED) IMAGE STYLES */
+  border: 2px solid #f00;
+}
+
+.customizationMenu button {
+  /* width: 80px; */
+  /* width: 100%; */
+  color: #ACD02D;
+  background-color: #161616;
+  /* -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s; */
+  border: 1px solid #ACD02D;
+  text-align: center;
+  font-family: "Aldrich", "Courier", monospace;
+  font-size: 20px;
+  line-height: 1.8;
+  padding: .4em;
+  margin-top: 30px;
+  ;
+}
+
+#castCircleButtons button {
+  margin-top: 0;
+  font-size: 24px;
+  width: 100px;
+  background-image: url(assets/dice_roll.gif);
+  background-repeat: no-repeat;
+  padding: .1em;
+}
+
+.blackDiv {
+  background-color: black;
+  padding: .5em;
+}
+
+.greenDiv {
+  background-color: #ACD02D;
+  color: #161616;
+  padding: 1em;
+}
+
+.buttonMenu>button {
+  display: block;
+  /* width: 250px; */
+  width: 100%;
+  color: #ACD02D;
+  background-color: #161616;
+  /* -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s; */
+  border: none;
+  text-align: left;
+  font-family: "Aldrich", "Courier", monospace;
+  font-size: 20px;
+  line-height: 1.8;
+  padding: .5em;
+}
+
+.buttonMenu>button:hover {
+  background-color: #ACD02D;
+  color: #161616;
+  /* padding: .5em .5em .5em 1.5em; */
+}
+
+button {
+  background-color: #ACD02D;
+  color: #161616;
+  padding: .5em .5em .5em 1.5em;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+
+.margin-bottom {
+  margin-bottom: 50px;
+}
+
+.center {
+  margin: auto;
+  padding: auto;
+}
+
+
+/* match media for large screens */
+
+@media (min-width: 500px) and (min-height: 500px) {
+  .container {
+    margin-top: 60px;
+  }
+}
