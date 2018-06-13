@@ -5,28 +5,14 @@ let size;
 let rectWidth = 800;
 let easing;
 let menu;
-var song;
 
-function preload() {
-
-}
 
 function preload() {
   title = loadAnimation("assets/sprites/traumagotchiTitle/traumagotchiTitle_0.png", "assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png");
   title.looping = false;
-  // we have included both an .ogg file and an .mp3 file
-  soundFormats('mp3');
-  // soundFormats('ogg', 'mp3');
-
-  // if mp3 is not supported by this browser,
-  // loadSound will load the ogg file
-  // we have included with our sketch
-  song = loadSound('assets/EagleInk_Aja_loop.mp3');
 }
 
 function setup() {
-
-  song.play();
   colorMode(HSB, 360); // Use HSB with scale of 0-255
   // colorMode(RGB, 255); // Use HSB with scale of 0-255
 
