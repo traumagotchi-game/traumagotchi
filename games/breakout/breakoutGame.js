@@ -1,3 +1,5 @@
+"use strict";
+
 // R E F E R E N C E
 // p5Sprite REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
 // 1) assign variable to new p5Sprite!
@@ -82,7 +84,7 @@ let breakoutGameInstance = function(p) { // p could be any variable name
     p.canvas.style("z-index: 5;");
 
     p.frameRate(30);
-    p.background(0);
+    // p.background(0);
 
     // context is for HTML5 Canvas
     let c = document.querySelector("#breakoutGameCanvas");
@@ -185,14 +187,14 @@ let breakoutGameInstance = function(p) { // p could be any variable name
   function intro() {
     // clear to have a clear background, if background is drawn on another canvas layer
     // p.clear();
-    p.background(0);
+    // p.background(0);
 
   }
 
   function play() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    // p.clear();
-    p.background(0);
+    p.clear();
+    // p.background(0);
 
     //*
     // create animation frame counter approx 8fps (if browser is running at 30fps)
@@ -356,7 +358,7 @@ let breakoutGameInstance = function(p) { // p could be any variable name
 
   function displayScore() {
     // p.rectMode(CENTER);
-    // p.fill(0);
+    // p.fill(125);
     // p.stroke(0, 255, 0);
     // p.strokeWeight(2);
     // p.rect(p.width - 30, 30, 60, 60);
@@ -364,19 +366,36 @@ let breakoutGameInstance = function(p) { // p could be any variable name
     // p.textFont()
     // p.textSize()
     //display score
+
     p.context.font = "16px Gamegirl";
-    p.context.fillStyle = "#00ff00";
+    p.context.fillStyle = "#161616";
     let str = "Score";
     let txt = p.context.measureText(str);
-    let left = p.canvas.width - 10 - txt.width;
+    let left = p.canvas.width - 18 - txt.width;
+    p.context.fillText("Score", left, 33);
+
+    p.context.font = "30px Gamegirl";
+    p.context.fillStyle = "#161616";
+    str = String(p.score);
+    txt = p.context.measureText(str);
+    left = p.canvas.width - 18 - txt.width;
+    p.context.fillText(p.score, left, 68);
+
+    p.context.font = "16px Gamegirl";
+    p.context.fillStyle = "#00ff00";
+    str = "Score";
+    txt = p.context.measureText(str);
+    left = p.canvas.width - 15 - txt.width;
     p.context.fillText("Score", left, 30);
 
     p.context.font = "30px Gamegirl";
     p.context.fillStyle = "#00ff00";
     str = String(p.score);
     txt = p.context.measureText(str);
-    left = p.canvas.width - 10 - txt.width;
+    left = p.canvas.width - 15 - txt.width;
     p.context.fillText(p.score, left, 65);
+
+
   }
 
 

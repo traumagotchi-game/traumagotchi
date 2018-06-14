@@ -5,9 +5,6 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>Traumagotchi</title>
-
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -16,41 +13,55 @@
 	<meta name="msapplication-TileColor" content="#000000">
 	<meta name="theme-color" content="#000000">
 
+	<title>TRAUMAGOTCHI</title>
+
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/flexbox.css">
 	<link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
 	<!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anonymous+Pro"> -->
-	<!-- <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro|Press+Start+2P" rel="stylesheet"> -->
+	<link href="https://fonts.googleapis.com/css?family=Anonymous+Pro|Press+Start+2P" rel="stylesheet">
 	<!-- <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet"> -->
 	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 	<script src="libraries/p5.js"></script>
 	<script src="libraries/p5.dom.js"></script>
 	<script src="libraries/p5.sound.js"></script>
 	<script src="libraries/p5.play.js"></script>
-	<script src="index.js"></script>
+	<script src="js/index.js"></script>
 
 
 </head>
 
-<body>
-	<div class="main-content">
-		<div id="canvasDiv">
-		</div>
-		<div class="container">
-			<div class="full" id="homePageMenu">
-				<!-- <img class="image margin-bottom" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" style="max-width: 800px;"> -->
-				<a href="" class="homepageLink chartreuseLink">
-					Launching June 15th, 2018
-				</a></br>
-				<!-- <a href="play.html" class="homepageLink greenLink">
-					load traumagotchi
-				</a> -->
+<body id="homePage">
+	<div class="main-content_homePage" id="homePageMenu">
+
+		<div id="fixedAlert">
+			<!-- <div id="alertImageBack">
+				<img class="image" src="assets/backgrounds/alertBoxBack.svg" alt="">
+			</div> -->
+			<div id="alertText">
+				<p>LAUNCHING JUNE 16th</br> =)</p>
 			</div>
+
 		</div>
+		<div id="canvasDiv" class="full" style="max-height: 100px; margin-bottom: 20px;">
+		</div>
+		<!-- <img class="image margin-bottom" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" style="max-width: 800px;"> -->
+		<div class="">
+			<!-- <a href="new.html" class="homepageLink chartreuseLink" id="newTgotchi">
+						new traumagotchi
+					</a></br>
+			<a href="play.html" class="homepageLink greenLink" id="loadTgotchi">
+						load traumagotchi
+					</a></br> -->
+			<a href="about.html" class="homepageLink highlighterLink" id="about">
+						*+:｡.｡ about ｡.｡:+*
+					</a>
+		</div>
+
 	</div>
 </body>
 <footer>
-	<p>traumagotchi-game (at) gmail.com</p>
+	<p>Traumagotchi (at) gmail.com</p>
 </footer>
 
 </html>

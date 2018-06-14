@@ -6,12 +6,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>New Traumagotchi</title>
+	<title>NEW TRAUMAGOTCHI</title>
 
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/flexbox.css">
 
-	<link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Aldrich|Press+Start+2P" rel="stylesheet">
 	<!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anonymous+Pro"> -->
 	<!-- <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet"> -->
 	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
@@ -19,9 +19,9 @@
 	<script src="libraries/p5.dom.js"></script>
 	<script src="libraries/p5.sound.js"></script>
 	<script src="libraries/jscolor.js"></script>
-	<script src="new.js"></script>
-	<script src="graphics.js"></script>
-	<script src="firebase.js"></script>
+	<script src="js/new.js"></script>
+	<script src="js/graphics.js"></script>
+	<script src="js/firebase.js"></script>
 
 
 </head>
@@ -31,9 +31,15 @@
 		<div class="container" id="gameArea">
 			<div class="" id="leftColumn">
 				<div class="" id="traumagotchiTitle">
-					<a href="index.html"><img class="image center" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" ></a>
+					<a href="index.html"><img class="image center" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi"></a>
 				</div>
 				<div id="canvasDiv">
+					<!-- this is from play.html, but using id's for new.html as well -->
+					<div id="gameIntroOverlay">
+						<h1 id="customizationOverlayTitle">
+							VIRTUAL SHADOW COMPLETE
+						</h1>
+					</div>
 				</div>
 
 				<div id="consoleDiv">
@@ -41,18 +47,18 @@
 					<span id="consoleNext"></span>
 				</div>
 			</div>
-			<div class="customizationMenu" id="rightColumn" style="margin-top: auto;">
+			<div class="customizationMenu" id="rightColumn" style="margin-top: 0;">
 				<div class="" id="divMenu0">
-
+<p>CREATE VIRTUAL SHADOW</p>
 					<p>pixel size</p>
-					<input type="range" min="6" max="50" value="10" class="slider" id="sliderSize">
+					<input type="range" min="3" max="50" value="10" class="slider" id="sliderSize">
 
-					<!-- angelabelle -->
+
 					<p>pixel color</p>
-					<input class="jscolor {width:150, padding:4, shadow:false, borderWidth:0, backgroundColor:'#00ff00', insetColor:'transparent', uppercase:false}" id="colorPickerPixel" onchange="setPixelColor(this.jscolor)" value="00ff00">
+					<input class="jscolor {width:150, padding:4, shadow:false, borderWidth:0, backgroundColor:'#00ff00', insetColor:'transparent', uppercase:false}" id="colorPickerPixel" onchange="setPixelColor(this.jscolor)" value="#00ff00">
 
 					<p>background color</p>
-					<input id="colorPickerBackground" class="jscolor {width:150, padding:4, shadow:false, borderWidth:0, backgroundColor:'#00ff00', insetColor:'transparent', uppercase:false}" id="colorPickerBackground" onchange="setBackgroundColor(this.jscolor)" value="0000ff">
+					<input class="jscolor {width:150, padding:4, shadow:false, borderWidth:0, backgroundColor:'#00ff00', insetColor:'transparent', uppercase:false}" id="colorPickerBackground" onchange="setBackgroundColor(this.jscolor)" value="#0000ff">
 
 
 					<p>traumagotchi name: <input type="text" name="tname" id="name" placeholder="type here"></p>
@@ -60,36 +66,63 @@
 					<button type="button" id="saveTgotchi">save</button>
 				</div>
 				<div class="" id="divMenu1">
+					<p>VIRTUAL SHADOW COMPLETE</p>
 					<p>You probably get asked this a lot, but what shape is your trauma?</p>
+					<p style="font-size: 16px;">click one or more</p>
 					<div class="align-left">
-						<input type="checkbox" id="cubeCheckbox" name="shape" value="cube">
+
+
+						<label class = "myCheckbox">
+							<input type="checkbox" id="cubeCheckbox" name="cube" value="cube">
+							<span class="checkmark"></span>
+							</label>
 						<label for="cube">box</label><br>
-						<input type="checkbox" id="sphereCheckbox" name="shape" value="sphere">
+
+						<label class = "myCheckbox">
+							<input type="checkbox" id="coneCheckbox" name="cone" value="cone">
+							<span class="checkmark"></span>
+						</label>
+						<label for="cone">saucer</label><br>
+
+						<label class = "myCheckbox">
+							<input type="checkbox" id="sphereCheckbox" name="sphere" value="sphere">
+							<span class="checkmark"></span>
+						</label>
 						<label for="sphere">globe</label><br>
-						<input type="checkbox" id="torusCheckbox" name="shape" value="torus">
-						<label for="torus">taurus</label><br>
-						<input type="checkbox" id="ringCheckbox" name="shape" value="ring">
+
+						<label class = "myCheckbox">
+							<input type="checkbox" id="torusCheckbox" name="torus" value="torus">
+							<span class="checkmark"></span>
+						</label>
+						<label for="torus">triangle</label><br>
+
+						<label class = "myCheckbox">
+							<input type="checkbox" id="ringCheckbox" name="ring" value="ring">
+							<span class="checkmark"></span>
+						</labeL>
 						<label for="ring">saturn</label><br>
+
 					</div>
 					<button type="button" id="saveTgotchiShape">next</button>
 				</div>
 				<div class="" id="divMenu2">
-					<p>Assign trauma processor:</p>
+					<p>ASSIGN TRAUMA PROCESSOR</p>
+					<p style="font-size: 16px;">select disk image</p>
 					<div class="align-left" id="processorRadio">
 						<label>
 								<input type="radio" name="processor" value="X13" />
-								<img src="assets/iconTest.png">
+								<img src="assets/stills/processor_0.png">
 							</label>
 						<label for="processor">X3: Cool core for normalizing memory</label><br>
 						<label>
 								<input type="radio"  name="processor" value="S133" />
-								<img src="assets/iconTest.png">
+								<img src="assets/stills/processor_2.png">
 							</label>
 						<label for="processor">S13: Gapped logic for astral data</label><br>
 						<label>
 							<label>
 								<input type="radio"  name="processor" value="D33P" />
-								<img src="assets/iconTest.png">
+								<img src="assets/stills/processor_1.png">
 							</label>
 						<label for="processor">D33333333P: Deep </label>
 						<label>
@@ -97,7 +130,7 @@
 					<button type="button" id="saveProcessor">next</button>
 				</div>
 				<div class="" id="divMenu3">
-					<p>Select charm:</p>
+					<p>SELECT CHARM</p>
 					<div class="" id="charmRadio">
 						<label>
 						  <input type="radio"  name="charm" value="arrow" />
@@ -171,16 +204,18 @@
 					<button type="button" id="saveCharm">next</button>
 				</div>
 				<div class="" id="divMenu4">
-					<p>What calms and comforts your Traumagotchi? This will be your password.</p>
-					<input type="text" id="passwordInput" name="password" placeholder="remember this">
+					<p>What calms and comforts your Traumagotchi?</p>
+					<p style="font-size: 16px">This will help it relax so you can play.</p>
+					<input type="text" id="passwordInput" name="password" placeholder="remember this"></br>
 					<button type="button" id="savePassword">next</button>
 				</div>
 				<div class="" id="divMenu5">
-					<p>One more thing to do: make a circle to protect your Traumagotchi.</p>
+					<p id="tgotchiComplete"></p>
+					<!-- <p>One more thing to do: make a circle to protect your Traumagotchi.</p>
 					<div class="align-left" id="castCircleButtons">
 						<img src="assets/dice_roll.gif" alt=" ">
 						<button type="button" id="saveEast">&#8737;90</button><br>
-						<img src="assets/dice_roll.gif" alt=" ">
+						<img src="assets/dice_roll.gxif" alt=" ">
 						<button type="button" id="saveSouth">&#8737;180</button><br>
 						<img src="assets/dice_roll.gif" alt=" ">
 						<button type="button" id="saveWest">&#8737;270</button><br>
@@ -190,7 +225,8 @@
 						<button type="button" id="saveBelow">&#8657;</button><br>
 						<img src="assets/dice_roll.gif" alt=" ">
 						<button type="button" id="saveAbove">&#8659;</button><br>
-					</div>
+					</div> -->
+					<p>Email (optional): <input type="text" name="email" id="emailInput" placeholder="stay updated"></p>
 					<button type="button" id="nowPlay">All done! Now log in.</button>
 				</div>
 			</div>

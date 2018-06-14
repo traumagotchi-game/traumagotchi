@@ -855,7 +855,7 @@ var jsc = {
 					break;
 				}
 			};
-			
+
 			paletteObj.elm = vmlContainer;
 			paletteObj.draw = drawFunc;
 		}
@@ -926,7 +926,7 @@ var jsc = {
 				grad.color = color1;
 				grad.color2 = color2;
 			};
-			
+
 			sliderObj.elm = vmlContainer;
 			sliderObj.draw = drawFunc;
 		}
@@ -1107,7 +1107,7 @@ var jsc = {
 			if (!(flags & jsc.leaveStyle)) {
 				if (this.styleElement) {
 					var bgColor = '#' + this.toString();
-					var fgColor = this.isLight() ? '#000' : '#FFF';
+					var fgColor = this.isLight() ? '#000' : '#fff';
 
 					this.styleElement.style.backgroundImage = 'none';
 					this.styleElement.style.backgroundColor = bgColor;

@@ -6,30 +6,29 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Play with Traumagotchi</title>
+	<title>PLAY TRAUMAGOTCHI</title>
 
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/flexbox.css">
 
-	<!-- <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anonymous+Pro"> -->
-	<link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Aldrich|Press+Start+2P" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anonymous+Pro"> -->
 	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 	<script src="libraries/p5.js"></script>
 	<script src="libraries/p5.dom.js"></script>
 	<script src="libraries/p5.sound.js"></script>
 	<!-- <script src="libraries/p5.play.js"></script> -->
-	<script src="decisionTree.js"></script>
-	<script src="gameManager.js"></script>
-	<script src="play.js"></script>
-	<script src="graphics.js"></script>
-	<script src="firebase.js"></script>
-	<!-- <script src="spriteClass.js"></script> -->
+	<script src="js/decisionTree.js"></script>
+	<script src="js/gameManager.js"></script>
+	<script src="js/play.js"></script>
+	<script src="js/graphics.js"></script>
+	<script src="js/firebase.js"></script>
 
 	<script src="libraries/spritoon.js"></script>
 	<script src="libraries/matter.min.js"></script>
 
+	<script src="games/gameBackground/gameBackground.js"></script>
 	<script src="games/p5Template/P5templateSketch.js"></script>
 	<script src="games/wackymole/wackymole.js"></script>
 	<script src="games/schmup/schmup.js"></script>
@@ -47,11 +46,11 @@
 </head>
 
 <body>
-	<ul class="topMenu">
+	<!-- <ul class="topMenu">
 		<li id="loginStatus">not logged in</li>
 		<li id="pointStats"></li>
 		<li id="logout"><a href="index.html" class="chartreuseLink">logout</a></li>
-	</ul>
+	</ul> -->
 	<div class="main-content">
 		<!-- <div class="container" id="header">
 			<img class="image margin-bottom" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" style="max-width: 600px;">
@@ -82,12 +81,20 @@
 					<span id="consoleNext"></span>
 				</div>
 			</div>
+
 			<div class="" id="rightColumn">
+
+				<ul class="topMenu">
+					<li id="loginStatus">not logged in</li>
+					<li id="pointStats"></li>
+					<li id="logout"><a href="index.html" class="chartreuseLink">logout</a></li>
+				</ul>
+
 				<div id="loginMenu">
 					<!-- <p>login</p> -->
 					<p>traumagotchi name: <input type="text" name="tname" id="name" placeholder="｡.｡:+♡*♥"></p>
-					<p>password: <input type="text" name="password" id="password" placeholder="♩♪♩♬"></p>
-					<button type="button" id="login">login</button>
+					<p>soothed by: <input type="text" name="password" id="password" placeholder="♩♪♩♬"></p>
+					<button type="button" id="login">LOGIN</button>
 				</div>
 				<div class="buttonMenu" id="careMenu">
 					<button type="button" id="menuTitle" style="display: none;"></button>

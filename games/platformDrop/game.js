@@ -983,11 +983,40 @@ class PlatformDropGame {
     this.bucket.update(dt);
   }
 
+// angelabelle
   debugPhysics(bodies, constraints) {
     this.context.beginPath();
 
-    for (let body of bodies) {
+
+     for (let body of bodies) {
       const vertices = body.vertices;
+      // console.log(body.label);
+
+
+      if (body.label && body.label == 'clickable'){
+        // console.log('in clickable');
+        this.context.lineWidth = 6;
+        this.context.strokeStyle = '#ff0000';
+        // this.context.stroke();
+      } else if (body.label && body.label == 'bath') {
+        // console.log(body);
+        // console.log('not clickable');
+        this.context.lineWidth = 5;
+        this.context.strokeStyle = '#00ff00';
+        // this.context.stroke();
+    } else {
+        // console.log('not clickable');
+        this.context.lineWidth = 10;
+        this.context.strokeStyle = '#ff00ff';
+        // this.context.stroke();
+      }
+
+      this.context.stroke();
+
+// default / original
+      this.context.lineWidth = 3;
+      this.context.strokeStyle = '#00ff00';
+      this.context.stroke();
 
       this.context.moveTo(vertices[0].x, vertices[0].y);
 
@@ -998,9 +1027,7 @@ class PlatformDropGame {
       this.context.lineTo(vertices[0].x, vertices[0].y);
     }
 
-    this.context.lineWidth = 1;
-    this.context.strokeStyle = '#999';
-    this.context.stroke();
+
 
     this.context.beginPath();
 
@@ -1065,6 +1092,7 @@ class PlatformDropGame {
       }
 
       if (this.debug) this.debugPhysics(bodies, constraints);
+
     } else if (this.stage == 'gameOver') {
       //clear previous
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
