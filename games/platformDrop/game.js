@@ -993,30 +993,25 @@ class PlatformDropGame {
       // console.log(body.label);
 
 
-      if (body.label && body.label == 'clickable'){
-        // console.log('in clickable');
-        this.context.lineWidth = 6;
-        this.context.strokeStyle = '#ff0000';
-        // this.context.stroke();
-      } else if (body.label && body.label == 'bath') {
-        // console.log(body);
-        // console.log('not clickable');
-        this.context.lineWidth = 5;
-        this.context.strokeStyle = '#00ff00';
-        // this.context.stroke();
-    } else {
-        // console.log('not clickable');
-        this.context.lineWidth = 10;
-        this.context.strokeStyle = '#ff00ff';
-        // this.context.stroke();
-      }
-
-      this.context.stroke();
+    //   if (body.label == 'clickable'){
+    //     // console.log('in clickable');
+    //     this.context.lineWidth = 6;
+    //     this.context.strokeStyle = '#ff0000';
+    //     this.context.stroke();
+    //   } else if (body.label =='bath') {
+    //     // console.log(body);
+    //     // console.log('not clickable');
+    //     this.context.lineWidth = 5;
+    //     this.context.strokeStyle = '#00ff00';
+    //     this.context.stroke();
+    // }
 
 // default / original
       this.context.lineWidth = 3;
       this.context.strokeStyle = '#00ff00';
+      this.context.fill = '#000000';
       this.context.stroke();
+
 
       this.context.moveTo(vertices[0].x, vertices[0].y);
 
@@ -1042,9 +1037,9 @@ class PlatformDropGame {
       }
     }
 
-    this.context.lineWidth = 1;
-    this.context.strokeStyle = '#933';
-    this.context.stroke();
+    // this.context.lineWidth = 1;
+    // this.context.strokeStyle = '#933';
+    // this.context.stroke();
   }
 
   render() {
@@ -1054,8 +1049,10 @@ class PlatformDropGame {
     if (this.stage == 'waiting') {
       // do nothing
     } else if (this.stage == 'intro') {
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      // this.context.fillStyle = "black";
+      // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       // // display placeholder title
       // this.context.font = "60px Verdana";
@@ -1082,10 +1079,14 @@ class PlatformDropGame {
 
     } else if (this.stage == 'play') {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
       //draw background
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      // this.context.fillStyle = "black";
+      // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      //display score
+
+    pointsRunningTotal.innerHTML = `${this.score}`;
+
 
       for (let i = 0; i < this.sprites.length; i++) {
         this.sprites[i].render(this.context);
@@ -1096,58 +1097,17 @@ class PlatformDropGame {
     } else if (this.stage == 'gameOver') {
       //clear previous
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      drawGameOverBGBool = true;
 
-      //draw background
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-      // display placeholder GameOver
-      this.context.font = "60px Verdana";
-      this.context.fillStyle = "#ACD02D";
-      let str = "GAME OVER";
-      let txt = this.context.measureText(str);
-      let left = (this.canvas.width - txt.width) / 2;
-      let top = this.canvas.height / 2;
-      this.context.fillText("GAME OVER", left, top);
     } else if (this.stage == 'youWon') {
       //clear previous
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      //draw background
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-      // display placeholder GameOver
-      this.context.font = "60px Verdana";
-      this.context.fillStyle = "#ACD02D";
-      let str = "YOU WON";
-      let txt = this.context.measureText(str);
-      let left = (this.canvas.width - txt.width) / 2;
-      let top = this.canvas.height / 2;
-      this.context.fillText("YOU WON", left, top);
+      drawGameOverBGBool = true;
 
     }
 
   }
 
-  // wrapText(context, text, x, y, maxWidth, lineHeight) {
-  //   let words = text.split(' ');
-  //   let line = '';
-  //
-  //   for (let n = 0; n < words.length; n++) {
-  //     let testLine = line + words[n] + ' ';
-  //     let metrics = context.measureText(testLine);
-  //     let testWidth = metrics.width;
-  //     if (testWidth > maxWidth && n > 0) {
-  //       context.fillText(line, x, y);
-  //       line = words[n] + ' ';
-  //       y += lineHeight;
-  //     } else {
-  //       line = testLine;
-  //     }
-  //   }
-  //   context.fillText(line, x, y);
-  // }
 
   getMousePos(evt) {
     const rect = this.canvas.getBoundingClientRect();
@@ -1186,4 +1146,4 @@ class PlatformDropGame {
       }
     }
   }
-}
+};

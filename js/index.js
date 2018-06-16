@@ -1,3 +1,5 @@
+"use strict";
+
 let canvas;
 let title;
 let titleRewound = false;
@@ -100,18 +102,18 @@ function WidthChange(mq) {
 
   if (mq.matches) {
     // window width is at least 500px
-    // document.querySelector("#newTgotchi").style.visibility = 'visible';
-    // document.querySelector("#loadTgotchi").style.visibility = 'visible';
-    // document.querySelector("#alertText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
+    document.querySelector("#newTgotchi").style.visibility = 'visible';
+    document.querySelector("#loadTgotchi").style.visibility = 'visible';
+    document.querySelector("#alertText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
     // document.querySelector("#newTgotchi").style.display = 'block';
     // document.querySelector("#loadTgotchi").style.display = 'block';
     browser = true;
     // console.log(browser);
 
   } else {
-    // document.querySelector("#newTgotchi").style.visibility = 'hidden';
-    // document.querySelector("#loadTgotchi").style.visibility = 'hidden';
-    // document.querySelector("#alertText").innerHTML = `Sorry not phone-playable. Come back when you are on a computer.`;
+    document.querySelector("#newTgotchi").style.visibility = 'hidden';
+    document.querySelector("#loadTgotchi").style.visibility = 'hidden';
+    document.querySelector("#alertText").innerHTML = `Sorry not phone-playable yet. Come back when you are on a computer.`;
 
     // document.querySelector("#newTgotchi").style.display = 'none';
     // document.querySelector("#loadTgotchi").style.display = 'none';

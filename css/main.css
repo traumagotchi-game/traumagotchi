@@ -3,6 +3,7 @@
   src: url("../assets/_fonts/Gamegirl.ttf");
 }
 
+@import url('https://fonts.googleapis.com/css?family=Aldrich|Press+Start+2P');
 html {
   height: 100%;
 }
@@ -48,20 +49,23 @@ a {
   /*display: block;*/
 }
 
+
 /* styling inputs  */
 
+
 /* angelabelle: trying to figure out how to turn off text appearing in input field for the js.color inputs  */
+
 
 /* all inputs */
 
 input {
-  padding: 10px;
   border-color: #00ff00;
   border-style: ridge;
   background: #000;
   color: #75c155;
   outline-color: #aeff00;
 }
+
 
 /* jscolor class */
 
@@ -71,34 +75,31 @@ input {
   border-style: ridge;
 }
 
-#divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #careMenu, #gameMenu, #gameIntroOverlay, #timer, #pointStats {
+#divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #careMenu, #gameMenu, #gameIntroOverlay, #pointsOverlay, #gameEndOverlay, #timer, #pointStats {
   display: none;
 }
 
 #alertMenu {
   display: none;
-  /* if menu is placed above others in html and position is absolute, it will cover other menus like pop-up */
-  /* position: absolute;
-  max-width: 250px; */
-  /* visibility: hidden; */
 }
-
-/* div inside .mainContent that contains game content */
 
 #gameArea {
   width: 1200px;
   height: 675px;
   padding: 20px;
-  /* background: linear-gradient(to bottom right, black, green); */
-  /* border: 5px solid #00ff00; */
+
+  /* disable highlights on text bc they trigger from clicks in game play*/
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
 }
 
 #leftColumn {
   width: 610px;
   height: 675px;
   margin: auto;
-  /* border: 5px solid #00ff00; */
-  /* background-color: #161616; */
 }
 
 #canvasDiv {
@@ -109,8 +110,6 @@ input {
   width: 400px;
   height: 530px;
   margin: 20px auto auto 10px;
-  /* border: 5px solid #00ff00;
-  background-color: #000; */
   padding: 20px;
 }
 
@@ -130,7 +129,6 @@ input {
   width: 610px;
   height: 130px;
   text-align: left;
-  /* background-color: black; */
 }
 
 canvas {
@@ -159,14 +157,54 @@ canvas {
   height: 450px; */
 }
 
-#gameIntroOverlay {
+#gameIntroOverlay, #gameEndOverlay {
   font-family: 'Gamegirl', 'Press Start 2P', 'Aldrich', "Courier", monospace;
-  z-index: 10;
   width: 600px;
   height: 450px;
   position: absolute;
   left: 0px;
   top: 0px;
+}
+
+#pointsOverlay {
+  z-index: 11;
+  font-family: 'Gamegirl', 'Press Start 2P', 'Aldrich', "Courier", monospace;
+  text-align: right;
+  width: 100px;
+  height: 80px;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  /* background-color: #000; */
+}
+
+#canvasDiv h1, p {
+  text-shadow: 2px 2px #000;
+}
+
+#pointsOverlay * {
+  margin: 0;
+  padding: 0;
+}
+
+#pointsOverlay p {
+  font-size: 16px;
+}
+
+#pointsOverlay h1 {
+  font-size: 28px;
+}
+
+#gameIntroOverlay {
+  z-index: 12;
+}
+
+#gameEndOverlay {
+  z-index: 11;
+}
+
+#finalScore {
+  margin: 150px auto auto auto;
 }
 
 #gameTitle {
@@ -215,6 +253,34 @@ canvas {
   font-family: 'Courier New', 'Courier';
 }
 
+
+/* width */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #333333;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #00ff00;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff00;
+}
+
 .consoleDiv a {
   color: #00ff00;
   background-color: #00aa00;
@@ -228,6 +294,7 @@ canvas {
   cursor: pointer;
 }
 
+
 /* menu at top right with login status */
 
 .topMenu {
@@ -240,8 +307,8 @@ canvas {
   position: relative;
 }
 
-/* choices on homepage: load or new traumagotchi */
 
+/* choices on homepage: load or new traumagotchi */
 
 .homepageLink {
   /* font-family: "Share Tech Mono", "Courier", monospace; */
@@ -317,6 +384,7 @@ canvas {
 .customizationMenu p {
   padding-top: 15px;
 }
+
 
 /* for radio button images */
 
@@ -429,7 +497,7 @@ button:hover {
   transition-duration: 0.3s;
 }
 
-#processorRadio{
+#processorRadio {
   font-size: 16px;
 }
 
@@ -442,6 +510,7 @@ button:hover {
   padding: auto;
 }
 
+
 /* changes the placeholder text for inputs */
 
 ::placeholder {
@@ -449,52 +518,86 @@ button:hover {
   opacity: 1;
 }
 
+
 /* text input background */
 
 #name {
   background-color: #161616;
+  padding: 10px
 }
 
 #password {
   background-color: #161616;
+  padding: 10px
 }
 
+
 /*check box in new.html creation */
+
 .myCheckbox input {
   position: absolute;
   opacity: 0;
-
-
 }
 
 .checkmark {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    background-color: #acd02d;
-    cursor: pointer;
-    border: 1px;
-    border-radius: 1.5px;
-    border-style: groove;
-    border-color: #7fff00 #ACD02D #00aa00;;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background-color: #acd02d;
+  cursor: pointer;
+  border: 1px;
+  border-radius: 1.5px;
+  border-style: groove;
+  border-color: #7fff00 #ACD02D #00aa00;
+  ;
 }
 
-.myCheckbox:hover input ~ .checkmark {
-    background-color: #Aeff00;
+.myCheckbox:hover input~.checkmark {
+  background-color: #Aeff00;
 }
 
-.myCheckbox input:checked ~ .checkmark {
-    background-color: #Aeff00;
+.myCheckbox input:checked~.checkmark {
+  background-color: #Aeff00;
 }
+
 
 /* if you want to include an image in replace of the checkmark*/
 
-.myCheckbox input:checked ~ span {
-    background: url("../assets/image/check.png");
+.myCheckbox input:checked~span {
+  background: url("../assets/image/check.png");
 }
 
 
+/* new custome slider */
 
+input[type=range] {
+  -webkit-appearance: none;
+  /* Hides the slider so that custom slider can be made */
+  width: 50%;
+  height: 4px;
+  background: #161616;
+  padding: none !important;
+  border-color: #ACD02D;
+}
+
+input[type=range]:focus {
+  outline: none;
+  /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #Aeff00;
+  height: 25px;
+  width: 15px;
+  border-radius: 1px;
+  background: #00ff00;
+  cursor: pointer;
+  margin-top: -2px;
+  /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #ACD02D, 1px 1px 1px #000000;
+  /* Add cool effects to your sliders! */
+}
 
 
 /* match media for large screens */
@@ -502,11 +605,10 @@ button:hover {
 @media (min-width: 500px) and (min-height: 500px) {
   #gameArea {
     /* margin-top: 60px; */
-    margin-top: 9%;
+    margin-top: 7%;
     margin-bottom: auto;
   }
-
-  .homepageLink{
+  .homepageLink {
     font-size: 30px;
   }
 }

@@ -1,57 +1,12 @@
 "use strict";
 
-// R E F E R E N C E
-// p5Sprite REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
-// 1) assign variable to new p5Sprite!
-// 2) add a collider (optional)
-// 3) add animation
-
-// in play loop you will need to :
-// 1) moveSprite()
-// 2) displayAnim("anim")
-
-// in addition to moving sprite you can describe how you want sprite to move. This includes followMouse(), followMouseX(), followMouseY(), attractionPoint()....
-
-// to keep in bounds there are a number of keepInFrame() methods (ie. bouncing or execpt bottom)
-
-// collidesWith(_otherSprite) function returns true or false
-
-
-// L O A D S P R I T E S (images)
-
-// Image variables and preload function will be moved to world.js , these are here as reference.. all the sprite images declared and preloaded.
-
-// let playerImgs = [];
-// let sprite32 = [];
-// let sprite64 = [];
-// let sprite128 = [];
-// let sprite32x100_purple = [];
-// let sprite32x100_yellow = [];
-//
-//
-// function preload() {
-//   // have to manually set numberFrames
-//   for (i = 0; i <= 5; i++) {
-//     playerImgs[i] = loadImage(`assets/sprites/ship_${i}.png`);
-//     // console.log(p.spriteTestImgs[i]);
-//   }
-//
-//   sprite32[0] = loadImage(`assets/sprites/placeholders/32x32_0.png`)
-//   sprite64[0] = loadImage(`assets/sprites/placeholders/64x64_0.png`)
-//   sprite128[0] = loadImage(`assets/sprites/placeholders/128x128_0.png`)
-//   sprite32x100_purple[0] = loadImage(`assets/sprites/placeholders/32x100_purple_0.png`)
-//   sprite32x100_yellow[0] = loadImage(`assets/sprites/placeholders/32x100_yellow_0.png`)
-// };
-
-
-
 
 let breakoutGameInstance = function(p) { // p could be any variable name
 
   p.canvas;
   p.context;
 
-  p.debug = true; // enable debug to see collider outlines
+  p.debug = false; // enable debug to see collider outlines
 
   p.animationFrame;
   p.lastAnimationFrame;
@@ -186,7 +141,7 @@ let breakoutGameInstance = function(p) { // p could be any variable name
 
   function intro() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    // p.clear();
+    p.clear();
     // p.background(0);
 
   }
@@ -276,7 +231,7 @@ let breakoutGameInstance = function(p) { // p could be any variable name
       p.stage = 'gameOver';
     }
 
-    displayScore();
+    pointsRunningTotal.innerHTML = `${p.score}`;
 
     //*
     p.lastAnimationFrame = p.animationFrame;
@@ -285,17 +240,18 @@ let breakoutGameInstance = function(p) { // p could be any variable name
 
   function gameOver() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    // p.clear();
-    p.background(0);
+    p.clear();
+    // p.background(0);
+    drawGameOverBGBool = true;
 
 
-    p.context.font = "60px Verdana";
-    p.context.fillStyle = "#ACD02D";
-    let str = "GAME OVER";
-    let txt = p.context.measureText(str);
-    let left = (p.canvas.width - txt.width) / 2;
-    let top = p.canvas.height / 2;
-    p.context.fillText("GAME OVER", left, top);
+    // p.context.font = "60px Verdana";
+    // p.context.fillStyle = "#ACD02D";
+    // let str = "GAME OVER";
+    // let txt = p.context.measureText(str);
+    // let left = (p.canvas.width - txt.width) / 2;
+    // let top = p.canvas.height / 2;
+    // p.context.fillText("GAME OVER", left, top);
 
     restart();
   }
@@ -355,50 +311,6 @@ let breakoutGameInstance = function(p) { // p could be any variable name
     }
     p.restartBool = true;
   }
-
-  function displayScore() {
-    // p.rectMode(CENTER);
-    // p.fill(125);
-    // p.stroke(0, 255, 0);
-    // p.strokeWeight(2);
-    // p.rect(p.width - 30, 30, 60, 60);
-    // p.fill(0, 255, 0);
-    // p.textFont()
-    // p.textSize()
-    //display score
-
-    p.context.font = "16px Gamegirl";
-    p.context.fillStyle = "#161616";
-    let str = "Score";
-    let txt = p.context.measureText(str);
-    let left = p.canvas.width - 18 - txt.width;
-    p.context.fillText("Score", left, 33);
-
-    p.context.font = "30px Gamegirl";
-    p.context.fillStyle = "#161616";
-    str = String(p.score);
-    txt = p.context.measureText(str);
-    left = p.canvas.width - 18 - txt.width;
-    p.context.fillText(p.score, left, 68);
-
-    p.context.font = "16px Gamegirl";
-    p.context.fillStyle = "#00ff00";
-    str = "Score";
-    txt = p.context.measureText(str);
-    left = p.canvas.width - 15 - txt.width;
-    p.context.fillText("Score", left, 30);
-
-    p.context.font = "30px Gamegirl";
-    p.context.fillStyle = "#00ff00";
-    str = String(p.score);
-    txt = p.context.measureText(str);
-    left = p.canvas.width - 15 - txt.width;
-    p.context.fillText(p.score, left, 65);
-
-
-  }
-
-
 
   //create sprite class
   class p5Sprite {

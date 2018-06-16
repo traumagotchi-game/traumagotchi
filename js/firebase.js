@@ -1,3 +1,5 @@
+"use strict";
+
 function gotData(data) {
   // need to retrieve firebase data with val() method
   tgotchiData = data.val();
@@ -74,10 +76,10 @@ function saveTgotchiData() {
 
 function createTgotchiNode() {
   // // comment out to disable pushing to firebase
-  let result = firebase.database().ref(userName).set(userData);
+  // let result = firebase.database().ref(userName).set(userData);
 
   // original
-  // let result = firebase.database().ref('tgotchi/' + userName).set(userData);
+  let result = firebase.database().ref('tgotchi/' + userName).set(userData);
 }
 
 function pushMoreData(data) {
@@ -85,23 +87,23 @@ function pushMoreData(data) {
   // this works to add new key:value pairs and also to reassign values with same key name
 
   // // comment out to disable pushing to firebase
-  firebase.database().ref(userName).update(data);
+  // firebase.database().ref(userName).update(data);
 
   // original push
-  // firebase.database().ref('tgotchi/' + userName).update(data);
+  firebase.database().ref('tgotchi/' + userName).update(data);
 
   // add new data to local userData object (this will also reassign values)
   userData = Object.assign(userData, data);
   // console.log(userData);
 }
 
-function rewriteData(data) {
+function rewriteData(node, data) {
 
   // not sure how to do this!
-  firebase.database().ref(userName).set(data);
+  // firebase.database().ref(userName).set(data);
 
   // original
-  // firebase.database().ref(`tgotchi/${userName}`).set(data);
+  firebase.database().ref(`tgotchi/${userName}/${node}`).set(data);
 
 
 }

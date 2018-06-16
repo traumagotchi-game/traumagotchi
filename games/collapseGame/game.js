@@ -20,7 +20,8 @@ class CollapseGame {
         webm: "games/collapseGame/gliss.webm"
       },
       loop: false,
-      volume: 0.3
+      volume: 0.0
+      // volume: 0.3
     });
     this.wrongSfx = new SFX({
       context: this.audioContext,
@@ -29,7 +30,8 @@ class CollapseGame {
         webm: "games/collapseGame/boing.webm"
       },
       loop: false,
-      volume: 0.3
+      volume: 0.0
+      // volume: 0.3
     });
     this.dropSfx = new SFX({
       context: this.audioContext,
@@ -38,7 +40,8 @@ class CollapseGame {
         webm: "games/collapseGame/swish.webm"
       },
       loop: false,
-      volume: 0.3
+      volume: 0.0
+      // volume: 0.3
     });
     const game = this;
     this.loadJSON("games/collapseGame/flowers", function(data, game) {
@@ -262,10 +265,12 @@ class CollapseGame {
     if (this.stage == 'waiting') {
       // do nothing
     } else if (this.stage == 'intro') {
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // // display placeholder
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      // this.context.fillStyle = "black";
+      // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      // display placeholder
       // this.context.font = "60px Verdana";
       // this.context.fillStyle = "#ACD02D";
       // let str = "COLLAPSE";
@@ -279,42 +284,19 @@ class CollapseGame {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       //draw background
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
+      // this.context.fillStyle = "black";
+      // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let sprite of this.sprites) sprite.render();
 
-      //display score
-      this.context.font = "16px Gamegirl";
-      this.context.fillStyle = "#00ff00";
-      let str = "Score";
-      let txt = this.context.measureText(str);
-      let left = this.canvas.width - 7 - txt.width;
-      this.context.fillText("Score", left, 30);
+      pointsRunningTotal.innerHTML = `${this.score}`;
 
-      this.context.font = "30px Gamegirl";
-      this.context.fillStyle = "#00ff00";
-      str = String(this.score);
-      txt = this.context.measureText(str);
-      left = this.canvas.width - 7 - txt.width;
-      this.context.fillText(this.score, left, 65);
+
+
     } else if (this.stage == 'gameOver') {
       //clear previous
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      //draw background
-      this.context.fillStyle = "black";
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-      // display placeholder GameOver
-      this.context.font = "60px Verdana";
-      this.context.fillStyle = "#ACD02D";
-      let str = "GAME OVER";
-      let txt = this.context.measureText(str);
-      let left = (this.canvas.width - txt.width) / 2;
-      let top = this.canvas.height / 2;
-      this.context.fillText("GAME OVER", left, top);
+      drawGameOverBGBool = true;
 
     }
   }
@@ -540,4 +522,4 @@ class flowerSprite {
 
     return dist < radius;
   }
-}
+};

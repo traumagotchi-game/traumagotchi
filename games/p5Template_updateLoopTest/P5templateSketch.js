@@ -1,31 +1,6 @@
+"use strict";
 
-
-// R E F E R E N C E
-// p5Sprite REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
-// 1) assign variable to new p5Sprite!
-// 2) add a collider (optional)
-// 3) add animation
-
-// in play loop you will need to :
-// 1) moveSprite()
-// 2) displayAnim("anim")
-
-// in addition to moving sprite you can describe how you want sprite to move. This includes followMouse(), followMouseX(), followMouseY(), attractionPoint()....
-
-// to keep in bounds there are a number of keepInFrame() methods (ie. bouncing or execpt bottom)
-
-// collidesWith(_otherSprite) function returns true or false
-
-
-// L O A D S P R I T E S (images)
-// Image variables and preload function will be moved to world.js eventually =), these are here as reference.. all the sprite images declared and preloaded.
-let playerImgs = [];
-let sprite32 = [];
-let sprite64 = [];
-let sprite128 = [];
-let sprite32x100_purple = [];
-let sprite32x100_yellow = [];
-let collisionAnimation_128 = [];
+// testing using window request animation frame (this is actually inplemented in index.js)
 
 
 function preload() {

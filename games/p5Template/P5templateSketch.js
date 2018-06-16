@@ -14,7 +14,7 @@
 
 // collidesWith(_otherSprite) function returns true or false
 
-// 
+//
 // // L O A D S P R I T E S (images)
 // // Image variables and preload function will be moved to world.js eventually =), these are here as reference.. all the sprite images declared and preloaded.
 // let playerImgs = [];
@@ -51,6 +51,8 @@
 //   sprite32x100_yellow[0] = loadImage(`assets/sprites/placeholders/32x100_yellow_0.png`)
 // };
 
+"use strict";
+
 let p5TemplateInstance = function(p) { // p could be any variable name
 
   p.canvas;
@@ -61,6 +63,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
   p.animationFrame;
   p.lastAnimationFrame;
 
+// ***FOR LEVELS NEED THESE
   p.level = 0; // level is different levels of game
   p.stage = 'waiting';
   p.score = 0;
@@ -133,7 +136,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     // initialize point sprites them with random x position and y position incrementing by 100px and velocityY set to 5 (so they fall)
     for (let i = 0; i < 16; i++) {
       // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
-      p.pointSprites.push(new p5Sprite(spritePurple, random(p.width), -i * 100, 0.3, 0, 5));
+      p.pointSprites.push(new p5Sprite(spritePurple, random(p.width), -i * 100, 0.5, 0, 5));
       // p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
       p.pointSprites[i].addAnimation("still", 0, 0);
       p.pointSprites[i].addAnimation("breathe", 0, 20);
@@ -203,15 +206,15 @@ let p5TemplateInstance = function(p) { // p could be any variable name
 
   function intro() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    // p.clear();
-    p.background(0);
+    p.clear();
+    // p.background(0);
 
   }
 
   function play() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    // p.clear();
-    p.background(0);
+    p.clear();
+    // p.background(0);
 
     //*
     // create animation frame counter approx 8fps (if browser is running at 30fps)
@@ -308,7 +311,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
       }
     }
 
-    displayScore();
+    pointsRunningTotal.innerHTML = `${p.score}`;
 
     //*
     p.lastAnimationFrame = p.animationFrame;
@@ -317,17 +320,18 @@ let p5TemplateInstance = function(p) { // p could be any variable name
 
   function gameOver() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    // p.clear();
-    p.background(0);
+    p.clear();
+    drawGameOverBGBool = true;
+    // p.background(0);
 
 
-    p.context.font = "60px Verdana";
-    p.context.fillStyle = "#ACD02D";
-    let str = "GAME OVER";
-    let txt = p.context.measureText(str);
-    let left = (p.canvas.width - txt.width) / 2;
-    let top = p.canvas.height / 2;
-    p.context.fillText("GAME OVER", left, top);
+    // p.context.font = "60px Verdana";
+    // p.context.fillStyle = "#ACD02D";
+    // let str = "GAME OVER";
+    // let txt = p.context.measureText(str);
+    // let left = (p.canvas.width - txt.width) / 2;
+    // let top = p.canvas.height / 2;
+    // p.context.fillText("GAME OVER", left, top);
 
     restart();
   }
@@ -352,6 +356,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
       // increment levels here
       // could increment gravity/velocity here to make game harder over multiple plays ;-)
 
+      // *** set how many levels you want
       // increment level (6 levels)
       if (p.level <= 5) {
         p.level += 1;
@@ -392,31 +397,6 @@ let p5TemplateInstance = function(p) { // p could be any variable name
       }
     }
     p.restartBool = true;
-  }
-
-  function displayScore() {
-    // p.rectMode(CENTER);
-    // p.fill(0);
-    // p.stroke(0, 255, 0);
-    // p.strokeWeight(2);
-    // p.rect(p.width - 30, 30, 60, 60);
-    // p.fill(0, 255, 0);
-    // p.textFont()
-    // p.textSize()
-    //display score
-    p.context.font = "16px Gamegirl";
-    p.context.fillStyle = "#00ff00";
-    let str = "Score";
-    let txt = p.context.measureText(str);
-    let left = p.canvas.width - 7 - txt.width;
-    p.context.fillText("Score", left, 30);
-
-    p.context.font = "30px Gamegirl";
-    p.context.fillStyle = "#00ff00";
-    str = String(p.score);
-    txt = p.context.measureText(str);
-    left = p.canvas.width - 7 - txt.width;
-    p.context.fillText(p.score, left, 65);
   }
 
   //create sprite class

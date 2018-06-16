@@ -169,8 +169,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
 
     sequence = generateSequence(5 + p.level);
     //console.dir(sequence);
-    for(i = 0; i < sequence.length; ++i)
-    {
+    for (i = 0; i < sequence.length; ++i) {
       console.log(sequence[i]);
     }
   };
@@ -247,7 +246,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     if (isOverUpArrow) {
       if (direction != 'down') {
         direction = 'up';
-            console.log("up");
+        console.log("up");
       }
     }
     if (isOverDownArrow) {
@@ -270,8 +269,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     }
   }
 
-  function localMouseOver()
-  {
+  function localMouseOver() {
     if (isOverUpArrow) {
       if (direction != 'down') {
         direction = 'up';
@@ -325,19 +323,16 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     clearPriorArrows();
     checkArrows();
     changeDirection();
-    if(direction === sequence[sequence.length - 1])
-    {
+    if (direction === sequence[sequence.length - 1]) {
       sequence.pop();
       directionsTiles.pop();
       p.score += 5
       console.log('Removed!');
-    }
-    else if(sequence.length <= 0)
-    {
+    } else if (sequence.length <= 0) {
       p.stage = 'gameOver';
     }
     drawDirections();
-    displayScore();
+    pointsRunningTotal.innerHTML = `${p.score}`;
 
     //*
     p.lastAnimationFrame = p.animationFrame;
@@ -379,10 +374,10 @@ let p5TemplateInstance = function(p) { // p could be any variable name
   function generateSequence(numberOfDirections) {
     let directions = ['up', 'down', 'left', 'right'];
     let localSequence = [];
-      for(i = 0; i < numberOfDirections; ++i) {
-        localSequence.push(directions[getRandomInt(directions.length - 1)]);
-      }
-      return localSequence;
+    for (i = 0; i < numberOfDirections; ++i) {
+      localSequence.push(directions[getRandomInt(directions.length - 1)]);
+    }
+    return localSequence;
   }
 
 
@@ -455,17 +450,16 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     //console.log("" + xFruit + " " + yFruit);
     //if (dist(mouseX, mouseY, xUp, yUp) <= 20){
     //if (xCor[xCor.length - 1] === xFruit && yCor[yCor.length - 1] === yFruit) {
-    if (dist(xCor[xCor.length - 1], yCor[yCor.length - 1], xFruit, yFruit) <= 20 ) {
+    if (dist(xCor[xCor.length - 1], yCor[yCor.length - 1], xFruit, yFruit) <= 20) {
       //var prevScore = parseInt(scoreElem.html().substring(8));
       // scoreElem.html('Score = ' + (prevScore + 1));
       p.score += 30;
 
       //increase the snake's length by 20 points
-      for(i = 0; i < 20; i++)
-      {
+      for (i = 0; i < 20; i++) {
         xCor.unshift(xCor[0]);
         yCor.unshift(yCor[0]);
-      //numSegments++;
+        //numSegments++;
         numSegments = numSegments + 1;
       }
       //numSegments += 10;
@@ -592,33 +586,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     p.restartBool = true;
   }
 
-  function displayScore() {
-    // p.rectMode(CENTER);
-    // p.fill(0);
-    // p.stroke(0, 255, 0);
-    // p.strokeWeight(2);
-    // p.rect(p.width - 30, 30, 60, 60);
-    // p.fill(0, 255, 0);
-    // p.textFont()
-    // p.textSize()
-    //display score
-    p.context.font = "16px Gamegirl";
-    p.context.fillStyle = "#00ff00";
-    let str = "Score";
-    let txt = p.context.measureText(str);
-    let left = p.canvas.width - 7 - txt.width;
-    p.context.fillText("Score", left, 30);
-
-    p.context.font = "30px Gamegirl";
-    p.context.fillStyle = "#00ff00";
-    str = String(p.score);
-    txt = p.context.measureText(str);
-    left = p.canvas.width - 7 - txt.width;
-    p.context.fillText(p.score, left, 65);
-  }
-
-  function clearPriorArrows()
-  {
+  function clearPriorArrows() {
     isOverUpArrow = false;
     isOverRightArrow = false;
     isOverDownArrow = false;
@@ -636,13 +604,13 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     let yUp = 375;
 
     // if the distance is less than the circle's radius
-    if (dist(mouseX, mouseY, xUp, yUp) <= 20){
+    if (dist(mouseX, mouseY, xUp, yUp) <= 20) {
       isOverUpArrow = true;
-    } else if (dist(mouseX, mouseY, xDown, yDown) <= 20){
+    } else if (dist(mouseX, mouseY, xDown, yDown) <= 20) {
       isOverDownArrow = true;
-    } else if(dist(mouseX, mouseY, xLeft, yLeft) <= 20){
+    } else if (dist(mouseX, mouseY, xLeft, yLeft) <= 20) {
       isOverLeftArrow = true;
-    } else if(dist(mouseX, mouseY, xRight, yRight) <= 20){
+    } else if (dist(mouseX, mouseY, xRight, yRight) <= 20) {
       isOverRightArrow = true;
     }
 
@@ -659,8 +627,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     p.ellipse(xDown, yDown, 40, 40);
   }
 
-  function drawDirections()
-  {
+  function drawDirections() {
     p.rectMode(CENTER);
     p.stroke(255);
     p.strokeWeight(5);
@@ -668,9 +635,8 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     startDrawPosX = 30;
     startDrawPosY = 225;
 
-    for(i = 0; i < sequence.length; ++i)
-    {
-          directionsTiles.push(p.rect(30 + 30 * i, 225, 40, 40));
+    for (i = 0; i < sequence.length; ++i) {
+      directionsTiles.push(p.rect(30 + 30 * i, 225, 40, 40));
     }
 
     // p.rect(30, 225, 40, 40);

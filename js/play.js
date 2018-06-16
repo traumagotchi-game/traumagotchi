@@ -4,7 +4,6 @@ let canvas;
 let canvasDiv;
 
 let state = 'login';
-// let pointsLocal;
 
 let diameter = 100; // probably should get rid of this if it is constant
 
@@ -13,6 +12,9 @@ let keys;
 let tgotchiData;
 let userData;
 let userName;
+let currentLoginTime;
+let lastLoginTime;
+let firstLoginTime;
 
 
 // DOM
@@ -24,13 +26,17 @@ let loginButton;
 let loginStatus;
 let pointStats;
 
-// game
+// games
 let gameMenu;
 let gameIntroOverlay;
+let pointsOverlay;
+let gameEndOverlay;
 let timer;
 let gameTitle;
 let playButton;
 let playInstructions;
+let pointsRunningTotal;
+let finalScore;
 let collapseGameCanvas;
 let collapseGame;
 let platformDropGameCanvas;
@@ -39,12 +45,25 @@ let breakoutGameCanvas;
 let breakoutGame;
 let wackymoleGameCanvas;
 let wackymoleGame;
-let schmupGameCanvas;
+let pluckGame;
+let pluckGameCanvas;
 let schmupGame;
+let schmupGameCanvas;
+let snakeGame;
+let snakeGameCanvas;
 let gameBackgroundCanvas;
 let gameBackground;
 let p5templateGameCanvas;
 let p5templateGame;
+
+let games = ['collapse', 'schmup', 'pluck', 'snake', 'wackymole', 'breakout'];
+// let games = ['collapse', 'platformDrop', 'schmup', 'pluck', 'snake', 'wackymole', 'breakout'];
+
+let game1;
+let game2;
+let game3;
+
+let gameCounter = 1;
 
 // controls
 // let keyCodePressed;
@@ -60,7 +79,9 @@ let stepTextArray = [{
   text: "",
   end: true
 }];
-
+let loginLandingPage = false;
+let writeToConsoleBool = true;
+let printOnceBool = true;
 // care menu
 
 let careMenu;
@@ -87,6 +108,7 @@ let gridOffset = 0;
 let angleTgotchi = 0;
 
 let cubeEnabled = false;
+let coneEnabled = false;
 let sphereEnabled = false;
 let torusEnabled = false;
 let ringEnabled = false;
@@ -98,10 +120,12 @@ let charmArray = [];
 let charmID;
 let charmMove;
 
-let actionX = 0;
+let actionX = 200;
 let actionY = 0;
-let actionZ = 475;
-let actionRotation = 0;
+let actionZ = 200;
+let actionAngle = 0;
+let actionAnimating = false;
+let swipeLeftComplete = false;
 
 let cameraX = 0;
 let cameraY = 0;
@@ -115,16 +139,92 @@ let cameraColorAmbient = [71, 71, 71];
 // sprites
 let playerImgs = [];
 let spritePurple = [];
+let spritePurpleLg = [];
+let spriteBlueSpike = [];
+let spriteBlue = [];
+let spritePinkGreenSpike = [];
+let spriteRedTall = [];
+let spriteYellowLong = [];
+
 let sprite32 = [];
 let sprite64 = [];
 let sprite128 = [];
+let arrowUp = [];
+let arrowDown = [];
+let arrowRight = [];
+let arrowLeft = [];
 let sprite32x100_purple = [];
 let sprite32x100_yellow = [];
 let collisionAnimation_128 = [];
 
 // action images
+let actionsHourlySinceLast = '';
+let actionsFiveMinutesSinceLast = '';
+let actionsHourlyList = '';
+let actionsFiveMinutesList = '';
+let actionFunction;
+let lastActionName;
+let lastActionPastTense;
+let lastActionInput;
+let executeAction = 'landingPage';
+let fourTwentyImgs = [];
+let fourTwentyImgsIndex = 0;
+let abstractImgs = [];
+let abstractImgsIndex = 0;
 let altarImgs = [];
 let altarImgsIndex = 0;
+let briskImgs = [];
+let briskImgsIndex = 0;
+let catwalkImgs = [];
+let catwalkImgsIndex = 0;
+let chortleImgs = [];
+let chortleImgsIndex = 0;
+let complicatedImgs = [];
+let complicatedImgsIndex = 0;
+let disassociateImgs = [];
+let disassociateImgsIndex = 0;
+let dreamImgs = [];
+let dreamImgsIndex = 0;
+let farmersMarketImgs = [];
+let farmersMarketImgsIndex = 0;
+let newLookImgs = [];
+let newLookImgsIndex = 0;
+let haventLaughedImgs = [];
+let haventLaughedImgsIndex = 0;
+let hotDogImgs = [];
+let hotDogImgsIndex = 0;
+let hotTubImgs = [];
+let hotTubImgsIndex = 0;
+let laughterTearsImgs = [];
+let laughterTearsImgsIndex = 0;
+let mantraImgs = [];
+let mantraImgsIndex = 0;
+let moisturizerImgs = [];
+let moisturizerImgsIndex = 0;
+let oceanImgs = [];
+let oceanImgsIndex = 0;
+let puppersImgs = [];
+let puppersImgsIndex = 0;
+let screamImgs = [];
+let screamImgsIndex = 0;
+let seaOtterSaladImgs = [];
+let seaOtterSaladImgsIndex = 0;
+let selfHarmImgs = [];
+let selfHarmImgsIndex = 0;
+let sewerImgs = [];
+let sewerImgsIndex = 0;
+let singleHugeTearImgs = [];
+let singleHugeTearImgsIndex = 0;
+let sleepImgs = [];
+let sleepImgsIndex = 0;
+let slimeImgs = [];
+let slimeImgsIndex = 0;
+let strangeThingImgs = [];
+let strangeThingImgsIndex = 0;
+let tearsLikeNailsImgs = [];
+let tearsLikeNailsImgsIndex = 0;
+
+
 
 function preload() {
 
@@ -135,7 +235,31 @@ function preload() {
   }
 
   for (let i = 0; i <= 20; i++) {
-    spritePurple[i] = loadImage(`assets/sprites/purple_breathe/purple_${i}.png`);
+    spritePurple[i] = loadImage(`assets/sprites/ancestralTrauma/purple_breathe_128/purple_${i}.png`);
+  }
+
+  for (let i = 0; i <= 20; i++) {
+    spritePurpleLg[i] = loadImage(`assets/sprites/ancestralTrauma/purple_breathe_256/purpleLg_${i}.png`);
+  }
+
+  for (let i = 0; i <= 24; i++) {
+    spriteBlueSpike[i] = loadImage(`assets/sprites/ancestralTrauma/blueSpike_breathe_128/blueSpike_${i}.png`);
+  }
+
+  for (let i = 0; i <= 24; i++) {
+    spriteBlue[i] = loadImage(`assets/sprites/ancestralTrauma/blue_breathe_128/blue_${i}.png`);
+  }
+
+  for (let i = 0; i <= 24; i++) {
+    spritePinkGreenSpike[i] = loadImage(`assets/sprites/ancestralTrauma/pinkGreenSpike_breathe_128/pinkGreenSpike_${i}.png`);
+  }
+
+  for (let i = 0; i <= 20; i++) {
+    spriteRedTall[i] = loadImage(`assets/sprites/ancestralTrauma/redTall_128x256/redTall_${i}.png`);
+  }
+
+  for (let i = 0; i <= 20; i++) {
+    spriteYellowLong[i] = loadImage(`assets/sprites/ancestralTrauma/yellowLong_256x128/yellowLong_${i}.png`);
   }
 
   for (let i = 0; i <= 10; i++) {
@@ -148,11 +272,201 @@ function preload() {
   sprite32x100_purple[0] = loadImage(`assets/sprites/placeholders/32x100_purple_0.png`)
   sprite32x100_yellow[0] = loadImage(`assets/sprites/placeholders/32x100_yellow_0.png`)
 
-  // L O A D A C T I O N I M A G E S
-  for (let i = 0; i <= 1; i++) {
-    altarImgs[i] = loadImage(`assets/actions/altar_${i}.jpg`);
+  arrowUp[0] = loadImage(`assets/sprites/placeholders/arrowUp.png`)
+  arrowDown[0] = loadImage(`assets/sprites/placeholders/arrowDown.png`)
+  arrowRight[0] = loadImage(`assets/sprites/placeholders/arrowRight.png`)
+  arrowLeft[0] = loadImage(`assets/sprites/placeholders/arrowLeft.png`)
 
+
+  // L O A D A C T I O N I M A G E S
+  for (let i = 0; i <= 4; i++) {
+    altarImgs[i] = loadImage(`assets/actions/altar_${i}.jpg`);
   }
+  for (let i = 0; i <= 3; i++) {
+    fourTwentyImgs[i] = loadImage(`assets/actions/420_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 2; i++) {
+    abstractImgs[i] = loadImage(`assets/actions/abstract_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    briskImgs[i] = loadImage(`assets/actions/brisk_crying_then_lunch_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 2; i++) {
+    catwalkImgs[i] = loadImage(`assets/actions/catwalk_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 2; i++) {
+    chortleImgs[i] = loadImage(`assets/actions/chortle_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    complicatedImgs[i] = loadImage(`assets/actions/complicated_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 4; i++) {
+    disassociateImgs[i] = loadImage(`assets/actions/disassociate_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 5; i++) {
+    dreamImgs[i] = loadImage(`assets/actions/dream_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    farmersMarketImgs[i] = loadImage(`assets/actions/farmersMarket_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 2; i++) {
+    newLookImgs[i] = loadImage(`assets/actions/newLook_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 4; i++) {
+    haventLaughedImgs[i] = loadImage(`assets/actions/havent_Laughed_inYears_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    hotDogImgs[i] = loadImage(`assets/actions/hotDog_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    hotTubImgs[i] = loadImage(`assets/actions/hotTub_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    laughterTearsImgs[i] = loadImage(`assets/actions/laughterTurnsToTears_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 0; i++) {
+    mantraImgs[i] = loadImage(`assets/actions/mantra_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    moisturizerImgs[i] = loadImage(`assets/actions/moisturizer_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    oceanImgs[i] = loadImage(`assets/actions/ocean_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 5; i++) {
+    puppersImgs[i] = loadImage(`assets/actions/puppers_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 0; i++) {
+    screamImgs[i] = loadImage(`assets/actions/scream_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    seaOtterSaladImgs[i] = loadImage(`assets/actions/seaOtterSalad_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    selfHarmImgs[i] = loadImage(`assets/actions/selfHarm_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    sewerImgs[i] = loadImage(`assets/actions/sewer_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    singleHugeTearImgs[i] = loadImage(`assets/actions/single_huge_tear_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    sleepImgs[i] = loadImage(`assets/actions/sleep_${i}.jpg`);
+  }
+
+
+  for (let i = 0; i <= 2; i++) {
+    catwalkImgs[i] = loadImage(`assets/actions/catwalk_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 4; i++) {
+    disassociateImgs[i] = loadImage(`assets/actions/disassociate_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 5; i++) {
+    dreamImgs[i] = loadImage(`assets/actions/dream_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    farmersMarketImgs[i] = loadImage(`assets/actions/farmersMarket_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 0; i++) {
+    newLookImgs[i] = loadImage(`assets/actions/newLook_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 4; i++) {
+    haventLaughedImgs[i] = loadImage(`assets/actions/havent_Laughed_inYears_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    hotDogImgs[i] = loadImage(`assets/actions/hotDog_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    hotTubImgs[i] = loadImage(`assets/actions/hotTub_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    laughterTearsImgs[i] = loadImage(`assets/actions/laughterTurnsToTears_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 0; i++) {
+    mantraImgs[i] = loadImage(`assets/actions/mantra_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    moisturizerImgs[i] = loadImage(`assets/actions/moisturizer_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    oceanImgs[i] = loadImage(`assets/actions/ocean_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 5; i++) {
+    puppersImgs[i] = loadImage(`assets/actions/puppers_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 0; i++) {
+    screamImgs[i] = loadImage(`assets/actions/scream_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    seaOtterSaladImgs[i] = loadImage(`assets/actions/seaOtterSalad_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    selfHarmImgs[i] = loadImage(`assets/actions/selfHarm_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 1; i++) {
+    sewerImgs[i] = loadImage(`assets/actions/sewer_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    singleHugeTearImgs[i] = loadImage(`assets/actions/single_huge_tear_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    sleepImgs[i] = loadImage(`assets/actions/sleep_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 4; i++) {
+    slimeImgs[i] = loadImage(`assets/actions/slime_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 5; i++) {
+    strangeThingImgs[i] = loadImage(`assets/actions/strangeThing_${i}.jpg`);
+  }
+
+  for (let i = 0; i <= 3; i++) {
+    tearsLikeNailsImgs[i] = loadImage(`assets/actions/tearsLikeNails_${i}.jpg`);
+  }
+
 };
 
 function setup() {
@@ -224,7 +538,7 @@ function setup() {
 
   //console
   consoleText = document.querySelector("#consoleText")
-  // writeConsoleText("test");
+  writeConsoleText(`Care for your Traumagotchi and it will help digest your damage! Play games to earn points. With points you can schedule repetitive actions, add charms, and more... ミ☆`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
@@ -235,6 +549,10 @@ function setup() {
   gameTitle = document.querySelector("#gameTitle");
   playButton = document.querySelector("#playButton");
   playInstructions = document.querySelector("#playInstructions");
+  pointsOverlay = document.querySelector("#pointsOverlay");
+  pointsRunningTotal = document.querySelector("#pointsRunningTotal");
+  gameEndOverlay = document.querySelector("#gameEndOverlay");
+  finalScore = document.querySelector("#finalScore");
 
   // alert menu
   alertMenu = document.querySelector("#alertMenu");
@@ -268,6 +586,14 @@ function setup() {
   schmupGame = new p5(schmupGameInstance, 'canvasDiv');
   schmupGameCanvas = document.querySelector("#schmupGameCanvas");
   schmupGameCanvas.style.visibility = "hidden";
+
+  snakeGame = new p5(snakeGameInstance, 'canvasDiv');
+  snakeGameCanvas = document.querySelector("#snakeGameCanvas");
+  snakeGameCanvas.style.visibility = "hidden";
+
+  pluckGame = new p5(pluckGameInstance, 'canvasDiv');
+  pluckGameCanvas = document.querySelector("#pluckGameCanvas");
+  pluckGameCanvas.style.visibility = "hidden";
 
   wackymoleGame = new p5(wackymoleGameInstance, 'canvasDiv');
   wackymoleGameCanvas = document.querySelector("#wackymoleGameCanvas");
@@ -311,21 +637,25 @@ function setup() {
   choice3 = document.querySelector("#menuItem3");
 
   choice0.addEventListener("click", () => {
+    alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[0].nextKey;
     tree[currentIndex].choices[0].action();
     nextMenu();
   })
   choice1.addEventListener("click", () => {
+    alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[1].nextKey;
     tree[currentIndex].choices[1].action();
     nextMenu();
   })
   choice2.addEventListener("click", () => {
+    alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[2].nextKey;
     tree[currentIndex].choices[2].action();
     nextMenu();
   })
   choice3.addEventListener("click", () => {
+    alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[3].nextKey;
     tree[currentIndex].choices[3].action();
     nextMenu();
@@ -345,9 +675,9 @@ function setup() {
   database = firebase.database();
 
   // to retrieve data
-  let ref = database.ref('/');
+  // let ref = database.ref('/');
   // originally
-  // let ref = database.ref('tgotchi');
+  let ref = database.ref('tgotchi');
   ref.on('value', gotData, errData);
 
 
@@ -381,14 +711,6 @@ function WidthChange(mq) {
 function draw() {
 
 
-  // push();
-  // normalMaterial();
-  // translate(0, 0 , 0);
-  // // texture(_actionGraphicArray[_actionGraphicIndex]);
-  // // box(altarImgs[0].width * 5, altarImgs[0].height * 5);
-  // box(100);
-  // pop();
-
   // create animation frame counter approx 8fps (if browser is running at 30fps)
   // animationFrame = Math.floor(frameCount / 3.75);
   // ---> added this to p5 games so not running all the time =)
@@ -405,25 +727,129 @@ function draw() {
       careMenu.style.display = "block";
       gameMenu.style.display = "none";
       gameIntroOverlay.style.display = "none";
+      pointsOverlay.style.display = "none";
+      gameEndOverlay.style.display = "none";
+
+      // console.log(executeAction);
       switch (executeAction) {
-        case 'titter':
+        case 'landingPage':
+          break;
+        case 'initialLoginCareMenu':
+          printRecentActivity();
+          break;
+        case 'careMenu':
+          printActiveActions();
+          break;
+        case 'chortle':
+          displayAction(chortleImgs, chortleImgsIndex);
+          break;
+        case 'laughterTears':
+          displayAction(haventLaughedImgs, haventLaughedImgsIndex);
+          break;
+        case 'haventLaughed':
+          displayAction(haventLaughedImgs, haventLaughedImgsIndex);
+          break;
+        case 'seaOtterSalad':
+          displayAction(seaOtterSaladImgs, seaOtterSaladImgsIndex);
+          break;
+        case 'strangeThing':
+          displayAction(strangeThingImgs, strangeThingImgsIndex);
+          break;
+        case 'puppers':
+          displayAction(puppersImgs, puppersImgsIndex);
+          break;
+        case 'farmersMarket':
+          displayAction(farmersMarketImgs, farmersMarketImgsIndex);
+          break;
+        case 'hotDog':
+          displayAction(hotDogImgs, hotDogImgsIndex);
+          break;
+          break;
+        case 'complicated':
+          displayAction(complicatedImgs, complicatedImgsIndex);
+          break;
+        case 'altar':
           displayAction(altarImgs, altarImgsIndex);
+          break;
+        case 'singleHugeTear':
+          displayAction(singleHugeTearImgs, singleHugeTearImgsIndex);
+          break;
+        case 'brisk':
+          displayAction(briskImgs, briskImgsIndex);
+          break;
+        case 'tearsLikeNails':
+          displayAction(tearsLikeNailsImgs, tearsLikeNailsImgsIndex);
+          break;
+        case 'slime':
+          displayAction(slimeImgs, slimeImgsIndex);
+          break;
+        case 'fourTwenty':
+          displayAction(fourTwentyImgs, fourTwentyImgsIndex);
+          break;
+        case 'selfHarm':
+          displayAction(selfHarmImgs, selfHarmImgsIndex);
+          break;
+        case 'disassociate':
+          displayAction(disassociateImgs, disassociateImgsIndex);
+          break;
+        case 'sleep':
+          displayAction(sleepImgs, sleepImgsIndex);
+          break;
+        case 'dream':
+          displayAction(dreamImgs, dreamImgsIndex);
+          break;
+        case 'newCharm':
+          //NOT DONE YET LARK!
+          // placeholder is abstract
+          break;
+        case 'abstract':
+          displayAction(abstractImgs, abstractImgsIndex);
+          break;
+        case 'moisturizer':
+          displayAction(moisturizerImgs, moisturizerImgsIndex);
+          break;
+        case 'changeColor':
+          //NOT DONE YET LARK!
+          // placeholder is newLook
+          break;
+        case 'newLook':
+          displayAction(newLookImgs, newLookImgsIndex);
+          break;
+        case 'hotTub':
+          displayAction(hotTubImgs, hotTubImgsIndex);
+          break;
+        case 'hotDog':
+          displayAction(hotDogImgs, hotDogImgsIndex);
+          break;
+        case 'ocean':
+          displayAction(oceanImgs, oceanImgsIndex);
+          break;
+        case 'sewer':
+          displayAction(sewerImgs, sewerImgsIndex);
+          break;
+        case 'mantra':
+          displayAction(mantraImgs, mantraImgsIndex);
+          break;
+        case 'scream':
+          displayAction(screamImgs, screamImgsIndex);
+          break;
+        case 'catwalk':
+          displayAction(catwalkImgs, catwalkImgsIndex);
+          break;
         case 'none':
           break;
         default:
           break;
       }
-
-
-
       break;
     case 'game':
 
       careMenu.style.display = "none";
       gameMenu.style.display = "block";
       gameIntroOverlay.style.display = "block";
-      gameBackgroundInstanceCanvas.style.visibility = "visible";
-
+      pointsOverlay.style.display = "block";
+      gameEndOverlay.style.display = "block";
+      gameBackgroundCanvas.style.visibility = "visible";
 
       break;
     default:
@@ -467,30 +893,27 @@ function displayMainCanvas() {
 function login() {
   keys.forEach(function(key) {
     // console.log(`key is ${key}, input name is ${inputName.value()}, password is ${tgotchiData[key].password}, and password input is ${inputPassword.value()}`)
-    if (key.toUpperCase() == inputName.value().toUpperCase() && tgotchiData[key].password.toUpperCase() == inputPassword.value().toUpperCase()) {
+    if (key.toUpperCase() === inputName.value().toUpperCase() && tgotchiData[key].password.toUpperCase() === inputPassword.value().toUpperCase()) {
       userName = key;
       userData = tgotchiData[key];
     }
   });
-
 
   if (userName) {
     loginStatus.innerHTML = `logged in as ${userName}`;
     pointStats.innerHTML = `${userData.points} points`;
     pointStats.style.display = 'block';
 
-    let lastLogin = userData.timeStamp[userData.timeStamp.length - 1];
-    // let currentDate = Date.now();
-    let minutesElapsed = Math.floor((Date.now() - lastLogin) / 60000);
+    loginLandingPage = true;
+    state = 'care';
 
 
+    lastLoginTime = userData.timeStamp[userData.timeStamp.length - 1];
+    currentLoginTime = Date.now();
+    userData.timeStamp.push(currentLoginTime);
+    firstLoginTime = userData.timeStamp[0];
 
-    writeConsoleText(`since you saw them last ${minutesElapsed} minutes ago, ${userName} has: </br> sunk into slime 5 times (daily) </br> inject pupper into eyeball 120 times (hourly)`)
-
-    state = "care";
-
-    userData.timeStamp.push(Date.now());
-
+    executeAction = 'initialLoginCareMenu';
     // this rewrites ALL the data
     pushMoreData(userData);
     //not sure how to rewrite...
@@ -518,12 +941,15 @@ function cameraControl() {
   specularMaterial(255);
 }
 
+
+
 function writeConsoleText(text) {
 
-  // will add code so messages can stack?
+  if (writeToConsoleBool === true) {
 
-  consoleText.innerHTML = text;
-
+    consoleText.innerHTML = text;
+    writeToConsoleBool = false;
+  }
   // from step text in new.js
   // consoleText.html(stepTextArray[step].text);
   // if (stepTextArray[step].end) {
@@ -540,6 +966,109 @@ function writeConsoleText(text) {
   //   }
   // });
 
+}
+
+function printRecentActivity() {
+
+  if (printOnceBool === true) {
+    let minutesElapsed = Math.floor((currentLoginTime - lastLoginTime) / 60000);
+
+    if (userData.actionsHourly.length === 1 && userData.actionsFiveMinutes.length === 1) {
+      writeToConsoleBool = true;
+      writeConsoleText(`since you saw them last ${minutesElapsed} minutes ago, ${userName} has been waiting for you to task it with things to do...`)
+    } else {
+      // hourly list of actions
+      if (userData.actionsHourly.length > 1) {
+        // actionsHourlySinceLast = 'hourly: </br>'
+        for (let i = 1; i < userData.actionsHourly.length; i++) {
+          // this fires every minute for testing
+          // let numberTimes = Math.floor((currentLoginTime - userData.actionsHourly[i].initialTimestamp) / 60000);
+          let numberTimes = Math.floor((currentLoginTime - userData.actionsHourly[i].initialTimestamp) / 3600000);
+          if (numberTimes === 1 && i < userData.actionsHourly.length - 1) {
+            actionsHourlySinceLast += `> ${userData.actionsHourly[i].actionPastTense} ${numberTimes} time </br>`;
+          } else if (numberTimes >= 2 && i < userData.actionsHourly.length - 1) {
+            actionsHourlySinceLast += `> ${userData.actionsHourly[i].actionPastTense} ${numberTimes} times </br>`;
+          } else if (numberTimes === 1 && userData.actionsHourly.length != 2) {
+            actionsHourlySinceLast += `> ${userData.actionsHourly[i].actionPastTense} ${numberTimes} time </br>`;
+          } else if (numberTimes >= 2 && userData.actionsHourly.length != 2) {
+            actionsHourlySinceLast += `> ${userData.actionsHourly[i].actionPastTense} ${numberTimes} times </br>`;
+          } else if (numberTimes === 1) {
+            actionsHourlySinceLast += `> ${userData.actionsHourly[i].actionPastTense} ${numberTimes} time </br>`;
+          } else if (numberTimes >= 2) {
+            actionsHourlySinceLast += `> ${userData.actionsHourly[i].actionPastTense} ${numberTimes} times </br>`;
+            // } else if (numberTimes === 0 && i === userData.actionsHourly.length - 1) {
+            //   actionsHourlySinceLast += `and that's all.`;
+          }
+        }
+      }
+      if (userData.actionsFiveMinutes.length > 1) {
+        //five minutely list of actions
+        // actionsFiveMinutesSinceLast = 'every five minutes: </br>'
+        for (let i = 1; i < userData.actionsFiveMinutes.length; i++) {
+          let numberTimes = Math.floor((currentLoginTime - userData.actionsFiveMinutes[i].initialTimestamp) / 300000);
+          if (numberTimes === 1 && i < userData.actionsFiveMinutes.length - 1) {
+            actionsFiveMinutesSinceLast += `> ${userData.actionsFiveMinutes[i].actionPastTense} ${numberTimes} time </br>`;
+          } else if (numberTimes >= 2 && i < userData.actionsFiveMinutes.length - 1) {
+            actionsFiveMinutesSinceLast += `> ${userData.actionsFiveMinutes[i].actionPastTense} ${numberTimes} times </br>`;
+          } else if (numberTimes === 1 && userData.actionsFiveMinutes.length != 2) {
+            actionsFiveMinutesSinceLast += `> ${userData.actionsFiveMinutes[i].actionPastTense} ${numberTimes} time </br>`;
+          } else if (numberTimes >= 2 && userData.actionsFiveMinutes.length != 2) {
+            actionsFiveMinutesSinceLast += `> ${userData.actionsFiveMinutes[i].actionPastTense} ${numberTimes} times </br>`;
+          } else if (numberTimes === 1) {
+            actionsFiveMinutesSinceLast += `> ${userData.actionsFiveMinutes[i].actionPastTense} ${numberTimes} time </br>`;
+          } else if (numberTimes >= 2) {
+            actionsFiveMinutesSinceLast += `> ${userData.actionsFiveMinutes[i].actionPastTense} ${numberTimes} times </br>`;
+            // } else if (numberTimes === 0 && i === userData.actionsFiveMinutes.length - 1) {
+            //   actionsFiveMinutesSinceLast += `...and that's all.`;
+          }
+        }
+      }
+
+      writeToConsoleBool = true;
+      writeConsoleText(`since you saw them last ${minutesElapsed} minutes ago, ${userName} has... </br> </br> ${actionsHourlySinceLast} ${actionsFiveMinutesSinceLast}`);
+
+
+    }
+    printOnceBool = false;
+  }
+}
+
+function printActiveActions() {
+  if (printOnceBool === true) {
+    if (userData.actionsHourly.length === 1 && userData.actionsFiveMinutes.length === 1) {
+      writeToConsoleBool = true;
+      writeConsoleText(`${userName} doesn't have any regular care actions yet! play games to get points and schedule repeating actions...`)
+    } else {
+      // hourly list of actions
+      if (userData.actionsHourly.length > 1) {
+        actionsHourlyList = '∘◦ hourly ◦∘</br>'
+        for (let i = 1; i < userData.actionsHourly.length; i++) {
+
+          if (i < userData.actionsHourly.length - 1) {
+            actionsHourlyList += `> ${userData.actionsHourly[i].action}  </br>`;
+          } else {
+            actionsHourlyList += `> ${userData.actionsHourly[i].action}`;
+          }
+
+        }
+      }
+      if (userData.actionsFiveMinutes.length > 1) {
+        actionsFiveMinutesList = '</br> ∘◦ every five minutes ◦∘ </br>'
+        //five minutely list of actions
+        for (let i = 1; i < userData.actionsFiveMinutes.length; i++) {
+          if (i < userData.actionsFiveMinutes.length - 1) {
+            actionsFiveMinutesList += `> ${userData.actionsFiveMinutes[i].action} </br>`;
+          } else {
+            actionsFiveMinutesList += `> ${userData.actionsFiveMinutes[i].action} </br>`;
+          }
+
+        }
+      }
+      writeToConsoleBool = true;
+      writeConsoleText(`${userName}'s current actions are... </br> ${actionsFiveMinutesList} </br> ${actionsHourlyList}`)
+    }
+    printOnceBool = false;
+  }
 }
 
 function createPOnce(text, parent, tag, bool = true) {

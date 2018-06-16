@@ -40,7 +40,7 @@ let cam360 = 0;
 
 let database;
 let keys;
-
+let tgotchiData;
 let frameCounter = 0;
 
 // dom
@@ -246,9 +246,9 @@ function setup() {
   // note this is updated automatically as firebase pings the site whenever
   // database changes
 
-  let ref = database.ref('/');
+  // let ref = database.ref('/');
   // original (tgotchi directory)
-  // let ref = database.ref('tgotchi');
+  let ref = database.ref('tgotchi');
   ref.on('value', gotData, errData);
 }
 
@@ -290,9 +290,9 @@ function draw() {
 
   if (!userData) {
 
-    if (webcamUsable == undefined) {
+    if (webcamUsable === undefined) {
       // console.log('wait for webcam')
-    } else if (webcamUsable == false) {
+    } else if (webcamUsable === false) {
       // console.log('webcam access not allowed')
       createRandomGraphics();
     } else {
@@ -305,7 +305,7 @@ function draw() {
 
     // // strobe effect
     //   // displayRealLife = !displayRealLife;
-    //     if (frameCount % 2 === 0) {
+    //     if (frameCount % 2 ==== 0) {
     //       displayRealLife = !displayRealLife;
     //     }
     //     if (displayRealLife) {
@@ -584,28 +584,28 @@ function buildTgotchi() {
   texture(graphics);
 
 
-  if (state == 'menu0') {
+  if (state === 'menu0') {
 
     drawFlatGotchi();
 
-  } else if (state == 'menu1') {
+  } else if (state === 'menu1') {
 
     customizeShape();
 
-  } else if (state == 'menu2') {
+  } else if (state === 'menu2') {
 
     displayTgotchi();
     // displayProcessor();
 
-  } else if (state == 'menu3') {
+  } else if (state === 'menu3') {
 
     displayTgotchi();
 
-  } else if (state == 'menu4') {
+  } else if (state === 'menu4') {
 
     displayTgotchi();
 
-  } else if (state == 'menu5') {
+  } else if (state === 'menu5') {
 
     displayTgotchi();
     castCircle();
@@ -820,6 +820,8 @@ function menu4() {
     // pushMoreData(passwordData);
 
     // if (!passwordInput.value()) {
+
+
     if (!passwordInput.value()) {
       alert("You will need to soothe your Traumagotchi before it will let you play with it.")
     } else if (!/^\S+$/.test(passwordInput.value())) {
@@ -828,6 +830,8 @@ function menu4() {
       // add to userData object
       userData.password = passwordInput.value();
 
+
+      console.log(userData);
       setTimeout(function() {
         state = 'menu5';
         menu5();
@@ -847,6 +851,8 @@ function menu5() {
   let emailInput = select("#emailInput");
 
   userData.email = emailInput.value();
+  userData.actionsHourly = [{action: 'none'}];
+  userData.actionsFiveMinutes = [{action: 'none'}];
 
   document.querySelector("#tgotchiComplete").innerHTML = `Your Traumagotchi, ${userName}, is soothed by ${userData.password}.`
 

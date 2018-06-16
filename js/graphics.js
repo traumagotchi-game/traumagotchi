@@ -1,3 +1,6 @@
+"use strict";
+
+
 function draw2DArray(_graphics, _array, _cellWidth, _cellHeight) {
   _graphics.fill(180, 360, 25);
   _graphics.rect(0, 0, _graphics.width, _graphics.height);
@@ -174,28 +177,70 @@ function displayCharm() {
 
 function displayAction(_actionGraphicArray, _actionGraphicIndex) {
 
-
+  // console.log('displaying animation');
   push();
   // normalMaterial();
-  translate(0, 0, actionZ);
+  translate(actionX, actionY, actionZ);
+  rotateX(actionAngle * .7);
+  rotateY(actionAngle * 5);
+  rotateZ(PI / 2);
+  // console.log(_actionGraphicArray);
   texture(_actionGraphicArray[_actionGraphicIndex]);
-  box(_actionGraphicArray[_actionGraphicIndex].width, _actionGraphicArray[_actionGraphicIndex].height);
-  box(100);
+  box(50);
   pop();
 
-  if (actionZ >= 0 - diameter) {
-    actionZ -= 10;
-  } else {
-    // reset
-    executeAction = 'none';
-    actionZ = 475;
-
-
-    if (_actionGraphicIndex < _actionGraphicArray.length) {
-      _actionGraphicIndex++;
+  if (actionAnimating && !swipeLeftComplete) {
+    // actionX -= 5;
+    if (actionX > -41) {
+      // console.log(actionX);
+      moveActionCube(-42, -33, 200, 0.07);
+      actionAngle += 0.0033;
     } else {
-      _actionGraphicIndex = 0;
+      swipeLeftComplete = true;
     }
+  } else if (actionAnimating && swipeLeftComplete) {
+    if (actionX < -10) {
+      // if (actionY < 0.5) {
+      moveActionCube(0, 0, -80, 0.025);
+      actionAngle += 0.02;
+    } else {
+      actionAnimating = false;
+      swipeLeftComplete = false;
+      actionX = 200;
+      actionY = 0;
+
+      actionZ = 200;
+      actionAngle = 0;
+      //  go back to initial menu when animation complete (this only gets triggered in one frame =p)
+      printOnceBool = true; // so only writes actions to console once
+      executeAction = 'careMenu';
+      currentKey = 'initial';
+      nextMenu();
+    }
+  } 
+}
+
+function moveActionCube(_actionX, _actionY, _actionZ, ease = .1) {
+  if (actionZ < _actionZ) {
+    actionZ += ((_actionZ + .1) - actionZ) * ease;
+  } else if (actionZ > _actionZ) {
+    // subtracted .1 so it will exit condition
+    actionZ += ((_actionZ - .1) - actionZ) * ease;
+  }
+
+  if (actionX < _actionX) {
+    // with ease: added 0.1 to target value so that it wil exit condition
+    actionX += ((_actionX + .1) - actionX) * ease;
+  } else if (actionX > _actionX) {
+    // subtracted .1 so it will exit condition
+    actionX += ((_actionX - .1) - actionX) * ease;
+  }
+
+  if (actionY < _actionY) {
+    actionY += ((_actionY + .1) - actionY) * ease;
+  } else if (actionY > _actionY) {
+    // subtracted .1 so it will exit condition
+    actionY += ((_actionY - .1) - actionY) * ease;
   }
 
 

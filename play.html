@@ -30,6 +30,8 @@
 
 	<script src="games/gameBackground/gameBackground.js"></script>
 	<script src="games/p5Template/P5templateSketch.js"></script>
+	<script src="games/pluck/pluck.js"></script>
+	<script src="games/snake/snake.js"></script>
 	<script src="games/wackymole/wackymole.js"></script>
 	<script src="games/schmup/schmup.js"></script>
 	<script src="games/breakout/breakoutGame.js"></script>
@@ -68,16 +70,24 @@
 
 						</h1>
 						<button type="button" id="playButton">play</button>
-
 						<p id="playInstructions">
 
 						</p>
 					</div>
+					<div id="gameEndOverlay">
+						<h1 id="finalScore">
+
+						</h1>
+					</div>
+					<div id="pointsOverlay">
+						<p>score:</p>
+						<h1 id="pointsRunningTotal">0</h1>
+					</div>
 				</div>
 
 				<!-- <div class="five-sixths consoleDiv"> -->
-				<div id="consoleDiv">
-					<span id="consoleText"></span>
+				<div id="consoleDiv" style="overflow: auto;">
+					<p id="consoleText" style="margin: 0;"></p>
 					<span id="consoleNext"></span>
 				</div>
 			</div>
