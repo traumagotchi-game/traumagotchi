@@ -4,8 +4,8 @@ function selectGames() {
   // recursive calls to find random 3 in games array
   // FOR WORKING ON A SPECIFIC GAME, INITIALIZE IT HERE (COMMENT OUT RANDOM)
 
-  game1 = 'collapse';
-  // game1 = random(games);
+  // game1 = 'collapse';
+  game1 = random(games);
   findGame2();
 
   // console.log(game1);

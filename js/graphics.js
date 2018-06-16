@@ -111,6 +111,7 @@ function displayTgotchi() {
     box(diameter);
   }
   if (coneEnabled) {
+    box(diameter/5);
     cone(diameter, Math.floor(diameter * .62));
   }
   if (sphereEnabled) {
@@ -217,7 +218,7 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
       currentKey = 'initial';
       nextMenu();
     }
-  } 
+  }
 }
 
 function moveActionCube(_actionX, _actionY, _actionZ, ease = .1) {
