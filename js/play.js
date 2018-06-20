@@ -538,7 +538,7 @@ function setup() {
 
   //console
   consoleText = document.querySelector("#consoleText")
-  writeConsoleText(`Care for your Traumagotchi and it will help digest your damage! Play games to earn points. With points you can schedule repetitive actions, add charms, and more... ミ☆`);
+  writeConsoleText(`Care for your Traumagotchi and it will care for you! Play games to earn points. With points you can schedule repetitive actions, add charms, and more... ミ☆`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
