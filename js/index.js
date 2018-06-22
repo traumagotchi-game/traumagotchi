@@ -14,6 +14,7 @@ let easing;
 let menu;
 let canvasDiv;
 let lastTime;
+let song;
 
 
 function preload() {
@@ -26,6 +27,7 @@ function preload() {
   title_mobile.looping = false;
   title_medium.looping = false;
 
+  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3');
 }
 
 function setup() {
@@ -42,10 +44,14 @@ function setup() {
   canvas.parent("canvasDiv");
 
 
+  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3', playBGmusic);
+  // song.loop();
+
   // canvas = createCanvas(windowWidth, windowHeight);
   // // canvas.id("canvasFullScreen");
   // canvas.parent("canvasDivResponsive");
   // // canvas.id("canvasDivResponsive");
+
 
   menu = select("#homePageMenu");
   // menu.position(0, height / 2 + 50);
@@ -87,6 +93,9 @@ function refresh() {
 //   }
 // }
 
+// function playBGmusic() {
+//     song.play();
+// }
 
 function windowResized() {
 

@@ -6,11 +6,22 @@ let spriteIndex = 0;
 let newSpriteFrame = true;
 let pixelArray = [];
 
+// 32x32
+let cols = 4;
+let rows = 16;
+// actual size
+// let cellWidth = 8;
+// let cellHeight = 2;
 
-let cols = 20;
-let rows = 20;
-let cellWidth = 50;
+// times 5 for drawing
+let cellWidth = 40;
 let cellHeight = 10;
+
+//big
+// let cols = 20;
+// let rows = 20;
+// let cellWidth = 50;
+// let cellHeight = 10;
 
 
 // // Actual fullScreenSize
@@ -77,15 +88,15 @@ let toggleFirstFrameOnionButton;
 let onionAlpha = 30;
 let onionAlphaSlider;
 
-let color1Hex = '#ffff00';
-let color2Hex = '#00ff00';
-let color3Hex = '#56bc2f';
-let color4Hex = '#0080ff';
+let color1Hex = '#EA212D';
+let color2Hex = '#9C0B5D';
+let color3Hex = '#FC28FC';
+let color4Hex = '#FEF035';
 let color5Hex = '#fc7800';
-let color6Hex = '#9400D3';
-let color7Hex = '#8b002f';
-let color8Hex = '#9f734a';
-let color9Hex = '#153a07';
+let color6Hex = '#20C0F1';
+let color7Hex = '#5700e2';
+let color8Hex = '#2158ef';
+let color9Hex = '#00ff00';
 let color0Hex = '#40374c';
 
 let frameCountP;

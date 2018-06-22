@@ -106,11 +106,46 @@ let below = false;
 let userName;
 let userData;
 
-// function preload(){
+let song;
+
+// function preload() {
+//   // L O A D A U D I O
+//   song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3');
 //
 // }
 
 function setup() {
+
+  // song.loop();
+  // playBGmusic();
+
+  // click.playMode('restart');
+
+  // load sound with call back not buffering well
+  // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3', playBGmusic);
+
+
+  // use canvasDiv size to set size of p5 canvas
+  canvasDiv = document.querySelector("#canvasDiv");
+  // set height of canvasDiv (else defaults to 0 bc canvas layers are set to position:absolute so they can stack)
+  // this is for responsive layout: height adjusts
+  // canvasDiv.style.height = `${canvasDiv.offsetWidth * 3 / 4}px`;
+  canvasDiv.style.height = `450px`;
+
+  // canvas = createCanvas(windowWidth / 2, windowWidth * 3 / 8, WEBGL);
+  // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetWidth * 3 / 4, WEBGL);
+  canvas = createCanvas(600, 450, WEBGL);
+  canvas.parent("canvasDiv");
+  canvas.class("gameCanvas");
+  canvas.id("p5Canvas");
+
+
+  // let canvasDivWidth = (canvasDiv.offsetWidth + parseFloat(canvasDiv.currentStyle.marginLeft) + parseFloat(canvasDiv.currentStyle.marginRight)) / 2 - 300;
+  // console.log(canvasDiv.offsetWidth);
+  // canvas.style(`left:${canvasDivWidth}px`);
+
+  frameRate(30);
+
   // detect webcam and set webcamUsable bool
   {
     navigator.getUserMedia = (navigator.getUserMedia ||
@@ -149,27 +184,6 @@ function setup() {
   // colorMode(HSB, 360); // Use HSB with scale of 0-360
   // colorMode(RGB, 255);
 
-  // use canvasDiv size to set size of p5 canvas
-  canvasDiv = document.querySelector("#canvasDiv");
-  // set height of canvasDiv (else defaults to 0 bc canvas layers are set to position:absolute so they can stack)
-  // this is for responsive layout: height adjusts
-  // canvasDiv.style.height = `${canvasDiv.offsetWidth * 3 / 4}px`;
-  canvasDiv.style.height = `450px`;
-
-  // canvas = createCanvas(windowWidth / 2, windowWidth * 3 / 8, WEBGL);
-  // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetWidth * 3 / 4, WEBGL);
-  canvas = createCanvas(600, 450, WEBGL);
-  canvas.parent("canvasDiv");
-  canvas.class("gameCanvas");
-  canvas.id("p5Canvas");
-
-
-  // let canvasDivWidth = (canvasDiv.offsetWidth + parseFloat(canvasDiv.currentStyle.marginLeft) + parseFloat(canvasDiv.currentStyle.marginRight)) / 2 - 300;
-  // console.log(canvasDiv.offsetWidth);
-  // canvas.style(`left:${canvasDivWidth}px`);
-
-
-  frameRate(30);
 
   // media query event handler
   if (matchMedia) {
@@ -323,6 +337,12 @@ function draw() {
   buildTgotchi();
 
 }
+
+// function playBGmusic() {
+//   if (!song.isPlaying()) {
+//     song.play();
+//   }
+// }
 
 function cameraControl() {
 
@@ -851,8 +871,12 @@ function menu5() {
   let emailInput = select("#emailInput");
 
   userData.email = emailInput.value();
-  userData.actionsHourly = [{action: 'none'}];
-  userData.actionsFiveMinutes = [{action: 'none'}];
+  userData.actionsHourly = [{
+    action: 'none'
+  }];
+  userData.actionsFiveMinutes = [{
+    action: 'none'
+  }];
 
   document.querySelector("#tgotchiComplete").innerHTML = `Your Traumagotchi, ${userName}, is soothed by ${userData.password}.`
 

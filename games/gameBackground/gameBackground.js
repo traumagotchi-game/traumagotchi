@@ -81,14 +81,20 @@ let gameBackgroundInstance = function(p) {
   }
 
   function drawSnakeBG() {
+    // p.image(gameBG_4, 0, 0)
+
     p.background(0);
   }
 
   function drawPluckBG() {
+    // p.image(gameBG_texture, 0, 0)
+
+    // p.image(gameBG_1, 0, 0)
     p.background(0);
   }
 
   function drawCollapseBG() {
+      // p.image(gameBG_4, 0, 0)
     p.background(0);
   }
 
@@ -97,19 +103,23 @@ let gameBackgroundInstance = function(p) {
   }
 
   function drawBreakoutBG() {
+      // p.image(gameBG_2, 0, 0)
     p.background(0);
   }
 
   function drawWackymoleBG() {
+      // p.image(gameBG_1, 0, 0)
     p.background(0);
   }
 
   function drawIntroBG() {
+      // p.image(gameBG_texture, 0, 0)
     p.background(0);
     // p.background(200);
   }
 
   function drawSchmupBG() {
+      // p.image(gameBG_0, 0, 0)
     p.background(0);
 
   }

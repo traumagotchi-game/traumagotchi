@@ -136,10 +136,10 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     // initialize point sprites them with random x position and y position incrementing by 100px and velocityY set to 5 (so they fall)
     for (let i = 0; i < 16; i++) {
       // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
-      p.pointSprites.push(new p5Sprite(spritePurple, random(p.width), -i * 100, 0.5, 0, 5));
-      // p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
+      // p.pointSprites.push(new p5Sprite(spritePurple, random(p.width), -i * 100, 0.5, 0, 5));
+      p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
       p.pointSprites[i].addAnimation("still", 0, 0);
-      p.pointSprites[i].addAnimation("breathe", 0, 20);
+      // p.pointSprites[i].addAnimation("breathe", 0, 20);
       p.pointSprites[i].addCollider(20, 20); // little smaller than 32x32
     }
 
@@ -229,8 +229,8 @@ let p5TemplateInstance = function(p) { // p could be any variable name
     // nove and display point and kill sprites
     for (let i = 0; i < p.pointSprites.length; i++) {
       p.pointSprites[i].moveSprite();
-      p.pointSprites[i].displayAnim("breathe");
-      // p.pointSprites[i].displayAnim("still");
+      // p.pointSprites[i].displayAnim("breathe");
+      p.pointSprites[i].displayAnim("still");
     }
 
     for (let i = 0; i < p.killSprites.length; i++) {

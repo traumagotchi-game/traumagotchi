@@ -5,12 +5,12 @@ let pluckGameInstance = function(p) { // p could be any variable name
   p.canvas;
   p.context;
 
-  p.debug = false; // enable debug to see collider outlines
+  // p.debug = true; // enable debug to see collider outlines
 
   p.animationFrame;
   p.lastAnimationFrame;
 
-// ***FOR LEVELS NEED THESE
+  // ***FOR LEVELS NEED THESE
   p.level = 0; // level is different levels of game
   p.stage = 'waiting';
   p.score = 0;
@@ -54,49 +54,42 @@ let pluckGameInstance = function(p) { // p could be any variable name
 
 
     // REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
-    p.player = new p5Sprite(playerImgs, p.width / 2, p.height / 2, .5);
+    p.player = new p5Sprite(charms, p.width / 2, p.height / 2, 1);
 
-    // Angelabelle: for breakout, initialize sprite at bottom
-    // p.player = new p5Sprite(sprite32x100_purple, p.width / 2, p.height - 50, 1);
-    // console.log(p.player.imgArray[0].width) // SOOOO weird this is not registering actual width sooner...
 
-    // add collider if you want it to be different than the default image size
-    // good to make it a little smaller so people enjoy game play more ;-=)
-    // enable debug variable to see collider outline
     p.player.addCollider(30, 20);
     p.player.addAnimation("still", 0, 0);
     // p.player.addAnimation("animated", 0, 5);
-    // console.log(p.player);
-    // console.log(p.player)
 
-    // p.collisionSprites = new p5Sprite(collisionAnimation_128, 100, 100);
-    // p.collisionSprites.addAnimation("explode", 0, 10);
 
-    // these are from breakout game but might make them clouds or something for this game
-    for (let i = 0; i < 5; i++) {
-      // initialize 5 sprites for top of breakout board. Their x positions acount for space inbetween (100 empty pixels / 6) and width of each of them. Their x y positions are centered bc image mode is center
-      p.breakoutSprites.push(new p5Sprite(sprite32x100_purple, (i + 1) * 100 / 6 + (i * 100) + 50, 20, 3));
-      p.breakoutSprites[i].addAnimation("still", 0, 0);
-
-    }
 
     // initialize point sprites them with random x position and y position incrementing by 100px and velocityY set to 5 (so they fall)
     for (let i = 0; i < 16; i++) {
       // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
-      p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -i * 100, 1, 0, 5));
-      // p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
+
+      p.pointSprites.push(new p5Sprite(schmupThings, random(p.width), -i * 100, 0.5, 0, 5));
+      // if (i % 3 === 0) {
+      //   p.pointSprites.push(new p5Sprite(spritePurple, random(p.width), -i * 100, .5, 0, 5));
+      //   p.pointSprites[i].addAnimation("breathe", 0, 20);
+      // } else if (i % 2 === 1) {
+      //   p.pointSprites.push(new p5Sprite(spriteYellow, random(p.width), -i * 100, .5, 0, 5));
+      //   p.pointSprites[i].addAnimation("breathe", 0, 24);
+      // } else {
+      //   p.pointSprites.push(new p5Sprite(spriteRed, random(p.width), -i * 100, .5, 0, 5));
+      //   p.pointSprites[i].addAnimation("breathe", 0, 31);
+      // }
+
       p.pointSprites[i].addAnimation("still", 0, 0);
-      p.pointSprites[i].addAnimation("breathe", 0, 20);
+      p.pointSprites[i].addAnimation("blinky", 0, 2);
+
       p.pointSprites[i].addCollider(20, 20); // little smaller than 32x32
     }
 
     // initialize kill sprites them with random x position and y position incrementing by 300px and velocityY set to 5 (so they fall)
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
       // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
-      p.killSprites.push(new p5Sprite(sprite64, random(p.width), -i * 300, 1, 0, 5));
-      // p.killSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
+      p.killSprites.push(new p5Sprite(sprite64, random(p.width), -random(400 + i * 400, 400 + (i + 1) * 400), 0.7, 0, 5));
       p.killSprites[i].addAnimation("still", 0, 0);
-      p.killSprites[i].addAnimation("explode", 0, 0);
       p.killSprites[i].addCollider(20, 20); // little smaller than 32x32
     }
 
@@ -168,16 +161,16 @@ let pluckGameInstance = function(p) { // p could be any variable name
     p.animationFrame = Math.floor(frameCount / 3);
 
 
-    // // angelabelle: for breakout initialization
-    // for (let i = 0; i < p.breakoutSprites.length; i++) {
-    //   p.breakoutSprites[i].displayAnim("still");
-    // }
+    // angelabelle: for breakout initialization
+    for (let i = 0; i < p.breakoutSprites.length; i++) {
+      p.breakoutSprites[i].displayAnim("still");
+    }
 
     // nove and display point and kill sprites
     for (let i = 0; i < p.pointSprites.length; i++) {
       p.pointSprites[i].moveSprite();
-      // p.pointSprites[i].displayAnim("breathe");
-      p.pointSprites[i].displayAnim("still");
+      p.pointSprites[i].displayAnim("blinky");
+      // p.pointSprites[i].displayAnim("still");
     }
 
     for (let i = 0; i < p.killSprites.length; i++) {
@@ -201,32 +194,26 @@ let pluckGameInstance = function(p) { // p could be any variable name
 
 
     p.player.drawConnectiveTissue(5);
-    // p.player.displayAnim("animated", true);
 
-    if (mouseIsPressed) {
-      // p.player.followMouse(0.1);
-      p.player.displayAnim("still");
-    } else {
-      p.player.displayAnim("still");
-    }
+    p.player.displayAnim("still");
+
 
     // check collision for pointSprites
     // iterate through them backwards in case you want to splice them from array, that way it won't skip one in loop.
     for (let i = p.pointSprites.length - 1; i >= 0; i--) {
       // seems redundant to check for visibility when the collidesWith function also checks for it, but for some reason there is a delay in setting the visibility to false in collision function, dunno! this fixes it so it only fires once instead of 5-15 times
       if (p.player.collidesWith(p.pointSprites[i]) && p.pointSprites[i].visible) {
-        console.log(`points!`);
 
 
         // set flag to display collision (below) & create new collision sprite to display
 
-        // p.collisionSprites.push(new p5Sprite(collisionAnimation_128, 100, 100));
-        // p.colSprIndex = p.collisionSprites.length - 1;
-        // p.collisionSprites[p.colSprIndex].x = p.pointSprites[i].x;
-        // p.collisionSprites[p.colSprIndex].y = p.pointSprites[i].y;
-        // p.collisionSprites[p.colSprIndex].addAnimation("explode", 0, 10);
-        // p.collisionSprites[p.colSprIndex].isPlaying = true;
-        // p.displayCollision = true;
+        p.collisionSprites.push(new p5Sprite(collisionAnimation_128, 100, 100));
+        p.colSprIndex = p.collisionSprites.length - 1;
+        p.collisionSprites[p.colSprIndex].x = p.pointSprites[i].x;
+        p.collisionSprites[p.colSprIndex].y = p.pointSprites[i].y;
+        p.collisionSprites[p.colSprIndex].addAnimation("explode", 0, 10);
+        p.collisionSprites[p.colSprIndex].isPlaying = true;
+        p.displayCollision = true;
 
         p.pointSprites[i].hide();
         // p.pointSprites.splice(i, 1); // if splice from array will need to repopulate it in the restart function
@@ -241,7 +228,6 @@ let pluckGameInstance = function(p) { // p could be any variable name
         if (p.collisionSprites[i].isPlaying) {
           // create a new collision sprite and push it to the array
           p.collisionSprites[i].displayAnim("explode", false);
-          console.log(`collision index ${i} is playing`)
         } else {
           p.collisionSprites.splice(i, 1)
         }
@@ -346,7 +332,7 @@ let pluckGameInstance = function(p) { // p could be any variable name
     p.restartBool = true;
   }
 
-  //create sprite class
+
   //create sprite class
   class p5Sprite {
     constructor(_imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0) {

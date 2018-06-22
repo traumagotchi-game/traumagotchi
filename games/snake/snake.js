@@ -29,16 +29,9 @@ let snakeGameInstance = function(p) { // p could be any variable name
   p.stage = 'waiting';
   p.score = 0;
 
-  // // variable for player
-  // p.player;
-  //
-  // // arrays to store other sprites
-  // p.pointSprites = [];
-  // p.killSprites = [];
-  // p.breakoutSprites = [];
-  // p.collisionSprites = [];
-  // p.colSprIndex;
-  // p.displayCollision = false;
+  p.collisionSprites = [];
+  p.colSprIndex;
+  p.displayCollision = false;
 
 
   p.restartBool = false;
@@ -60,9 +53,13 @@ let snakeGameInstance = function(p) { // p could be any variable name
     p.stroke(255);
     p.strokeWeight(10);
 
-    p.fruit = new p5Sprite(sprite32, 220, 120, 1);
-    p.fruit.addCollider(32, 32);
+    p.fruit = new p5Sprite(fruit, 220, 120, 0.5);
+    // p.fruit = new p5Sprite(gemSparkle_128, 220, 120, .5);
+    // p.fruit = new p5Sprite(sprite32, 220, 120, 1);
+    // p.fruit.addCollider(32, 32);
+    p.fruit.addCollider(64, 64);
     p.fruit.addAnimation("still", 0, 0);
+    p.fruit.addAnimation("breathe", 0, 3);
 
 
     p.up = new p5Sprite(arrowUp, 500, 375, 1);
@@ -83,7 +80,7 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
     updateFruitCoordinates();
 
-    for (let i =0; i < numSegments; i++) {
+    for (let i = 0; i < numSegments; i++) {
       xCor.push(xStart + (i * diff));
       yCor.push(yStart);
     }
@@ -93,54 +90,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
     p.canvas.mouseClicked(localMouseClicked);
 
     p.lastAnimationFrame = p.animationFrame;
-
-
-    // // REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
-    // p.player = new p5Sprite(playerImgs, p.width / 2, p.height / 2, 1);
-
-    // Angelabelle: for breakout, initialize sprite at bottom
-    // p.player = new p5Sprite(sprite32x100_purple, p.width / 2, p.height - 50, 1);
-    // console.log(p.player.imgArray[0].width) // SOOOO weird this is not registering actual width sooner...
-
-    // // add collider if you want it to be different than the default image size
-    // // good to make it a little smaller so people enjoy game play more ;-=)
-    // // enable debug variable to see collider outline
-    // p.player.addCollider(30, 20);
-    // p.player.addAnimation("still", 0, 0);
-    // p.player.addAnimation("animated", 0, 5);
-    // // console.log(p.player);
-    // // console.log(p.player)
-
-    // p.collisionSprites = new p5Sprite(collisionAnimation_128, 100, 100);
-    // p.collisionSprites.addAnimation("explode", 0, 10);
-
-    // // these are from breakout game but might make them clouds or something for this game
-    // for (let i = 0; i < 5; i++) {
-    //   // initialize 5 sprites for top of breakout board. Their x positions acount for space inbetween (100 empty pixels / 6) and width of each of them. Their x y positions are centered bc image mode is center
-    //   p.breakoutSprites.push(new p5Sprite(sprite32x100_purple, (i + 1) * 100 / 6 + (i * 100) + 50, 20, 1));
-    //   p.breakoutSprites[i].addAnimation("still", 0, 0);
-    //
-    // }
-    //
-    // // initialize point sprites them with random x position and y position incrementing by 100px and velocityY set to 5 (so they fall)
-    // for (let i = 0; i < 16; i++) {
-    //   // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
-    //   p.pointSprites.push(new p5Sprite(spritePurple, random(p.width), -i * 100, 0.3, 0, 5));
-    //   // p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
-    //   p.pointSprites[i].addAnimation("still", 0, 0);
-    //   p.pointSprites[i].addAnimation("breathe", 0, 20);
-    //   p.pointSprites[i].addCollider(20, 20); // little smaller than 32x32
-    // }
-    //
-    // // initialize kill sprites them with random x position and y position incrementing by 300px and velocityY set to 5 (so they fall)
-    // for (let i = 0; i < 5; i++) {
-    //   // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
-    //   p.killSprites.push(new p5Sprite(sprite64, random(p.width), -i * 300, 3 / 4, 0, 5));
-    //   // p.killSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
-    //   p.killSprites[i].addAnimation("still", 0, 0);
-    //   p.killSprites[i].addAnimation("explode", 0, 0);
-    //   p.killSprites[i].addCollider(20, 20); // little smaller than 32x32
-    // }
 
 
   };
@@ -165,9 +114,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
         break;
       case 'gameOver':
         gameOver();
-        break;
-      case 'youWon':
-        youWon();
         break;
       default:
         break;
@@ -237,8 +183,7 @@ let snakeGameInstance = function(p) { // p could be any variable name
     return false;
   }
 
-  function localMouseOver()
-  {
+  function localMouseOver() {
     if (isOverUpArrow) {
       if (direction != 'down') {
         direction = 'up';
@@ -270,10 +215,9 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
   // everything from draw() loop in example
   function play() {
-    // clear to have a clear background, if background is drawn on another canvas layer
     p.clear();
     // p.background(0);
-    p.stroke(0,255,0);
+    p.stroke(0, 255, 0);
 
 
     //*
@@ -281,14 +225,10 @@ let snakeGameInstance = function(p) { // p could be any variable name
     p.animationFrame = Math.floor(frameCount / 3);
 
 
-    for (let i =0; i < numSegments - 1; i++) {
+    for (let i = 0; i < numSegments - 1; i++) {
       p.line(xCor[i], yCor[i], xCor[i + 1], yCor[i + 1]);
     }
 
-    // checkIfOverUpArrow();
-    // checkIfOverDownArrow();
-    // checkIfOverLeftArrow();
-    // checkIfOverRightArrow();
     clearPriorArrows();
     checkArrows();
     updateSnakeCoordinates();
@@ -316,79 +256,10 @@ let snakeGameInstance = function(p) { // p could be any variable name
       }
     }
 
-    // // angelabelle: for breakout initialization
-    // for (let i = 0; i < p.breakoutSprites.length; i++) {
-    //   p.breakoutSprites[i].displayAnim("still");
-    // }
-    //
-    // // nove and display point and kill sprites
-    // for (let i = 0; i < p.pointSprites.length; i++) {
-    //   p.pointSprites[i].moveSprite();
-    //   p.pointSprites[i].displayAnim("breathe");
-    //   // p.pointSprites[i].displayAnim("still");
-    // }
-    //
-    // for (let i = 0; i < p.killSprites.length; i++) {
-    //   p.killSprites[i].moveSprite();
-    //   p.killSprites[i].displayAnim("still");
-    // }
-    //
-
-
-    // p.player.drawConnectiveTissue(5);
-    // // p.player.displayAnim("animated", true);
-    //
-    //
-    // // check collision for pointSprites
-    // // iterate through them backwards in case you want to splice them from array, that way it won't skip one in loop.
-    // for (let i = p.pointSprites.length - 1; i >= 0; i--) {
-    //   // seems redundant to check for visibility when the collidesWith function also checks for it, but for some reason there is a delay in setting the visibility to false in collision function, dunno! this fixes it so it only fires once instead of 5-15 times
-    //   if (p.player.collidesWith(p.pointSprites[i]) && p.pointSprites[i].visible) {
-    //     console.log(`points!`);
-    //
-    //
-    //     // set flag to display collision (below) & create new collision sprite to display
-    //
-    //     p.collisionSprites.push(new p5Sprite(collisionAnimation_128, 100, 100));
-    //     p.colSprIndex = p.collisionSprites.length - 1;
-    //     p.collisionSprites[p.colSprIndex].x = p.pointSprites[i].x;
-    //     p.collisionSprites[p.colSprIndex].y = p.pointSprites[i].y;
-    //     p.collisionSprites[p.colSprIndex].addAnimation("explode", 0, 10);
-    //     p.collisionSprites[p.colSprIndex].isPlaying = true;
-    //     p.displayCollision = true;
-    //
-    //     p.pointSprites[i].hide();
-    //     // p.pointSprites.splice(i, 1); // if splice from array will need to repopulate it in the restart function
-    //     p.score += 10;
-    //   }
-    // }
-    //
-    //
-    // if (p.displayCollision) {
-    //   // if (p.displayCollision && p.collisionSprites[p.colSprIndex]) {
-    //   for (let i = p.collisionSprites.length - 1; i >= 0; i--) {
-    //     if (p.collisionSprites[i].isPlaying) {
-    //       // create a new collision sprite and push it to the array
-    //       p.collisionSprites[i].displayAnim("explode", false);
-    //       console.log(`collision index ${i} is playing`)
-    //     } else {
-    //       p.collisionSprites.splice(i, 1)
-    //     }
-    //   }
-    // }
-    // // check collision for kill sprites
-    // // iterate through them backwards in case want to splice them from array, that way it won't skip one in loop
-    // for (let i = p.killSprites.length - 1; i >= 0; i--) {
-    //
-    //   if (p.player.collidesWith(p.killSprites[i]) == true) {
-    //     console.log(`collision!`)
-    //     p.killSprites[i].hide();
-    //     p.stage = 'gameOver';
-    //   }
-    // }
 
     p.fruit.moveSprite();
-    p.fruit.displayAnim("still");
+    p.fruit.displayAnim("breathe");
+    // p.fruit.displayAnim("sparkle");
 
     p.up.moveSprite();
     p.up.displayAnim("still");
@@ -402,6 +273,21 @@ let snakeGameInstance = function(p) { // p could be any variable name
     p.left.moveSprite();
     p.left.displayAnim("still");
 
+
+    if (p.displayCollision) {
+      // if (p.displayCollision && p.collisionSprites[p.colSprIndex]) {
+      for (let i = p.collisionSprites.length - 1; i >= 0; i--) {
+        if (p.collisionSprites[i].isPlaying) {
+          // create a new collision sprite and push it to the array
+          p.collisionSprites[i].displayAnim("explode", false);
+        } else {
+          p.collisionSprites.splice(i, 1)
+        }
+      }
+    }
+
+
+
     pointsRunningTotal.innerHTML = `${p.score}`;
 
     //*
@@ -410,7 +296,7 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
   function updateSnakeCoordinates() {
 
-    for (let i =0; i < numSegments - 1; i++) {
+    for (let i = 0; i < numSegments - 1; i++) {
       xCor[i] = xCor[i + 1];
       yCor[i] = yCor[i + 1];
     }
@@ -459,7 +345,7 @@ let snakeGameInstance = function(p) { // p could be any variable name
   function checkSnakeCollision() {
     var snakeHeadX = xCor[xCor.length - 1];
     var snakeHeadY = yCor[yCor.length - 1];
-    for (let i =0; i < xCor.length - 1; i++) {
+    for (let i = 0; i < xCor.length - 1; i++) {
       if (xCor[i] === snakeHeadX && yCor[i] === snakeHeadY) {
         return true;
       }
@@ -474,22 +360,32 @@ let snakeGameInstance = function(p) { // p could be any variable name
   function checkForFruit() {
 
     //this draws the fruit
-    p.stroke(0,255,0);
+    p.stroke(0, 255, 0);
     // p.rect(p.fruit.x, p.fruit.y, 20, 20);
     //console.log("" + xFruit + " " + yFruit);
     //if (dist(mouseX, mouseY, xUp, yUp) <= 20){
     //if (xCor[xCor.length - 1] === xFruit && yCor[yCor.length - 1] === yFruit) {
-    if (dist(xCor[xCor.length - 1], yCor[yCor.length - 1], p.fruit.x, p.fruit.y) <= 20 ) {
-      //var prevScore = parseInt(scoreElem.html().substring(8));
-      // scoreElem.html('Score = ' + (prevScore + 1));
+    if (dist(xCor[xCor.length - 1], yCor[yCor.length - 1], p.fruit.x, p.fruit.y) <= 20) {
+
       p.score += 30;
 
+      // display collision
+      // set flag to display collision (below) & create new collision sprite to display
+
+      p.collisionSprites.push(new p5Sprite(confettiPop_green_128, 100, 100));
+      p.colSprIndex = p.collisionSprites.length - 1;
+      p.collisionSprites[p.colSprIndex].x = p.fruit.x;
+      p.collisionSprites[p.colSprIndex].y = p.fruit.y;
+      p.collisionSprites[p.colSprIndex].addAnimation("explode", 0, 6);
+      p.collisionSprites[p.colSprIndex].isPlaying = true;
+      p.displayCollision = true;
+
+
       //increase the snake's length by 20 points
-      for(let i = 0; i < 20; i++)
-      {
+      for (let i = 0; i < 20; i++) {
         xCor.unshift(xCor[0]);
         yCor.unshift(yCor[0]);
-      //numSegments++;
+        //numSegments++;
         numSegments = numSegments + 1;
       }
       //numSegments += 10;
@@ -506,36 +402,14 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
     p.fruit.x = floor(random(10, (p.width - 100) / 10)) * 10;
     p.fruit.y = floor(random(10, (p.height - 100) / 10)) * 10;
-    //xFruit = floor(random(25, 625));
-    //yFruit = floor(random(25, 425));
+
   }
 
   function gameOver() {
-    // clear to have a clear background, if background is drawn on another canvas layer
+
     p.clear();
-    // p.background(0);
+
     drawGameOverBGBool = true;
-
-    // p.context.font = "60px Verdana";
-    // p.context.fillStyle = "#ACD02D";
-    // let str = "GAME OVER";
-    // let txt = p.context.measureText(str);
-    // let left = (p.canvas.width - txt.width) / 2;
-    // let top = p.canvas.height / 2;
-    // p.context.fillText("GAME OVER", left, top);
-
-    restart();
-  }
-
-  function youWon() {
-    // p.context.font = "60px Verdana";
-    // p.context.fillStyle = "#ACD02D";
-    // let str = "YOU WON";
-    // let txt = p.context.measureText(str);
-    // let left = (p.canvas.width - txt.width) / 2;
-    // let top = p.canvas.height / 2;
-    // p.context.fillText("YOU WON", left, top);
-
 
     restart();
   }
@@ -544,22 +418,20 @@ let snakeGameInstance = function(p) { // p could be any variable name
     // note: changes made here have to also match the initial positions when sprites are created in setup.
 
     if (p.restartBool == false) {
-      // increment levels here
-      // could increment gravity/velocity here to make game harder over multiple plays ;-)
 
       // increment level (6 levels)
       if (p.level <= 5) {
         p.level += 1;
+        // diff += 1
       } else {
         p.level = 0;
+        // diff = 3;
       }
+      // this math keeps it at same difficulty twice
       diff = 1;
       diff *= p.level + 1;
-      // reset variables
-      // p.player.x = p.width / 2;
-      // p.player.y = p.height / 2;
-      // p.player.velocityX = 0;
-      // p.player.velocityY = 0;
+
+
 
       //reset variables
       numSegments = 60; //Change this to make the snake longer 10 was the default
@@ -580,42 +452,16 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
       updateFruitCoordinates();
 
-      for (let i =0; i < numSegments; i++) {
+      for (let i = 0; i < numSegments; i++) {
         xCor.push(xStart + (i * diff));
         yCor.push(yStart);
       }
 
-      // reset point sprites
-      // for (let i = 0; i < p.pointSprites.length; i++) {
-      //   p.pointSprites[i].x = random(p.width);
-      //   p.pointSprites[i].y = -i * 100;
-      //   // sprites get faster with each play turn, up to 10
-      //   if (p.pointSprites[i].velocityY <= 10) {
-      //     p.pointSprites[i].velocityY += 1;
-      //   } else {
-      //     p.pointSprites.velocityY = 5;
-      //   }
-      //   p.pointSprites[i].show();
-      // }
-
-      // reset kill sprites
-      //   for (let i = 0; i < p.killSprites.length; i++) {
-      //     p.killSprites[i].x = random(p.width);
-      //     p.killSprites[i].y = -i * 300;
-      //     // sprites get faster with each play turn, up to 10
-      //     if (p.killSprites[i].velocityY <= 10) {
-      //       p.killSprites[i].velocityY += 1;
-      //     } else {
-      //       p.killSprites.velocityY = 5;
-      //     }
-      //     p.killSprites[i].show();
-      //   }
     }
     p.restartBool = true;
   }
 
-  function clearPriorArrows()
-  {
+  function clearPriorArrows() {
     isOverUpArrow = false;
     isOverRightArrow = false;
     isOverDownArrow = false;
@@ -633,24 +479,15 @@ let snakeGameInstance = function(p) { // p could be any variable name
     p.up.y = 375;
 
     // if the distance is less than the circle's radius
-    if (dist(mouseX, mouseY, p.up.x, p.up.y) <= 20){
+    if (dist(mouseX, mouseY, p.up.x, p.up.y) <= 20) {
       isOverUpArrow = true;
-    } else if (dist(mouseX, mouseY, p.down.x, p.down.y) <= 20){
+    } else if (dist(mouseX, mouseY, p.down.x, p.down.y) <= 20) {
       isOverDownArrow = true;
-    } else if(dist(mouseX, mouseY, p.left.x, p.left.y) <= 20){
+    } else if (dist(mouseX, mouseY, p.left.x, p.left.y) <= 20) {
       isOverLeftArrow = true;
-    } else if(dist(mouseX, mouseY, p.right.x, p.right.y) <= 20){
+    } else if (dist(mouseX, mouseY, p.right.x, p.right.y) <= 20) {
       isOverRightArrow = true;
     }
-
-    // p.ellipseMode(CENTER);
-    // p.stroke(0);
-    // p.strokeWeight(5);
-    //
-    // p.ellipse(p.right.x, p.right.y, 40, 40);
-    // p.ellipse(p.left.x, p.left.y, 40, 40);
-    // p.ellipse(p.up.x, p.up.y, 40, 40);
-    // p.ellipse(p.down.x, p.down.y, 40, 40);
   }
 
   function checkIfOverUpArrow() {
@@ -765,7 +602,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
 
 
-  //create sprite class
   //create sprite class
   class p5Sprite {
     constructor(_imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0) {

@@ -138,13 +138,11 @@ let cameraColorAmbient = [71, 71, 71];
 
 // sprites
 let playerImgs = [];
-let spritePurple = [];
-let spritePurpleLg = [];
-let spriteBlueSpike = [];
-let spriteBlue = [];
-let spritePinkGreenSpike = [];
-let spriteRedTall = [];
-let spriteYellowLong = [];
+let fruit = [];
+
+let collisionAnimation_128 = [];
+let confettiPop_pink_128 = [];
+let confettiPop_green_128 = [];
 
 let sprite32 = [];
 let sprite64 = [];
@@ -155,7 +153,23 @@ let arrowRight = [];
 let arrowLeft = [];
 let sprite32x100_purple = [];
 let sprite32x100_yellow = [];
-let collisionAnimation_128 = [];
+
+let clouds = [];
+let ball = [];
+let slimePlatform = [];
+let schmupper = [];
+let schmupThings = [];
+let plucker = [];
+let charms = [];
+
+// backgrounds
+let gameBG_0;
+let gameBG_1;
+let gameBG_2;
+let gameBG_3;
+let gameBG_4;
+let gameBG_texture;
+let gameBG_textureSm;
 
 // action images
 let actionsHourlySinceLast = '';
@@ -224,9 +238,14 @@ let strangeThingImgsIndex = 0;
 let tearsLikeNailsImgs = [];
 let tearsLikeNailsImgsIndex = 0;
 
-
+let song;
 
 function preload() {
+
+  // L O A D A U D I O
+  // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3');
+
+
 
   // L O A D S P R I T E S
   // have to manually set numberFrames
@@ -234,36 +253,48 @@ function preload() {
     playerImgs[i] = loadImage(`assets/sprites/slimerDrip/slimerDrip_${i}.png`);
   }
 
-  for (let i = 0; i <= 20; i++) {
-    spritePurple[i] = loadImage(`assets/sprites/ancestralTrauma/purple_breathe_128/purple_${i}.png`);
+  for (let i = 0; i <= 3; i++) {
+    fruit[i] = loadImage(`assets/sprites/fruit/fruit_${i}.png`);
   }
 
-  for (let i = 0; i <= 20; i++) {
-    spritePurpleLg[i] = loadImage(`assets/sprites/ancestralTrauma/purple_breathe_256/purpleLg_${i}.png`);
+  for (let i = 0; i <= 7; i++) {
+    clouds[i] = loadImage(`assets/sprites/clouds/cloud_${i}.png`);
   }
 
-  for (let i = 0; i <= 24; i++) {
-    spriteBlueSpike[i] = loadImage(`assets/sprites/ancestralTrauma/blueSpike_breathe_128/blueSpike_${i}.png`);
+  for (let i = 0; i <= 1; i++) {
+    schmupper[i] = loadImage(`assets/sprites/schmupper/schmupper_${i}.png`);
   }
 
-  for (let i = 0; i <= 24; i++) {
-    spriteBlue[i] = loadImage(`assets/sprites/ancestralTrauma/blue_breathe_128/blue_${i}.png`);
+  for (let i = 0; i <= 2; i++) {
+    schmupThings[i] = loadImage(`assets/sprites/schmupThings/schmupThing_${i}.png`);
   }
 
-  for (let i = 0; i <= 24; i++) {
-    spritePinkGreenSpike[i] = loadImage(`assets/sprites/ancestralTrauma/pinkGreenSpike_breathe_128/pinkGreenSpike_${i}.png`);
+  for (let i = 0; i <= 1; i++) {
+    plucker[i] = loadImage(`assets/sprites/plucker/plucker_${i}.png`);
   }
 
-  for (let i = 0; i <= 20; i++) {
-    spriteRedTall[i] = loadImage(`assets/sprites/ancestralTrauma/redTall_128x256/redTall_${i}.png`);
+  for (let i = 0; i <= 0; i++) {
+    charms[i] = loadImage(`assets/charms/charm_fourLeafClover.png`);
   }
 
-  for (let i = 0; i <= 20; i++) {
-    spriteYellowLong[i] = loadImage(`assets/sprites/ancestralTrauma/yellowLong_256x128/yellowLong_${i}.png`);
+  for (let i = 0; i <= 5; i++) {
+    ball[i] = loadImage(`assets/sprites/ball/ball_${i}.png`);
+  }
+
+// hm
+  for (let i = 0; i <= 8; i++) {
+    slimePlatform[i] = loadImage(`assets/sprites/slimePlatform/slimePlatform_${i}.png`);
   }
 
   for (let i = 0; i <= 10; i++) {
     collisionAnimation_128[i] = loadImage(`assets/sprites/collisionAnimation_128/collisionAnimation_128_${i}.png`);
+  }
+
+  for (let i = 0; i <= 7; i++) {
+    confettiPop_pink_128[i] = loadImage(`assets/sprites/confettiPop_pink_128/confettiPop_pink_${i}.png`);
+  }
+  for (let i = 0; i <= 6; i++) {
+    confettiPop_green_128[i] = loadImage(`assets/sprites/confettiPop_green_128/confettiPop_green_${i}.png`);
   }
 
   sprite32[0] = loadImage(`assets/sprites/placeholders/32x32_0.png`)
@@ -277,6 +308,15 @@ function preload() {
   arrowRight[0] = loadImage(`assets/sprites/placeholders/arrowRight.png`)
   arrowLeft[0] = loadImage(`assets/sprites/placeholders/arrowLeft.png`)
 
+  // L O A D B G
+
+  gameBG_0 = loadImage(`assets/backgrounds/gameBG_0.png`)
+  gameBG_1 = loadImage(`assets/backgrounds/gameBG_1.png`)
+  gameBG_2 = loadImage(`assets/backgrounds/gameBG_2.png`)
+  gameBG_3 = loadImage(`assets/backgrounds/gameBG_3.png`)
+  gameBG_4 = loadImage(`assets/backgrounds/gameBG_4.png`)
+  gameBG_texture = loadImage(`assets/backgrounds/gameBG_texture.png`)
+  gameBG_textureSm = loadImage(`assets/backgrounds/gameBG_textureSm.png`)
 
   // L O A D A C T I O N I M A G E S
   for (let i = 0; i <= 4; i++) {
@@ -470,8 +510,12 @@ function preload() {
 };
 
 function setup() {
-  // colorMode(HSB, 360); // Use HSB with scale of 0-255
-  // colorMode(RGB, 255);
+
+  // if avoiding preload, load with callback. only thing is that it doesn't buffer well on slow connections, so throws everthing off.
+  // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3', playBGmusic);
+
+  // song.loop();
+  // playBGmusic();
 
   // use canvasDiv size to set size of p5 canvas
   canvasDiv = document.querySelector("#canvasDiv");
@@ -860,6 +904,12 @@ function draw() {
 
 }
 
+// function playBGmusic() {
+//   if (!song.isPlaying()) {
+//     song.play();
+//   }
+// }
+
 function displayLoginScreen() {
   background(180, 360, 25);
 
@@ -891,38 +941,54 @@ function displayMainCanvas() {
 }
 
 function login() {
-  keys.forEach(function(key) {
-    // console.log(`key is ${key}, input name is ${inputName.value()}, password is ${tgotchiData[key].password}, and password input is ${inputPassword.value()}`)
-    if (key.toUpperCase() === inputName.value().toUpperCase() && tgotchiData[key].password.toUpperCase() === inputPassword.value().toUpperCase()) {
-      userName = key;
-      userData = tgotchiData[key];
+  if (keys) {
+    keys.forEach(function(key) {
+      // console.log(`key is ${key}, input name is ${inputName.value()}, password is ${tgotchiData[key].password}, and password input is ${inputPassword.value()}`)
+      if (key.toUpperCase() === inputName.value().toUpperCase() && tgotchiData[key].password.toUpperCase() === inputPassword.value().toUpperCase()) {
+        userName = key;
+        userData = tgotchiData[key];
+      }
+    });
+
+    if (userName) {
+
+
+      // save userData as JSON
+      // let json = JSON.stringify(userData);
+      // saveJSON(json, 'slimer.json');
+
+      // load JSON as userData
+      // loadJSON(`JSON/${fileName}.json`, callback);
+      // userData = JSON.parse(jsonFile);
+
+
+      loginStatus.innerHTML = `logged in as ${userName}`;
+      pointStats.innerHTML = `${userData.points} points`;
+      pointStats.style.display = 'block';
+
+      loginLandingPage = true;
+      state = 'care';
+
+
+      lastLoginTime = userData.timeStamp[userData.timeStamp.length - 1];
+      currentLoginTime = Date.now();
+      userData.timeStamp.push(currentLoginTime);
+      firstLoginTime = userData.timeStamp[0];
+
+      executeAction = 'initialLoginCareMenu';
+      // this rewrites ALL the data
+      pushMoreData(userData);
+      //not sure how to rewrite...
+      // rewriteData(userData);
+
+      loginMenu.remove();
+    } else {
+      // bug: createPOnce is for drawing DOM elements in draw loop: need to set flag so this doesn't appear over and over, or create DOM element that toggles off/on
+      createPOnce(`login error.`, "loginMenu")
     }
-  });
-
-  if (userName) {
-    loginStatus.innerHTML = `logged in as ${userName}`;
-    pointStats.innerHTML = `${userData.points} points`;
-    pointStats.style.display = 'block';
-
-    loginLandingPage = true;
-    state = 'care';
-
-
-    lastLoginTime = userData.timeStamp[userData.timeStamp.length - 1];
-    currentLoginTime = Date.now();
-    userData.timeStamp.push(currentLoginTime);
-    firstLoginTime = userData.timeStamp[0];
-
-    executeAction = 'initialLoginCareMenu';
-    // this rewrites ALL the data
-    pushMoreData(userData);
-    //not sure how to rewrite...
-    // rewriteData(userData);
-
-    loginMenu.remove();
   } else {
-    // bug: createPOnce is for drawing DOM elements in draw loop: need to set flag so this doesn't appear over and over, or create DOM element that toggles off/on
-    createPOnce(`login error.`, "loginMenu")
+    // Lark: make login error here
+    createPOnce(`slow connection... </br> wait a sec </br> or try reloading`, "loginMenu")
   }
 }
 

@@ -4,7 +4,7 @@ function selectGames() {
   // recursive calls to find random 3 in games array
   // FOR WORKING ON A SPECIFIC GAME, INITIALIZE IT HERE (COMMENT OUT RANDOM)
 
-  // game1 = 'collapse';
+  // game1 = 'wackymole';
   game1 = random(games);
   findGame2();
 
@@ -186,7 +186,7 @@ function initPluckGame() {
 
   drawIntroBGBool = true;
 
-  displayGameTitle(`PLUCK`, `Instructions: Grab red luck-things, avoid purple bad-things`);
+  displayGameTitle(`PLUCK`, `Instructions: Grab blinky luck-things, avoid purple bad-things`);
 
   playButton.addEventListener("click", startTimer);
 
@@ -233,7 +233,7 @@ function initSnakeGame() {
 
   drawIntroBGBool = true;
 
-  displayGameTitle(`SNAKE`, `Instructions: Collect fruit. Mouse-over arrows to move.`);
+  displayGameTitle(`SNAKE`, `Instructions: Mouse-over arrows to move.`);
 
   playButton.addEventListener("click", startTimer);
 
@@ -275,7 +275,7 @@ function initSchmupGame() {
   // hide care menu with state change
   state = 'game';
 
-  displayGameTitle(`SCHMUP`, `Instructions: Shoot'em up`);
+  displayGameTitle(`SCHMUP`, `Instructions: Press mouse to launch pink-defense`);
 
   playButton.addEventListener("click", startTimer);
 
@@ -321,7 +321,7 @@ function initWackymoleGame() {
   // hide care menu with state change
   state = 'game';
   drawIntroBGBool = true;
-  displayGameTitle(`WACKYMOLE`, `Instructions: Whack`);
+  displayGameTitle(`WACKYMOLE`, `Instructions: Click to wacky'em`);
 
   playButton.addEventListener("click", startTimer);
 
