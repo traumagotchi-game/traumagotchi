@@ -107,7 +107,7 @@ let p5TemplateInstance = function(p) { // p could be any variable name
 
 
     // REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
-    p.player = new p5Sprite(playerImgs, p.width / 2, p.height / 2, .5);
+    p.player = new p5Sprite(sprite32, p.width / 2, p.height / 2, .5);
 
     // Angelabelle: for breakout, initialize sprite at bottom
     // p.player = new p5Sprite(sprite32x100_purple, p.width / 2, p.height - 50, 1);
