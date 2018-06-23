@@ -977,7 +977,7 @@ function playBGmusic() {
 
       if (!song_universalBass.isPlaying()) {
         // set volumes here, since it is after buffering and only triggers every-so-often
-        song_B2.setVolume(0.15);
+        song_B2.setVolume(0.1);
         song_universalBass.setVolume(0.3);
         sound_click.setVolume(0.4);
         sound_beep1.setVolume(0.4);
