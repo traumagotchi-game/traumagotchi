@@ -732,28 +732,24 @@ function setup() {
   choice3 = document.querySelector("#menuItem3");
 
   choice0.addEventListener("click", () => {
-    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[0].nextKey;
     tree[currentIndex].choices[0].action();
     nextMenu();
   })
   choice1.addEventListener("click", () => {
-    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[1].nextKey;
     tree[currentIndex].choices[1].action();
     nextMenu();
   })
   choice2.addEventListener("click", () => {
-    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[2].nextKey;
     tree[currentIndex].choices[2].action();
     nextMenu();
   })
   choice3.addEventListener("click", () => {
-    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[3].nextKey;
     tree[currentIndex].choices[3].action();
@@ -1042,7 +1038,7 @@ function displayMainCanvas() {
 }
 
 function login() {
-  if (keys) {
+  if (keys && sound_click.buffer) {
     keys.forEach(function(key) {
       // console.log(`key is ${key}, input name is ${inputName.value()}, password is ${tgotchiData[key].password}, and password input is ${inputPassword.value()}`)
       if (key.toUpperCase() === inputName.value().toUpperCase() && tgotchiData[key].password.toUpperCase() === inputPassword.value().toUpperCase()) {
