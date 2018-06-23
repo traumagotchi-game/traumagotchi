@@ -85,9 +85,9 @@ let snakeGameInstance = function(p) { // p could be any variable name
       yCor.push(yStart);
     }
 
-    p.canvas.mousePressed(localMousePressed);
+    // p.canvas.mousePressed(localMousePressed);
     // p.canvas.localMouseOver(localMouseOver);
-    p.canvas.mouseClicked(localMouseClicked);
+    // p.canvas.mouseClicked(localMouseClicked);
 
     p.lastAnimationFrame = p.animationFrame;
 
@@ -121,91 +121,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
   };
 
 
-  // code for mousePressed on THIS canvas
-  function localMousePressed() {
-
-
-    return false;
-  }
-
-  // code for mouseClicked on THIS canvas
-  // this fires only once after the mouse is pressed - not really seeing it behave differently rn tho....
-  function localMouseClicked() {
-    // if statements to check what qua¬drant it is pressed in
-
-    // if (pressed up){
-    //   direction =
-    // }
-    // switch (keyCode) {
-    //     case 74:
-    //       if (direction != 'right') {
-    //         direction = 'left';
-    //       }
-    //       break;
-    //     case 76:
-    //       if (direction != 'left') {
-    //         direction = 'right';
-    //       }
-    //       break;
-    //     case 73:
-    //       if (direction != 'down') {
-    //         direction = 'up';
-    //       }
-    //       break;
-    //     case 75:
-    //       if (direction != 'up') {
-    //         direction = 'down';
-    //       }
-    //       break;
-    //   }
-    //
-    // return false;
-    if (isOverUpArrow) {
-      if (direction != 'down') {
-        direction = 'up';
-      }
-    }
-    if (isOverDownArrow) {
-      if (direction != 'up') {
-        direction = 'down';
-      }
-    }
-    if (isOverLeftArrow) {
-      if (direction != 'right') {
-        direction = 'left';
-      }
-    }
-    if (isOverRightArrow) {
-      if (direction != 'left') {
-        direction = 'right';
-      }
-    }
-    return false;
-  }
-
-  function localMouseOver() {
-    if (isOverUpArrow) {
-      if (direction != 'down') {
-        direction = 'up';
-      }
-    }
-    if (isOverDownArrow) {
-      if (direction != 'up') {
-        direction = 'down';
-      }
-    }
-    if (isOverLeftArrow) {
-      if (direction != 'right') {
-        direction = 'left';
-      }
-    }
-    if (isOverRightArrow) {
-      if (direction != 'left') {
-        direction = 'right';
-      }
-    }
-  }
-
   function intro() {
     // clear to have a clear background, if background is drawn on another canvas layer
     p.clear();
@@ -237,21 +152,46 @@ let snakeGameInstance = function(p) { // p could be any variable name
 
     if (isOverUpArrow) {
       if (direction != 'down') {
+        if (!sound_snake_1.isPlaying()) {
+          sound_snake_0.stop();
+          sound_snake_1.loop();
+          console.log(`sound not playing so loop()`)
+          // sound_snake_1.loop();
+        }
         direction = 'up';
       }
     }
     if (isOverDownArrow) {
       if (direction != 'up') {
+        if (!sound_snake_1.isPlaying()) {
+          console.log(`sound not playing so loop & play`)
+          // sound_snake_1.loop();
+          sound_snake_0.stop();
+          sound_snake_1.loop();
+        };
         direction = 'down';
       }
     }
     if (isOverLeftArrow) {
       if (direction != 'right') {
-        direction = 'left';
+        if (!sound_snake_0.isPlaying()) {
+          sound_snake_1.stop();
+          sound_snake_0.loop();
+          console.log(`not is playing so play`)
+        }
+        if (direction != 'right') {
+          direction = 'left';
+        }
       }
     }
     if (isOverRightArrow) {
+      // sound_beep1.loop();
       if (direction != 'left') {
+        if (!sound_snake_0.isPlaying()) {
+          sound_snake_1.stop();
+          sound_snake_0.loop();
+          console.log(`not is playing so play`)
+        }
         direction = 'right';
       }
     }
@@ -331,9 +271,7 @@ let snakeGameInstance = function(p) { // p could be any variable name
       yCor[yCor.length - 1] > height ||
       yCor[yCor.length - 1] < 0 ||
       checkSnakeCollision()) {
-      //noLoop();
-      //var scoreVal = parseInt(scoreElem.html().substring(8));
-      //scoreElem.html('Game ended! Your score was : ' + scoreVal);
+      sound_fizzDown_sad.play();
       p.stage = 'gameOver';
     }
   }
@@ -367,6 +305,7 @@ let snakeGameInstance = function(p) { // p could be any variable name
     //if (xCor[xCor.length - 1] === xFruit && yCor[yCor.length - 1] === yFruit) {
     if (dist(xCor[xCor.length - 1], yCor[yCor.length - 1], p.fruit.x, p.fruit.y) <= 20) {
 
+      sound_collide_light.play();
       p.score += 30;
 
       // display collision
@@ -408,6 +347,10 @@ let snakeGameInstance = function(p) { // p could be any variable name
   function gameOver() {
 
     p.clear();
+    sound_snake_1.stop();
+    sound_snake_0.stop();
+
+
 
     drawGameOverBGBool = true;
 
@@ -502,18 +445,11 @@ let snakeGameInstance = function(p) { // p could be any variable name
       isOverUpArrow = false;
     }
 
-    // draw a circle
-    p.ellipseMode(CENTER);
-    p.stroke(0);
-    p.strokeWeight(5);
     if (isOverUpArrow == true) {
-      p.fill(100);
       p.cursor(HAND);
     } else {
-      p.fill(200);
       p.cursor(ARROW);
     }
-    p.ellipse(500, 375, 40, 40);
   }
 
 
@@ -530,18 +466,11 @@ let snakeGameInstance = function(p) { // p could be any variable name
       isOverDownArrow = false;
     }
 
-    // draw a circle
-    p.ellipseMode(CENTER);
-    p.stroke(0);
-    p.strokeWeight(5);
     if (isOverDownArrow == true) {
-      p.fill(100);
       p.cursor(HAND);
     } else {
-      p.fill(200);
       p.cursor(ARROW);
     }
-    p.ellipse(500, 425, 40, 40);
   }
 
 
@@ -558,18 +487,11 @@ let snakeGameInstance = function(p) { // p could be any variable name
       isOverLeftArrow = false;
     }
 
-    // draw a circle
-    p.ellipseMode(CENTER);
-    p.stroke(0);
-    p.strokeWeight(5);
     if (isOverLeftArrow == true) {
-      p.fill(100);
       p.cursor(HAND);
     } else {
-      p.fill(200);
       p.cursor(ARROW);
     }
-    p.ellipse(450, 400, 40, 40);
   }
 
 
@@ -586,18 +508,11 @@ let snakeGameInstance = function(p) { // p could be any variable name
       isOverRightArrow = false;
     }
 
-    // draw a circle
-    p.ellipseMode(CENTER);
-    p.stroke(0);
-    p.strokeWeight(5);
     if (isOverRightArrow == true) {
-      p.fill(100);
       p.cursor(HAND);
     } else {
-      p.fill(200);
       p.cursor(ARROW);
     }
-    p.ellipse(550, 400, 40, 40);
   }
 
 
@@ -868,8 +783,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
       for (let i = 3; i < _number; i++) {
         p.line(mouseX, mouseY, p.player.x + p.player.width / i, p.player.y + p.player.height / i);
         p.line(mouseX, mouseY, p.player.x - p.player.width / i, p.player.y - p.player.height / i);
-        // p.line(mouseX, mouseY, p.player.x + 10 * i, p.player.y + 10 * i);
-        // p.line(mouseX, mouseY, p.player.x - 10 * i, p.player.y - 10 * i);
       }
       p.strokeWeight(0);
     }

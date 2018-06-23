@@ -206,6 +206,7 @@ let pluckGameInstance = function(p) { // p could be any variable name
 
 
         // set flag to display collision (below) & create new collision sprite to display
+        sound_thud2.play();
 
         p.collisionSprites.push(new p5Sprite(collisionAnimation_128, 100, 100));
         p.colSprIndex = p.collisionSprites.length - 1;
@@ -223,6 +224,7 @@ let pluckGameInstance = function(p) { // p could be any variable name
 
 
     if (p.displayCollision) {
+
       // if (p.displayCollision && p.collisionSprites[p.colSprIndex]) {
       for (let i = p.collisionSprites.length - 1; i >= 0; i--) {
         if (p.collisionSprites[i].isPlaying) {
@@ -238,7 +240,8 @@ let pluckGameInstance = function(p) { // p could be any variable name
     for (let i = p.killSprites.length - 1; i >= 0; i--) {
 
       if (p.player.collidesWith(p.killSprites[i]) == true) {
-        console.log(`collision!`)
+        sound_thud1.play();
+        sound_fizzDown_sad.play();
         p.killSprites[i].hide();
         p.stage = 'gameOver';
       }

@@ -690,6 +690,7 @@ function congratsAlert(_type, _numberPoints) {
 
 // functions for key eat_00
 function chortle() {
+  
   writeToConsoleBool = true;
   writeConsoleText(`chortle!!!`);
 

@@ -107,17 +107,23 @@ let userName;
 let userData;
 
 let song;
+let sound_click;
+let sound_fizzDown_hiPitch;
 
-// function preload() {
-//   // L O A D A U D I O
-//   song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3');
-//
-// }
+function preload() {
+  // L O A D A U D I O
+  song = loadSound('assets/audio/music/EagleInk_Aja_loop.mp3');
+  sound_click = loadSound('assets/audio/sfx/click.mp3');
+  sound_fizzDown_hiPitch = loadSound('assets/audio/sfx/fizzDown_hiPitch.mp3');
+}
 
 function setup() {
 
-  // song.loop();
-  // playBGmusic();
+  song.loop();
+  song.setVolume(0.3);
+  sound_click.setVolume(0.4);
+  sound_fizzDown_hiPitch.setVolume(0.2);
+  playBGmusic();
 
   // click.playMode('restart');
 
@@ -145,6 +151,15 @@ function setup() {
   // canvas.style(`left:${canvasDivWidth}px`);
 
   frameRate(30);
+
+  // add sound to buttons
+  let buttons = document.querySelectorAll("button, [type='checkbox'], [type='radio'], select, [href]");
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", function() {
+      sound_click.play();
+    });
+  }
 
   // detect webcam and set webcamUsable bool
   {
@@ -338,11 +353,11 @@ function draw() {
 
 }
 
-// function playBGmusic() {
-//   if (!song.isPlaying()) {
-//     song.play();
-//   }
-// }
+function playBGmusic() {
+  if (!song.isPlaying()) {
+    song.play();
+  }
+}
 
 function cameraControl() {
 

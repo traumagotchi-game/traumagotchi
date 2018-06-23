@@ -27,12 +27,13 @@ function preload() {
   title_mobile.looping = false;
   title_medium.looping = false;
 
-  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3');
+  song = loadSound('assets/audio/music/rooksFeather_traces.mp3');
 }
 
 function setup() {
-  colorMode(HSB, 360); // Use HSB with scale of 0-255
-  // colorMode(RGB, 255); // Use HSB with scale of 0-255
+  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3', playBGmusic);
+  song.setVolume(0.3);
+  song.loop();
 
   // use canvasDiv size to set size of p5 canvas
   canvasDiv = document.querySelector("#canvasDiv");
@@ -44,9 +45,6 @@ function setup() {
   canvas.parent("canvasDiv");
 
 
-  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3', playBGmusic);
-  // song.loop();
-
   // canvas = createCanvas(windowWidth, windowHeight);
   // // canvas.id("canvasFullScreen");
   // canvas.parent("canvasDivResponsive");
@@ -56,7 +54,7 @@ function setup() {
   menu = select("#homePageMenu");
   // menu.position(0, height / 2 + 50);
 
-  //bug !
+  //bug ! created draw loop using window requestAnimationFrame in refresh()
   frameRate(30);
 
   setInterval(animateTitleTimer, 5000);
@@ -67,6 +65,7 @@ function setup() {
     mq.addListener(WidthChange);
     WidthChange(mq);
   }
+
   refresh();
 }
 
@@ -93,9 +92,11 @@ function refresh() {
 //   }
 // }
 
-// function playBGmusic() {
-//     song.play();
-// }
+function playBGmusic() {
+  if (!song.isPlaying()) {
+    song.play();
+  }
+}
 
 function windowResized() {
 

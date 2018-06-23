@@ -16,6 +16,7 @@ function errData(err) {
 
 function saveTgotchiData() {
 
+
   let newName = true;
   keys.forEach(function(key) {
     if (key === inputName.value()) {
@@ -37,6 +38,7 @@ function saveTgotchiData() {
       // }
       // console.log(date);
       userName = inputName.value();
+      sound_fizzDown_hiPitch.play();
       // // create json for data
       userData = {
         // name: inputName.value(),

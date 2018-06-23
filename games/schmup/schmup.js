@@ -73,6 +73,7 @@ let schmupGameInstance = function(p) {
   }
 
   function localMousePressed() {
+    sound_skitter.play();
     p.bullets.push(Bullet({}));
     console.log("PEW!");
     return false;
@@ -143,8 +144,8 @@ let schmupGameInstance = function(p) {
 
 
   function collision(bullet, enemy) {
-    return bullet.x + bullet.width >= enemy.x && bullet.x <= enemy.x + enemy.width &&
-      bullet.y + bullet.height >= enemy.y && bullet.y <= enemy.y + enemy.height;
+    return bullet.x >= enemy.x - enemy.width / 2  && bullet.x <= enemy.x + enemy.width / 2 &&
+      bullet.y >= enemy.y - enemy.width / 2 && bullet.y <= enemy.y + enemy.height / 2;
   }
 
 
@@ -200,6 +201,7 @@ let schmupGameInstance = function(p) {
     p.bullets.forEach(function(bullet) {
       enemies.forEach(function(enemy) {
         if (collision(bullet, enemy)) {
+          sound_collide_heavy.play();
 
           p.collisionSprites.push(new p5Sprite(confettiPop_pink_128, 100, 100));
           p.colSprIndex = p.collisionSprites.length - 1;
@@ -238,12 +240,14 @@ let schmupGameInstance = function(p) {
 
     enemies.forEach(function(enemy) {
       if (collision(enemy, p.player)) {
+        sound_fizzDown_hiPitch.play();
         p.stage = 'gameOver';
       }
     })
 
     enemies.forEach(function(enemy) {
       if (out(enemy)) {
+        sound_fizzDown_hiPitch.play();
         p.stage = 'gameOver';
       }
     });
@@ -279,7 +283,7 @@ let schmupGameInstance = function(p) {
       if (p.level <= 5) {
         p.level += 1;
         // test incrementation number
-        p.spawnRate += 0.02;
+        p.spawnRate += 0.01;
       } else {
         p.level = 0;
         p.spawnRate = 0.02;

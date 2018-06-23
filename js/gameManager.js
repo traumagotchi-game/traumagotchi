@@ -4,8 +4,8 @@ function selectGames() {
   // recursive calls to find random 3 in games array
   // FOR WORKING ON A SPECIFIC GAME, INITIALIZE IT HERE (COMMENT OUT RANDOM)
 
-  // game1 = 'wackymole';
-  game1 = random(games);
+  game1 = 'schmup';
+  // game1 = random(games);
   findGame2();
 
   // console.log(game1);
@@ -206,6 +206,7 @@ function initPluckGame() {
       if (countdown <= 0) {
         pluckGame.stage = 'gameOver'
         timer.innerHTML = `end round ${gameCounter}`; // last parameters in setTimeout are parameters that pass into endGame(_game, _gameCanvas)
+
         setTimeout(endGame, 2500, pluckGame, pluckGameCanvas);
       } else if (pluckGame.stage == 'gameOver' || pluckGame.stage == 'youWon') {
         timer.innerHTML = `end round ${gameCounter}`;
@@ -254,6 +255,7 @@ function initSnakeGame() {
       if (countdown <= 0) {
         snakeGame.stage = 'gameOver'
         timer.innerHTML = `end round ${gameCounter}`; // last parameters in setTimeout are parameters that pass into endGame(_game, _gameCanvas)
+        // sound_powerup_0.play();
         setTimeout(endGame, 2500, snakeGame, snakeGameCanvas);
       } else if (snakeGame.stage == 'gameOver' || snakeGame.stage == 'youWon') {
         timer.innerHTML = `end round ${gameCounter}`;
@@ -297,6 +299,7 @@ function initSchmupGame() {
       if (countdown <= 0) {
         schmupGame.stage = 'gameOver';
         timer.innerHTML = `end round ${gameCounter}`; // last parameters in setTimeout are parameters that pass into endGame(_game, _gameCanvas)
+        // sound_powerup_1.play();
         setTimeout(endGame, 2500, schmupGame, schmupGameCanvas);
       } else if (schmupGame.stage == 'gameOver' || schmupGame.stage == 'youWon') {
         timer.innerHTML = `end round ${gameCounter}`;

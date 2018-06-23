@@ -154,7 +154,6 @@ let arrowLeft = [];
 let sprite32x100_purple = [];
 let sprite32x100_yellow = [];
 
-let clouds = [];
 let ball = [];
 let slimePlatform = [];
 let schmupper = [];
@@ -238,27 +237,79 @@ let strangeThingImgsIndex = 0;
 let tearsLikeNailsImgs = [];
 let tearsLikeNailsImgsIndex = 0;
 
-let song;
+let song_B2;
+let song_universalBass;
+let readyToPlay = false;
+
+let sound_click;
+let sound_thud1;
+let sound_thud2;
+let sound_beep1;
+let sound_collide_heavy;
+let sound_collide_light;
+// let sound_fizzDown_computery;
+let sound_fizzDown_loPitch;
+let sound_fizzDown_hiPitch;
+let sound_fizzDown_sad;
+// let sound_metallic_0;
+let sound_metallic_1;
+// let sound_powerup_0;
+// let sound_powerup_1;
+let sound_skitter;
+let sound_snake_0;
+let sound_snake_1;
+let sound_wack;
 
 function preload() {
 
-  // L O A D A U D I O
-  // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3');
+  // // L O A D A U D I O
+  song_B2 = loadSound('assets/audio/music/B2_Aja_loop.mp3');
+  song_universalBass = loadSound('assets/audio/music/UniversalBass_Aja_loop_fadeIn.mp3');
+  sound_click = loadSound('assets/audio/sfx/click.mp3');
+  sound_thud1 = loadSound('assets/audio/sfx/thud1.mp3');
+  sound_thud2 = loadSound('assets/audio/sfx/thud2.mp3');
+  sound_beep1 = loadSound('assets/audio/sfx/beep1.mp3');
+  // sound_fizzDown_computery = loadSound('assets/audio/sfx/fizzDown_computery.mp3');
+  sound_fizzDown_loPitch = loadSound('assets/audio/sfx/fizzDown_loPitch.mp3');
+  sound_fizzDown_hiPitch = loadSound('assets/audio/sfx/fizzDown_hiPitch.mp3');
+  sound_fizzDown_sad = loadSound('assets/audio/sfx/fizzDown_sad.mp3');
+  // sound_metallic_0 = loadSound('assets/audio/sfx/metallic_0.mp3');
+  sound_metallic_1 = loadSound('assets/audio/sfx/metallic_1.mp3');
+  sound_collide_light = loadSound('assets/audio/sfx/collide_light.mp3');
+  sound_collide_heavy = loadSound('assets/audio/sfx/collide_heavy.mp3');
+  sound_skitter = loadSound('assets/audio/sfx/skitter.mp3');
+  // sound_powerup_0 = loadSound('assets/audio/sfx/powerup_0.mp3');
+  // sound_powerup_1 = loadSound('assets/audio/sfx/powerup_1.mp3');
+  sound_snake_0 = loadSound('assets/audio/sfx/snake_0.mp3');
+  sound_snake_1 = loadSound('assets/audio/sfx/snake_1.mp3');
+  sound_wack = loadSound('assets/audio/sfx/wack.mp3');
+
+  // // // L O A D A U D I O ----> trying absolute links
+  // song_B2 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/B2_aja_loop.mp3');
+  // song_universalBass = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/universalBass_aja_loop_fadeIn.mp3');
+  // sound_click = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/click.mp3');
+  // sound_thud1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/thud1.mp3');
+  // sound_thud2 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/thud2.mp3');
+  // sound_beep1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/beep1.mp3');
+  // sound_fizzDown_computery = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_computery.mp3');
+  // sound_fizzDown_loPitch = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_loPitch.mp3');
+  // sound_fizzDown_hiPitch = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_hiPitch.mp3');
+  // sound_fizzDown_sad = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_sad.mp3');
+  // sound_metallic_0 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/metallic_0.mp3');
+  // sound_metallic_1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/metallic_1.mp3');
+  // sound_collide_light = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/collide_light.mp3');
+  // sound_collide_heavy = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/collide_heavy.mp3');
+  // sound_skitter = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/skitter.mp3');
+  // sound_powerup_0 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/powerup_0.mp3');
+  // sound_powerup_1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/powerup_1.mp3');
 
 
 
   // L O A D S P R I T E S
   // have to manually set numberFrames
-  for (let i = 0; i <= 13; i++) {
-    playerImgs[i] = loadImage(`assets/sprites/slimerDrip/slimerDrip_${i}.png`);
-  }
 
   for (let i = 0; i <= 3; i++) {
     fruit[i] = loadImage(`assets/sprites/fruit/fruit_${i}.png`);
-  }
-
-  for (let i = 0; i <= 7; i++) {
-    clouds[i] = loadImage(`assets/sprites/clouds/cloud_${i}.png`);
   }
 
   for (let i = 0; i <= 1; i++) {
@@ -281,7 +332,6 @@ function preload() {
     ball[i] = loadImage(`assets/sprites/ball/ball_${i}.png`);
   }
 
-// hm
   for (let i = 0; i <= 8; i++) {
     slimePlatform[i] = loadImage(`assets/sprites/slimePlatform/slimePlatform_${i}.png`);
   }
@@ -514,8 +564,6 @@ function setup() {
   // if avoiding preload, load with callback. only thing is that it doesn't buffer well on slow connections, so throws everthing off.
   // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3', playBGmusic);
 
-  // song.loop();
-  // playBGmusic();
 
   // use canvasDiv size to set size of p5 canvas
   canvasDiv = document.querySelector("#canvasDiv");
@@ -535,6 +583,11 @@ function setup() {
 
   // default cameraZ
   cameraZ = (height / 2) / tan(PI / 6);
+
+// not buffering in time
+  // song_B2.setVolume(0.00);
+  // song_universalBass.setVolume(0.2);
+  // sound_click.setVolume(0.1);
 
   // media query event handler
   if (matchMedia) {
@@ -619,8 +672,6 @@ function setup() {
 
 
 
-
-
   // p5 games
   p5templateGame = new p5(p5TemplateInstance, 'canvasDiv');
   p5templateGameCanvas = document.querySelector("#p5templateGameCanvas");
@@ -681,29 +732,43 @@ function setup() {
   choice3 = document.querySelector("#menuItem3");
 
   choice0.addEventListener("click", () => {
+    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[0].nextKey;
     tree[currentIndex].choices[0].action();
     nextMenu();
   })
   choice1.addEventListener("click", () => {
+    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[1].nextKey;
     tree[currentIndex].choices[1].action();
     nextMenu();
   })
   choice2.addEventListener("click", () => {
+    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[2].nextKey;
     tree[currentIndex].choices[2].action();
     nextMenu();
   })
   choice3.addEventListener("click", () => {
+    // sound_click.play();
     alertMenu.style.display = "none";
     currentKey = tree[currentIndex].choices[3].nextKey;
     tree[currentIndex].choices[3].action();
     nextMenu();
   })
+
+  // add sound to buttons
+    let buttons = document.querySelectorAll("button, [type='checkbox'], [type='radio'], select, [href]");
+
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", function() {
+        sound_click.play();
+      });
+    }
+
 
   // Initialize Firebase
   let config = {
@@ -760,7 +825,9 @@ function draw() {
   // ---> added this to p5 games so not running all the time =)
 
 
-
+  if (song_B2.buffer && song_universalBass.buffer) {
+    playBGmusic();
+  }
 
   switch (state) {
     case 'login':
@@ -899,16 +966,50 @@ function draw() {
     default:
       break;
   }
-
-
-
 }
 
-// function playBGmusic() {
-//   if (!song.isPlaying()) {
-//     song.play();
-//   }
-// }
+function playBGmusic() {
+
+    if (state == 'login' || state == 'care') {
+      if (song_B2.isPlaying()) {
+        song_B2.stop();
+      }
+
+      if (!song_universalBass.isPlaying()) {
+        // set volumes here, since it is after buffering and only triggers every-so-often
+        song_B2.setVolume(0.15);
+        song_universalBass.setVolume(0.3);
+        sound_click.setVolume(0.4);
+        sound_beep1.setVolume(0.4);
+        sound_thud1.setVolume(0.4);
+        sound_thud2.setVolume(0.4);
+        sound_collide_heavy.setVolume(0.3);
+        sound_collide_light.setVolume(0.4);
+        // sound_fizzDown_computery.setVolume(0.2);
+        sound_fizzDown_loPitch.setVolume(0.2);
+        sound_fizzDown_hiPitch.setVolume(0.2);
+        sound_fizzDown_sad.setVolume(0.2);
+        // sound_metallic_0.setVolume(0.4);
+        sound_metallic_1.setVolume(0.4);
+        // sound_powerup_0.setVolume(0.2);
+        // sound_powerup_1.setVolume(0.2);
+        sound_skitter.setVolume(0.2);
+        sound_snake_0.setVolume(0.07);
+        sound_snake_1.setVolume(0.07);
+        sound_wack.setVolume(0.2);
+
+        song_universalBass.loop();
+      }
+    } else if (state == 'game') {
+      if (song_universalBass.isPlaying()) {
+        song_universalBass.stop();
+      }
+      if (!song_B2.isPlaying()) {
+        song_B2.loop();
+      }
+    }
+
+}
 
 function displayLoginScreen() {
   background(180, 360, 25);
@@ -984,10 +1085,9 @@ function login() {
       loginMenu.remove();
     } else {
       // bug: createPOnce is for drawing DOM elements in draw loop: need to set flag so this doesn't appear over and over, or create DOM element that toggles off/on
-      createPOnce(`login error.`, "loginMenu")
+      createPOnce(`hm try again`, "loginMenu")
     }
   } else {
-    // Lark: make login error here
     createPOnce(`slow connection... </br> wait a sec </br> or try reloading`, "loginMenu")
   }
 }

@@ -87,7 +87,7 @@ let wackymoleGameInstance = function(p) {
     let distance = int(dist(mouseX, mouseY, p.mole.x, p.mole.y));
 
     if (distance <= 32) {
-      console.log("mole clicked")
+      sound_metallic_1.play();
       p.score += 10;
 
       p.collisionSprites.push(new p5Sprite(confettiPop_green_128, 100, 100));
@@ -98,6 +98,10 @@ let wackymoleGameInstance = function(p) {
       p.collisionSprites[p.colSprIndex].isPlaying = true;
       p.displayCollision = true;
 
+    } else {
+      if (!sound_wack.isPlaying()) {
+        sound_wack.play();
+      }
     }
     return false;
   }

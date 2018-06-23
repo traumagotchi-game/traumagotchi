@@ -1,13 +1,33 @@
 "use strict";
 
+// testing using window request animation frame (this is actually inplemented in index.js)
 
-let breakoutGameInstance = function(p) { // p could be any variable name
+
+function preload() {
+  // have to manually set numberFrames
+  for (i = 0; i <= 5; i++) {
+    playerImgs[i] = loadImage(`assets/sprites/playerShip/ship_${i}.png`);
+    // console.log(p.spriteTestImgs[i]);
+  }
+
+  for (i = 0; i <= 10; i++) {
+    collisionAnimation_128[i] = loadImage(`assets/sprites/collisionAnimation_128/collisionAnimation_128_${i}.png`);
+    // console.log(p.spriteTestImgs[i]);
+  }
+
+  sprite32[0] = loadImage(`assets/sprites/placeholders/32x32_0.png`)
+  sprite64[0] = loadImage(`assets/sprites/placeholders/64x64_0.png`)
+  sprite128[0] = loadImage(`assets/sprites/placeholders/128x128_0.png`)
+  sprite32x100_purple[0] = loadImage(`assets/sprites/placeholders/32x100_purple_0.png`)
+  sprite32x100_yellow[0] = loadImage(`assets/sprites/placeholders/32x100_yellow_0.png`)
+};
+
+let p5TemplateInstance = function(p) { // p could be any variable name
 
   p.canvas;
   p.context;
 
-  // p.debug = true; // enable debug to see collider outlines
-
+  p.debug = false; // enable debug to see collider outlines
 
   p.animationFrame;
   p.lastAnimationFrame;
@@ -20,12 +40,10 @@ let breakoutGameInstance = function(p) { // p could be any variable name
   p.player;
 
   // arrays to store other sprites
-  p.ballSprite;
-  p.ballInitialVelocityX = 4;
-  p.ballInitialVelocityY = 8;
+  p.pointSprites = [];
+  p.killSprites = [];
   p.breakoutSprites = [];
-  p.collisionSprites = [];
-  p.colSprIndex;
+  p.collisionSprite = [];
   p.displayCollision = false;
 
   p.gravity = .001;
@@ -39,14 +57,14 @@ let breakoutGameInstance = function(p) { // p could be any variable name
     p.canvas = p.createCanvas(600, 450);
     p.canvas.parent("canvasDiv");
     p.canvas.class("gameCanvas");
-    p.canvas.id("breakoutGameCanvas");
+    p.canvas.id("p5templateGameCanvas");
     p.canvas.style("z-index: 5;");
 
     p.frameRate(30);
-    // p.background(0);
+    p.background(0);
+    p.imageMode(CENTER);
 
-    // context is for HTML5 Canvas
-    let c = document.querySelector("#breakoutGameCanvas");
+    let c = document.querySelector("#p5templateGameCanvas");
     p.context = c.getContext("2d");
 
     p.canvas.mousePressed(localMousePressed);
@@ -55,70 +73,77 @@ let breakoutGameInstance = function(p) { // p could be any variable name
     p.lastAnimationFrame = p.animationFrame;
 
 
+    // REFERENCE: parameters for sprite: new p5Sprite(imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0)
+    p.player = new p5Sprite(playerImgs, p.width / 2, p.height / 2, 1);
 
-    p.imageMode(CENTER);
-
-    p.player = new p5Sprite(slimePlatform, p.width / 2, p.height - 32, 1);
-    // p.player = new p5Sprite(sprite32x100_yellow, p.width / 2, p.height - 32, 1);
+    // Angelabelle: for breakout, initialize sprite at bottom
+    // p.player = new p5Sprite(sprite32x100_purple, p.width / 2, p.height - 50, 1);
     // console.log(p.player.imgArray[0].width) // SOOOO weird this is not registering actual width sooner...
 
     // add collider if you want it to be different than the default image size
     // good to make it a little smaller so people enjoy game play more ;-=)
     // enable debug variable to see collider outline
-    p.player.addCollider(128, 34);
+    p.player.addCollider(30, 20);
     p.player.addAnimation("still", 0, 0);
-    p.player.addAnimation("drip", 0, 8);
+    p.player.addAnimation("animated", 0, 5);
     // console.log(p.player);
+    // console.log(p.player)
 
+    p.collisionSprite = new p5Sprite(collisionAnimation_128, 100, 100);
+    p.collisionSprite.addAnimation("explode", 0, 10);
 
+    // these are from breakout game but might make them clouds or something for this game
+    for (let i = 0; i < 5; i++) {
+      // initialize 5 sprites for top of breakout board. Their x positions acount for space inbetween (100 empty pixels / 6) and width of each of them. Their x y positions are centered bc image mode is center
+      p.breakoutSprites.push(new p5Sprite(sprite32x100_purple, (i + 1) * 100 / 6 + (i * 100) + 50, 20, 1));
+      p.breakoutSprites[i].addAnimation("still", 0, 0);
 
-
-    p.ballSprite = new p5Sprite(sprite32, p.width * 0.5, 133, 1, p.ballInitialVelocityX, p.ballInitialVelocityY);
-
-    // p.ballSprite.addCollider(20, 20);
-    p.ballSprite.addAnimation("still", 0, 0);
-
-
-    // angelabelle: initialized breakoutSprites here =)
-    for (let i = 0; i < 10; i++) {
-      if (i < 5) {
-        // initialize 5 sprites for top of breakout board. Their x positions acount for space inbetween (100 empty pixels / 6) and width of each of them. Their x y positions are centered bc image mode is center]
-        p.breakoutSprites.push(new p5Sprite(sprite32x100_purple, (i + 1) * (Math.floor(100 / 6)) + (i * 100) + 50, 20, 1));
-
-        // p.breakoutSprites.push(new p5Sprite(spriteYellowLong, (i + 1) * (Math.floor(100 / 6)) + (i * 100) + 50, 33, .5));
-        // p.breakoutSprites[i].addAnimation("still", 0, 0);
-        // p.breakoutSprites[i].addAnimation("animated", 0, 20);
-        // p.breakoutSprites[i].addCollider(50, 20);
-
-        // p.breakoutSprites.push(new p5Sprite(clouds, (i + 1) * (Math.floor(100 / 6)) + (i * 100) + 50, 33, 1/8));
-        p.breakoutSprites[i].addAnimation("still", 2, 2);
-        p.breakoutSprites[i].addAnimation("animated", 0, 20);
-        p.breakoutSprites[i].addCollider(50, 20);
-
-      } else {
-
-        p.breakoutSprites.push(new p5Sprite(sprite32x100_purple, (i - 4) * (Math.floor(100 / 6)) + ((i - 5) * 100) + 50, 70, 1));
-
-        // p.breakoutSprites.push(new p5Sprite(spriteYellowLong, (i - 4) * (Math.floor(100 / 6)) + ((i - 5) * 100) + 50, 90, .5));
-
-        // p.breakoutSprites[i].addAnimation("still", 0, 0);
-        // p.breakoutSprites[i].addAnimation("animated", 0, 20);
-        // p.breakoutSprites[i].addCollider(50, 20);
-
-        // p.breakoutSprites.push(new p5Sprite(clouds, (i - 4) * (Math.floor(100 / 6)) + ((i - 5) * 100) + 50, 90, 1/8));
-        p.breakoutSprites[i].addAnimation("still", 2, 2);
-        p.breakoutSprites[i].addAnimation("animated", 0, 20);
-        p.breakoutSprites[i].addCollider(50, 20);
-      }
     }
 
+    // initialize point sprites them with random x position and y position incrementing by 100px and velocityY set to 5 (so they fall)
+    for (let i = 0; i < 16; i++) {
+      // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
+      p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -i * 100, 1, 0, 5));
+      // p.pointSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
+      p.pointSprites[i].addAnimation("still", 0, 0);
+      p.pointSprites[i].addAnimation("explode", 0, 0);
+      p.pointSprites[i].addCollider(20, 20); // little smaller than 32x32
+    }
+
+    // initialize kill sprites them with random x position and y position incrementing by 300px and velocityY set to 5 (so they fall)
+    for (let i = 0; i < 5; i++) {
+      // These positions are re-initialized when restart() is called game ends. So any changes here have to be applied to restart function as well....
+      p.killSprites.push(new p5Sprite(sprite64, random(p.width), -i * 300, 3 / 4, 0, 5));
+      // p.killSprites.push(new p5Sprite(sprite32, random(p.width), -random(800), 1, 0, 5));
+      p.killSprites[i].addAnimation("still", 0, 0);
+      p.killSprites[i].addAnimation("explode", 0, 0);
+      p.killSprites[i].addCollider(20, 20); // little smaller than 32x32
+    }
+
+    refresh();
   };
 
-  p.draw = function() {
+  function refresh() {
+    // const game = p;
+    window.requestAnimationFrame(function() {
+      refresh()
+    });
+    const now = Date.now();
+    if (p.lastTime == null) {
+      p.lastTime = now;
+      const dt = (now - p.lastTime) / 1000.0
+      updateLoop();
+      p.lastTime = now;
+    }
+  }
+
+
+
+  function updateLoop() {
+
 
     // for debugging
     // mouseEvents();
-
 
     switch (p.stage) {
       case 'waiting':
@@ -141,6 +166,35 @@ let breakoutGameInstance = function(p) { // p could be any variable name
       default:
         break;
     }
+  }
+
+  p.draw = function() {
+    //
+    //
+    // // for debugging
+    // // mouseEvents();
+    //
+    // switch (p.stage) {
+    //   case 'waiting':
+    //     // do nothing
+    //     break;
+    //   case 'intro':
+    //     intro();
+    //     // restartBool flag makes it so it only restarts once, this initializes the boolean so it will restart again
+    //     p.restartBool = false;
+    //     break;
+    //   case 'play':
+    //     play();
+    //     break;
+    //   case 'gameOver':
+    //     gameOver();
+    //     break;
+    //   case 'youWon':
+    //     youWon();
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
 
 
@@ -165,125 +219,115 @@ let breakoutGameInstance = function(p) { // p could be any variable name
   function intro() {
     // clear to have a clear background, if background is drawn on another canvas layer
     // p.clear();
-    // p.background(0);
+    p.background(0);
 
   }
 
   function play() {
     // clear to have a clear background, if background is drawn on another canvas layer
-    p.clear();
-    // p.background(0);
+    // p.clear();
+    p.background(0);
 
     //*
     // create animation frame counter approx 8fps (if browser is running at 30fps)
-    p.animationFrame = Math.floor(frameCount / 3.75);
+    p.animationFrame = Math.floor(frameCount / 3);
 
 
     // angelabelle: for breakout initialization
     for (let i = 0; i < p.breakoutSprites.length; i++) {
-      // p.breakoutSprites[i].displayAnim("animated");
       p.breakoutSprites[i].displayAnim("still");
     }
 
-    p.ballSprite.moveSprite();
-    p.ballSprite.keepInFrameExceptBottom();
+    // nove and display point and kill sprites
+    for (let i = 0; i < p.pointSprites.length; i++) {
+      p.pointSprites[i].moveSprite();
+      p.pointSprites[i].displayAnim("still");
+    }
 
-    p.ballSprite.displayAnim("still");
+    for (let i = 0; i < p.killSprites.length; i++) {
+      p.killSprites[i].moveSprite();
+      p.killSprites[i].displayAnim("still");
+    }
+
 
     // move and display player
     p.player.moveSprite();
-    p.player.keepInFrame();
+    p.player.keepInFrameBouncing();
     // player follows mouse with 0.05 ease (lower the ease the more drag)
     // p.player.followMouse(0.05);
 
     // player follows mouse, restriced to X Axis
-    p.player.followMouseX(0.05);
-    // ^ angelabelle: use this for breakout. OR place this function INSIDE of the localMousePressed() function, so it only moves when people have mouse pressed
+    // p.player.followMouseX(0.05);
+    // ^ angelabelle: you would use this for breakout. OR place this function INSIDE of the localMousePressed() function, so it only moves when people have mouse pressed
+
+    // attraction point is creating this wild pendulum effect rn. kinda coool.... but not working when it is in the mouseClicked function
+    p.player.attractionPoint(mouseX, mouseY, .3);
 
 
     p.player.drawConnectiveTissue(5);
     // p.player.displayAnim("animated", true);
 
-    p.player.displayAnim("drip");
+    if (mouseIsPressed) {
+      // p.player.followMouse(0.1);
+      p.player.displayAnim("animated");
+    } else {
+      p.player.displayAnim("still");
+    }
 
-    // // this is where sprites could be animated...
-    //     if (mouseIsPressed) {
-    //       // p.player.followMouse(0.1);
-    //       p.player.displayAnim("animated");
-    //     } else {
-    //       p.player.displayAnim("still");
-    //     }
-
-
-    // check collision for breakoutSprites
+    // check collision for pointSprites
     // iterate through them backwards in case you want to splice them from array, that way it won't skip one in loop.
-    for (let i = p.breakoutSprites.length - 1; i >= 0; i--) {
+    for (let i = p.pointSprites.length - 1; i >= 0; i--) {
       // seems redundant to check for visibility when the collidesWith function also checks for it, but for some reason there is a delay in setting the visibility to false in collision function, dunno! this fixes it so it only fires once instead of 5-15 times
+      if (p.player.collidesWith(p.pointSprites[i]) && p.pointSprites[i].visible) {
+        console.log(`points!`);
+        p.collisionSprite.x = p.pointSprites[i].x;
+        p.collisionSprite.y = p.pointSprites[i].y;
 
-      if (p.ballSprite.collidesWith(p.breakoutSprites[i])) {
+        // set flag to display collision ( below)
+        //p.displayCollision = true;
 
-        p.collisionSprites.push(new p5Sprite(collisionAnimation_128, 100, 100, .75));
-        p.colSprIndex = p.collisionSprites.length - 1;
-        p.collisionSprites[p.colSprIndex].x = p.breakoutSprites[i].x;
-        p.collisionSprites[p.colSprIndex].y = p.breakoutSprites[i].y;
-        p.collisionSprites[p.colSprIndex].addAnimation("explode", 0, 10);
-        p.collisionSprites[p.colSprIndex].isPlaying = true;
-        p.displayCollision = true;
-
-
-        p.breakoutSprites[i].hide();
-        // reverse ball direction
-        p.ballSprite.velocityX *= -1;
-        p.ballSprite.velocityY *= -1;
+        p.pointSprites[i].hide();
         // p.pointSprites.splice(i, 1); // if splice from array will need to repopulate it in the restart function
-
-        sound_thud1.play();
         p.score += 10;
       }
     }
 
+    // if (p.displayCollision) {
+    //   p.collisionSprite.animations[0].isPlaying = true;
+    //   p.collisionSprite.displayAnim("explode", false);
+    // }
 
-    if (p.displayCollision) {
-      // if (p.displayCollision && p.collisionSprites[p.colSprIndex]) {
-      for (let i = p.collisionSprites.length - 1; i >= 0; i--) {
-        if (p.collisionSprites[i].isPlaying) {
-          // create a new collision sprite and push it to the array
-          p.collisionSprites[i].displayAnim("explode", false);
-        } else {
-          p.collisionSprites.splice(i, 1)
-        }
+    // check collision for kill sprites
+    // iterate through them backwards in case want to splice them from array, that way it won't skip one in loop
+    for (let i = p.killSprites.length - 1; i >= 0; i--) {
+
+      if (p.player.collidesWith(p.killSprites[i]) == true) {
+        console.log(`collision!`)
+        p.killSprites[i].hide();
+        p.stage = 'gameOver';
       }
     }
 
+    displayScore();
 
-    if (p.ballSprite.collidesWith(p.player)) {
-      p.ballSprite.velocityY *= -1;
-
-      sound_beep1.play();
-      // measure distance from middle of platform. have velocity x change MORE the farther it is from middle
-      // max is p.player.width / 2
-      if (p.ballSprite.velocityX > 0) {
-        p.ballSprite.velocityX = p.ballSprite.velocityX + 4 * Math.abs(p.ballSprite.x - p.player.x) / (p.player.width * 0.5);
-      } else {
-        p.ballSprite.velocityX = p.ballSprite.velocityX - 4 * Math.abs(p.ballSprite.x - p.player.x) / (p.player.width * 0.5);
-      }
-    }
-
-    if (p.ballSprite.y > p.height + 30) {
-      sound_fizzDown_hiPitch.play();
-      p.stage = 'gameOver';
-    }
-
-    pointsRunningTotal.innerHTML = `${p.score}`;
-
-
+    //*
     p.lastAnimationFrame = p.animationFrame;
   }
 
 
   function gameOver() {
-    p.clear();
-    drawGameOverBGBool = true;
+    // clear to have a clear background, if background is drawn on another canvas layer
+    // p.clear();
+    p.background(0);
+
+
+    p.context.font = "60px Verdana";
+    p.context.fillStyle = "#ACD02D";
+    let str = "GAME OVER";
+    let txt = p.context.measureText(str);
+    let left = (p.canvas.width - txt.width) / 2;
+    let top = p.canvas.height / 2;
+    p.context.fillText("GAME OVER", left, top);
 
     restart();
   }
@@ -303,42 +347,79 @@ let breakoutGameInstance = function(p) { // p could be any variable name
 
   function restart() {
     // note: changes made here have to also match the initial positions when sprites are created in setup.
-    p.clear();
 
-    // restart bool is a flag to make sure it restarts only once
     if (p.restartBool == false) {
+      // increment levels here
+      // could increment gravity/velocity here to make game harder over multiple plays ;-)
 
+      // increment level (6 levels)
       if (p.level <= 5) {
         p.level += 1;
-        p.ballSprite.velocityX = p.level + p.ballInitialVelocityX;
-        p.ballSprite.velocityY = p.level + p.ballInitialVelocityY;
       } else {
         p.level = 0;
-        p.ballSprite.velocityX = p.ballInitialVelocityX;
-        p.ballSprite.velocityY = p.ballInitialVelocityY;
       }
 
       // reset variables
       p.player.x = p.width / 2;
-      p.player.y = p.height - 50;
+      p.player.y = p.height / 2;
       p.player.velocityX = 0;
       p.player.velocityY = 0;
 
-      p.ballSprite.x = p.width * 0.5;
-      p.ballSprite.y = 100;
-
-
-      // if sprites are spliced from breakoutSprites array (instead of just being hidden) then you would need to repopulate array here
-      for (let i = 0; i < p.breakoutSprites.length; i++) {
-        p.breakoutSprites[i].show();
+      // reset point sprites
+      for (let i = 0; i < p.pointSprites.length; i++) {
+        p.pointSprites[i].x = random(p.width);
+        p.pointSprites[i].y = -i * 100;
+        // sprites get faster with each play turn, up to 10
+        if (p.pointSprites[i].velocityY <= 10) {
+          p.pointSprites[i].velocityY += 1;
+        } else {
+          p.pointSprites.velocityY = 5;
+        }
+        p.pointSprites[i].show();
       }
 
-
+      // reset kill sprites
+      for (let i = 0; i < p.killSprites.length; i++) {
+        p.killSprites[i].x = random(p.width);
+        p.killSprites[i].y = -i * 300;
+        // sprites get faster with each play turn, up to 10
+        if (p.killSprites[i].velocityY <= 10) {
+          p.killSprites[i].velocityY += 1;
+        } else {
+          p.killSprites.velocityY = 5;
+        }
+        p.killSprites[i].show();
+      }
     }
     p.restartBool = true;
   }
 
+  function displayScore() {
+    // p.rectMode(CENTER);
+    // p.fill(0);
+    // p.stroke(0, 255, 0);
+    // p.strokeWeight(2);
+    // p.rect(p.width - 30, 30, 60, 60);
+    // p.fill(0, 255, 0);
+    // p.textFont()
+    // p.textSize()
+    //display score
+    p.context.font = "16px Gamegirl";
+    p.context.fillStyle = "#00ff00";
+    let str = "Score";
+    let txt = p.context.measureText(str);
+    let left = p.canvas.width - 7 - txt.width;
+    p.context.fillText("Score", left, 30);
 
+    p.context.font = "30px Gamegirl";
+    p.context.fillStyle = "#00ff00";
+    str = String(p.score);
+    txt = p.context.measureText(str);
+    left = p.canvas.width - 7 - txt.width;
+    p.context.fillText(p.score, left, 65);
+  }
+
+  //create sprite class
   //create sprite class
   class p5Sprite {
     constructor(_imgArray, _x, _y, _scaleFactor = 1, _velocityX = 0, _velocityY = 0) {
@@ -352,7 +433,6 @@ let breakoutGameInstance = function(p) { // p could be any variable name
       this.animations = [];
       this.rotation = 0;
       this.visible = true;
-      this.isPlaying = true;
       // width and height not loading properly bc for some reason img not fully loaded (even tho it is visible in array :?)
       this.width = this.imgArray[0].width * this.scaleFactor;
       this.height = this.imgArray[0].height * this.scaleFactor;
@@ -364,7 +444,7 @@ let breakoutGameInstance = function(p) { // p could be any variable name
     }
 
     // if no frame start and frame sound added, default is to display a still of first frame
-    addAnimation(_animation, _frameStart = 0, _frameEnd = 0, _sound, _animWidth, _animHeight, _frameCount = 0) {
+    addAnimation(_animation, _frameStart = 0, _frameEnd = 0, _sound, _animWidth, _animHeight, _isPlaying = true) {
       this.animations.push({
         name: _animation,
         frameStart: _frameStart,
@@ -372,17 +452,21 @@ let breakoutGameInstance = function(p) { // p could be any variable name
         sound: _sound,
         animWidth: _animWidth,
         animHeight: _animHeight,
-        frameCount: _frameCount
+        isPlaying: _isPlaying
       })
     }
 
 
+    //
     displayAnim(_animation, _looping = true, _delay = 1) {
 
       // bug (could be better if only declared once in setup but imgArray[0].width doesn't load until frame 5)
       // declaring this here bc so weird the image width won't load in setup, delays a few frames
       this.width = this.imgArray[0].width * this.scaleFactor;
       this.height = this.imgArray[0].height * this.scaleFactor;
+
+
+
 
       let animation;
       let animationIndex;
@@ -394,12 +478,13 @@ let breakoutGameInstance = function(p) { // p could be any variable name
       for (let i = 0; i < this.animations.length; i++) {
         if (_animation == this.animations[i].name) {
           animation = this.animations[i];
+
         }
       }
 
 
       // bug doesn't start from first frame, trying to use timerStart...
-      if (animation && this.visible && this.isPlaying) {
+      if (animation && this.visible) {
         // // try step thru frame index with animation frame....
 
         // if (!frameIndex) {
@@ -409,53 +494,50 @@ let breakoutGameInstance = function(p) { // p could be any variable name
         // if (p.animationFrame != p.lastAnimationFrame) {
         //   // console.log('animation frame change')
         //   // step the frame index here ( would have to account for delay)
-        //   if (this.isPlaying && frameIndex <= animation.frameEnd) {
+        //   if (animation.isPlaying && frameIndex <= animation.frameEnd) {
         //     frameIndex++
         //   } else {
         //     frameIndex = animation.frameStart;
-        //     this.isPlaying = true;
+        //     animation.isPlaying = true;
         //   }
         // }
 
-        // console.log(animation.frameCount)
+        //  use a bool flag to set start to 0 ?
+        frameIndex = Math.floor(p.animationFrame / _delay) % (animation.frameEnd - animation.frameStart + 1) + animation.frameStart;
 
-        if (p.animationFrame != p.lastAnimationFrame) {
 
-          animation.frameCount = (animation.frameCount + 1) % (animation.frameEnd - animation.frameStart + 1);
+        spriteFrame = this.imgArray[frameIndex];
 
+        // // no rotation
+        p.image(spriteFrame, this.x, this.y, this.imgArray[0].width * this.scaleFactor, this.imgArray[0].height * this.scaleFactor);
+
+        if (p.debug && this.colliderWidth) {
+          p.rectMode(CENTER);
+          p.noFill();
+          p.stroke(255);
+          p.strokeWeight(3);
+          p.rect(this.x, this.y, this.colliderWidth / this.scaleFactor, this.colliderHeight / this.scaleFactor);
+
+          // to rotate (buggy)
+          // p.push();
+          //
+          // p.translate(this.x, this.y);
+          //
+          // p.rotate(this.rotation);
+          //
+          // p.image(spriteFrame, 0, 0, this.imgArray[0].width * this.scaleFactor, this.imgArray[0].height * this.scaleFactor);
+          //
+          // p.pop();
         }
-        if (!_looping && animation.frameCount == animation.frameEnd) {
-          // destroy -- remove sprite from array
-          this.isPlaying = false;
 
-        } else {
-
-          // animation.frameCount = Math.floor(p.animationFrame / _delay) % (animation.frameEnd - animation.frameStart + 1) + animation.frameStart;
-
-          spriteFrame = this.imgArray[animation.frameCount];
-
-          // // no rotation
-          p.image(spriteFrame, this.x, this.y, this.imgArray[0].width * this.scaleFactor, this.imgArray[0].height * this.scaleFactor);
-
-          if (p.debug && this.colliderWidth) {
-            p.rectMode(CENTER);
-            p.noFill();
-            p.stroke(255);
-            p.strokeWeight(3);
-            p.rect(this.x, this.y, this.colliderWidth / this.scaleFactor, this.colliderHeight / this.scaleFactor);
-
-            // to rotate (buggy)
-            // p.push();
-            //
-            // p.translate(this.x, this.y);
-            //
-            // p.rotate(this.rotation);
-            //
-            // p.image(spriteFrame, 0, 0, this.imgArray[0].width * this.scaleFactor, this.imgArray[0].height * this.scaleFactor);
-            //
-            // p.pop();
-          }
-        }
+        // bug this isn't working
+        // if (spriteFrame && _looping) {
+        //   p.image(spriteFrame, this.x, this.y);
+        // } else if (spriteFrame && !_looping) {
+        //   if (frameIndex >= animation.frameEnd) {
+        //
+        //   }
+        // }
       }
     }
 
@@ -610,5 +692,15 @@ let breakoutGameInstance = function(p) { // p could be any variable name
       }
       p.strokeWeight(0);
     }
+
+
   }
+
+
+
 };
+
+
+
+// moved this initialization to world.js
+// let p5template = new p5(s, 'canvasDiv');

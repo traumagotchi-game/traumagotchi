@@ -20,8 +20,7 @@ class CollapseGame {
         webm: "games/collapseGame/gliss.webm"
       },
       loop: false,
-      volume: 0.0
-      // volume: 0.3
+      volume: 0.2
     });
     this.wrongSfx = new SFX({
       context: this.audioContext,
@@ -30,8 +29,7 @@ class CollapseGame {
         webm: "games/collapseGame/boing.webm"
       },
       loop: false,
-      volume: 0.0
-      // volume: 0.3
+      volume: 0.2
     });
     this.dropSfx = new SFX({
       context: this.audioContext,
@@ -40,8 +38,7 @@ class CollapseGame {
         webm: "games/collapseGame/swish.webm"
       },
       loop: false,
-      volume: 0.0
-      // volume: 0.3
+      volume: 0.2
     });
     const game = this;
     this.loadJSON("games/collapseGame/flowers", function(data, game) {
