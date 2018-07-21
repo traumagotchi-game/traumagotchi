@@ -3,7 +3,7 @@
 let canvas;
 let canvasDiv;
 
-let state = 'login';
+let state = 'shrine';
 
 let diameter = 100; // probably should get rid of this if it is constant
 
@@ -83,11 +83,8 @@ let stepTextArray = [{
 let loginLandingPage = false;
 let writeToConsoleBool = true;
 let printOnceBool = true;
-
-// community menu
-let communityMenu;
-
 // care menu
+
 let careMenu;
 let treeLength;
 
@@ -118,20 +115,6 @@ let coneEnabled = false;
 let sphereEnabled = false;
 let torusEnabled = false;
 let ringEnabled = false;
-
-let mindwipeEnabled;
-let emdrEnabled;
-let psoasEnabled;
-let asmrEnabled;
-let reliquificationEnabled;
-let treEnabled;
-let longfinEelsEnabled;
-let cbtEnabled;
-let yogaEnabled;
-let deprivationEnabled;
-let dramaEnabled;
-let sexEnabled;
-let meditationEnabled;
 
 let processorData;
 
@@ -661,11 +644,11 @@ function setup() {
   inputPassword = select("#passwordInput");
   loginButton = select("#login");
 
-  loginButton.mouseClicked(login);
+  // loginButton.mouseClicked(login);
 
   //console
   consoleText = document.querySelector("#consoleText")
-  writeConsoleText(`Log into the Traumagrid. Visit the shrine or sign up for community chatrooms. Play games to earn points. With points you can schedule repetitive actions in the care menu. ミ☆`);
+  writeConsoleText(`Traumagotchi named ANXIETYXXL is visiting the DeepInTheMachineWorldTraumaCompostShrine`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
@@ -748,10 +731,11 @@ function setup() {
 
 
 
-  communityMenu = document.querySelector("#communityMenu");
+  // care menu
   careMenu = document.querySelector("#careMenu");
 
   // care menu decision tree!
+  // declare tree length as var
   treeLength = tree.length;
 
   choiceMenuTitle = document.querySelector("#menuTitle");
@@ -860,21 +844,22 @@ function draw() {
     case 'mainMenu':
       displayMainCanvas();
       careMenu.style.display = "block";
-      communityMenu.style.display = "none";
       gameMenu.style.display = "none";
       gameIntroOverlay.style.display = "none";
       pointsOverlay.style.display = "none";
       gameEndOverlay.style.display = "none";
       break;
     case 'shrine':
-
+      loginMenu.remove();
+      pointStats.style.display = 'block';
+      careMenu.style.display = "block";
+      gameMenu.style.display = "none";
+      gameIntroOverlay.style.display = "none";
+      pointsOverlay.style.display = "none";
+      gameEndOverlay.style.display = "none";
       displayShrine();
       break;
     case 'community':
-      careMenu.style.display = "none";
-      communityMenu.style.display = "block";
-      writeToConsoleBool = true;
-      writeConsoleText(`Traumagotchi need community to heal. </br>`);
       break;
     case 'care':
       displayMainCanvas();
@@ -1233,170 +1218,8 @@ function login() {
       createPOnce(`hm try again`, "loginMenu")
     }
   } else {
-    createPOnce(`slow connection... </br> wait a sec`, "loginMenu")
+    createPOnce(`slow connection... </br> wait a sec </br> or try reloading`, "loginMenu")
   }
-}
-
-function communitySignup() {
-
-  if (userData.community) {
-    mindwipeEnabled = userData.community.mindwipe;
-    emdrEnabled = userData.community.emdr;
-    psoasEnabled = userData.community.psoas;
-    asmrEnabled = userData.community.asmr;
-    reliquificationEnabled = userData.community.reliquification;
-    treEnabled = userData.community.tre;
-    longfinEelsEnabled = userData.community.longfinEels;
-    cbtEnabled = userData.community.cbt;
-    yogaEnabled = userData.community.yoga;
-    deprivationEnabled = userData.community.deprivation;
-    dramaEnabled = userData.community.drama;
-    sexEnabled = userData.community.sex;
-    meditationEnabled = userData.community.meditation;
-  } else {
-    mindwipeEnabled = false;
-    emdrEnabled = false;
-    psoasEnabled = false;
-    asmrEnabled = false;
-    reliquificationEnabled = false;
-    treEnabled = false;
-    longfinEelsEnabled = false;
-    cbtEnabled = false;
-    yogaEnabled = false;
-    deprivationEnabled = false;
-    dramaEnabled = false;
-    sexEnabled = false;
-    meditationEnabled = false;
-  }
-
-  console.log('here');
-  let mindwipeCheckbox = createCheckbox('Mindwipe Consortium', mindwipeEnabled);
-  let emdrCheckbox = createCheckbox("EMDR Playground", emdrEnabled);
-  let psoasCheckbox = createCheckbox("Psoas Release", psoasEnabled);
-  let asmrCheckbox = createCheckbox("ASMR", asmrEnabled);
-  let reliquificationCheckbox = createCheckbox("Reliquification", reliquificationEnabled);
-  let treCheckbox = createCheckbox("TRE: Trauma Release Exercises", treEnabled);
-  let longfinEelsCheckbox = createCheckbox("Longfin Eels", longfinEelsEnabled);
-  let cbtCheckbox = createCheckbox("Talk and CBT", cbtEnabled);
-  let yogaCheckbox = createCheckbox("Yoga", yogaEnabled);
-  let deprivationCheckbox = createCheckbox("Sensory Deprivation Orb", deprivationEnabled);
-  let dramaCheckbox = createCheckbox("Making new memories: Drama Therapy", dramaEnabled);
-  let sexCheckbox = createCheckbox("Orgasmix Sludge", sexEnabled);
-  let meditationCheckbox = createCheckbox("Meditation and grounding", meditationEnabled);
-
-  mindwipeCheckbox.parent('#communityCheckboxes');
-  emdrCheckbox.parent('#communityCheckboxes');
-  psoasCheckbox.parent('#communityCheckboxes');
-  asmrCheckbox.parent('#communityCheckboxes');
-  reliquificationCheckbox.parent('#communityCheckboxes');
-  treCheckbox.parent('#communityCheckboxes');
-  longfinEelsCheckbox.parent('#communityCheckboxes');
-  cbtCheckbox.parent('#communityCheckboxes');
-  yogaCheckbox.parent('#communityCheckboxes');
-  deprivationCheckbox.parent('#communityCheckboxes');
-  dramaCheckbox.parent('#communityCheckboxes');
-  sexCheckbox.parent('#communityCheckboxes');
-  meditationCheckbox.parent('#communityCheckboxes');
-
-  // let mindwipeCheckbox = select("#mindwipeCheckbox");
-  // let emdrCheckbox = select("#emdrCheckbox");
-  // let psoasCheckbox = select("#psoasCheckbox");
-  // let asmrCheckbox = select("#asmrCheckbox");
-  // let reliquificationCheckbox = select("#reliquificationCheckbox");
-  // let treCheckbox = select("#treCheckbox");
-  // let longfinEelsCheckbox = select("#longfinEelsCheckbox");
-  // let cbtCheckbox = select("#cbtCheckbox");
-  // let yogaCheckbox = select("#yogaCheckbox");
-  // let deprivationCheckbox = select("#deprivationCheckbox");
-  // let dramaCheckbox = select("#dramaCheckbox");
-  // let sexCheckbox = select("#sexCheckbox");
-  // let meditationCheckbox = select("#meditationCheckbox");
-
-  let saveTgotchiGroups = select("#saveTgotchiGroups");
-
-  // if (userData.community){
-  //   mindwipeCheckbox.checked());
-  // }
-
-  mindwipeCheckbox.changed(function() {
-    mindwipeEnabled = !mindwipeEnabled;
-  });
-  emdrCheckbox.changed(function() {
-    emdrEnabled = !emdrEnabled;
-  });
-  psoasCheckbox.changed(function() {
-    psoasEnabled = !psoasEnabled;
-  });
-  asmrCheckbox.changed(function() {
-    asmrEnabled = !asmrEnabled;
-  });
-  reliquificationCheckbox.changed(function() {
-    reliquificationEnabled = !reliquificationEnabled;
-  });
-  treCheckbox.changed(function() {
-    treEnabled = !treEnabled;
-  });
-  longfinEelsCheckbox.changed(function() {
-    longfinEelsEnabled = !longfinEelsEnabled;
-  });
-  cbtCheckbox.changed(function() {
-    cbtEnabled = !cbtEnabled;
-  });
-  yogaCheckbox.changed(function() {
-    yogaEnabled = !yogaEnabled;
-  });
-  deprivationCheckbox.changed(function() {
-    deprivationEnabled = !deprivationEnabled;
-  });
-  dramaCheckbox.changed(function() {
-    dramaEnabled = !dramaEnabled;
-  });
-  sexCheckbox.changed(function() {
-    sexEnabled = !sexEnabled;
-  });
-  meditationCheckbox.changed(function() {
-    meditationEnabled = !meditationEnabled;
-  });
-
-
-  saveTgotchiGroups.mouseClicked(function() {
-
-    mindwipeCheckbox.remove();
-    emdrCheckbox.remove();
-    psoasCheckbox.remove();
-    asmrCheckbox.remove();
-    reliquificationCheckbox.remove();
-    treCheckbox.remove();
-    longfinEelsCheckbox.remove();
-    cbtCheckbox.remove();
-    yogaCheckbox.remove();
-    deprivationCheckbox.remove();
-    dramaCheckbox.remove();
-    sexCheckbox.remove();
-    meditationCheckbox.remove();
-
-    userData.community = {
-      mindwipe: mindwipeEnabled,
-      emdr: emdrEnabled,
-      psoas: psoasEnabled,
-      asmr: asmrEnabled,
-      reliquification: reliquificationEnabled,
-      tre: treEnabled,
-      longfinEels: longfinEelsEnabled,
-      cbt: cbtEnabled,
-      yoga: yogaEnabled,
-      deprivation: deprivationEnabled,
-      drama: dramaEnabled,
-      sex: sexEnabled,
-      meditation: meditationEnabled
-    };
-
-    createTgotchiNode();
-
-    setTimeout(function() {
-      state = 'mainMenu';
-    }, 750);
-  })
 }
 
 function cameraControl() {

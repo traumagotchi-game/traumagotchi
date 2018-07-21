@@ -13,7 +13,7 @@
 	<meta name="msapplication-TileColor" content="#000000">
 	<meta name="theme-color" content="#000000">
 
-	<title>PLAY TRAUMAGOTCHI</title>
+	<title>SHRINE TRAUMAGOTCHI</title>
 
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/flexbox.css">
@@ -26,8 +26,8 @@
 	<!-- <script src="libraries/p5.play.js"></script> -->
 	<script src="js/decisionTree.js"></script>
 	<script src="js/gameManager.js"></script>
-	<script src="js/play.js"></script>
-	<script src="js/graphics.js"></script>
+	<script src="js/shrine.js"></script>
+	<script src="js/graphicsBAC.js"></script>
 	<script src="js/load.js"></script>
 
 	<script src="libraries/spritoon.js"></script>
@@ -97,20 +97,20 @@
 			<div class="" id="rightColumn">
 
 				<ul class="topMenu">
-					<li id="loginStatus">not logged in</li>
-					<li id="pointStats"></li>
+					<li id="loginStatus">logged in as ANXIETYXXL</li>
+					<li id="pointStats">433 points</li>
 					<li id="logout"><a href="index.html" class="chartreuseLink">logout</a></li>
 				</ul>
 
 				<div id="loginMenu">
-					<!-- <p>login</p> -->
+
 					<p>traumagotchi name: <input type="text" name="tname" id="name" placeholder="｡.｡:+♡*"></p>
 					<p>soothed by: <input type="text" name="password" id="passwordInput" placeholder="♩♪♩♬"></p>
 					<button type="button" id="login">LOGIN</button>
 				</div>
 				<div class="buttonMenu" id="careMenu">
 					<button type="button" id="menuTitle" style="display: none;"></button>
-					<button type="button" id="menuItem0">shrine</button>
+					<button type="button" id="menuItem0" style="border: 2px solid #ACD02D;">shrine</button>
 					<button type="button" id="menuItem1">community</button>
 					<button type="button" id="menuItem2">care</button>
 					<button type="button" id="menuItem3">play</button>
@@ -118,93 +118,6 @@
 					<button type="button" id="menuItem1">rest</button>
 					<button type="button" id="menuItem2">bathe</button>
 					<button type="button" id="menuItem3">play</button> -->
-				</div>
-				<div class="blackDiv" id="communityMenu" class="communityMenu">
-					<!-- <div class="" id="divMenu1"> -->
-						<p>These groups are private to Traumagotchi only. Humans may not view content of the chatrooms.</p>
-						<!-- <p style="font-size: 12px;">click one or more</p> -->
-						<div class="align-left" id="communityCheckboxes" class="myCheckbox">
-							<!-- <label class="myCheckbox">
-								<input type="checkbox" id="mindwipeCheckbox" name="mindwipe" value="mindwipe">
-								<span class="checkmark"></span>
-								</label>
-							<label for="mindwipe">Mindwipe Consortium</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="emdrCheckbox" name="emdr" value="emdr">
-								<span class="checkmark"></span>
-							</label>
-							<label for="emdr">EMDR Playground</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="psoasCheckbox" name="psoas" value="psoas">
-								<span class="checkmark"></span>
-							</label>
-							<label for="psoas">Psoas Release</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="asmrCheckbox" name="asmr" value="asmr">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="asmr">ASMR</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="reliquificationCheckbox" name="reliquification" value="reliquification">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="reliquification">Reliquification</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="treCheckbox" name="tre" value="tre">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="tre">TRE: Trauma Release Exercises</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="longfinEelsCheckbox" name="longfinEels" value="longfinEels">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="longfinEels">Longfin Eels</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="cbtCheckbox" name="cbt" value="cbt">
-								<span class="checkmark"></span>
-							</label>
-							<label for="cbt">Talk and CBT</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="yogaCheckbox" name="yoga" value="yoga">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="yoga">Trauma-informed Yoga</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="deprivationCheckbox" name="deprivation" value="deprivation">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="deprivation">Sensory Deprivation Orb</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="dramaCheckbox" name="drama" value="drama">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="drama">Making new memories: Drama Therapy</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="sexCheckbox" name="sex" value="sex">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="sex">Orgasmic Sludge</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="meditationCheckbox" name="meditation" value="meditation">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="meditation">Meditation and grounding</label><br> -->
-
-						</div>
-						<button type="button" id="saveTgotchiGroups">Sign up</button>
-					<!-- </div> -->
 				</div>
 				<div class="blackDiv" id="gameMenu">
 					<!-- <div id="playInstructions">

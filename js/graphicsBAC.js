@@ -522,8 +522,8 @@ function displayShrineCenter() {
 
   let shrineTgotchiDiameter = 20;
   let jMax = 4;
-  // let iMax = 5; // for BAC
-  let iMax = 18;
+  let iMax = 5; // for BAC
+  // let iMax = 18;
 
   for (var j = 0; j < jMax; j++) {
     push();

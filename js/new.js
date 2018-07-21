@@ -41,6 +41,7 @@ let cam360 = 0;
 let database;
 let keys;
 let tgotchiData;
+let tgotchiDataArray;
 let frameCounter = 0;
 
 // dom
@@ -71,6 +72,7 @@ let divMenu2;
 let divMenu3;
 let divMenu4;
 let divMenu5;
+let divMenu6;
 
 // menu0
 let pixelColor = [0, 255, 0];
@@ -106,24 +108,53 @@ let below = false;
 let userName;
 let userData;
 
-let song;
+let song1;
 let sound_click;
 let sound_fizzDown_hiPitch;
+let songs = [song1, sound_click, sound_fizzDown_hiPitch];
+let totalSongs = 3;
+let loading = true;
+let counter = 0;
 
-function preload() {
-  // L O A D A U D I O
-  song = loadSound('assets/audio/music/EagleInk_Aja_loop.mp3');
-  sound_click = loadSound('assets/audio/sfx/click.mp3');
-  sound_fizzDown_hiPitch = loadSound('assets/audio/sfx/fizzDown_hiPitch.mp3');
+let angle = 0;
+
+// function soundLoaded(song) {
+//   // L O A D A U D I O
+//   song1 = song;
+//   song1.loop();
+//   song1.setVolume(0.3);
+//   loading = false;
+//   // sound_click = loadSound('assets/audio/sfx/click.mp3');
+//   // sound_fizzDown_hiPitch = loadSound('assets/audio/sfx/fizzDown_hiPitch.mp3');
+// }
+
+function loadItem(index, filename) {
+  loadSound(filename, soundLoaded);
+
+  function soundLoaded(sound) {
+    // console.log(index + ' ' + filename);
+    songs[index] = sound;
+    counter++;
+
+    if (counter == 3) {
+      songs[0].loop();
+      loading = false;
+    }
+  }
 }
 
 function setup() {
+  loadItem(0, 'assets/audio/music/EagleInk_Aja_loop.mp3');
+  loadItem(1, 'assets/audio/sfx/click.mp3');
+  loadItem(2, 'assets/audio/sfx/fizzDown_hiPitch.mp3');
+  // song1 = loadSound('assets/audio/music/EagleInk_Aja_loop.mp3', soundLoaded);
+  // sound_click = loadSound('assets/audio/sfx/click.mp3', soundLoaded);
 
-  song.loop();
-  song.setVolume(0.3);
-  sound_click.setVolume(0.4);
-  sound_fizzDown_hiPitch.setVolume(0.2);
-  playBGmusic();
+  // song1.loop();
+
+  // sound_click.setVolume(0.4);
+  // sound_fizzDown_hiPitch.setVolume(0.2);
+  // playBGmusic();
 
   // click.playMode('restart');
 
@@ -157,7 +188,7 @@ function setup() {
 
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function() {
-      sound_click.play();
+      songs[1].play();
     });
   }
 
@@ -246,6 +277,7 @@ function setup() {
   divMenu3 = select("#divMenu3");
   divMenu4 = select("#divMenu4");
   divMenu5 = select("#divMenu5");
+  divMenu6 = select("#divMenu6");
 
   gameIntroOverlay = document.querySelector("#gameIntroOverlay");
 
@@ -253,7 +285,7 @@ function setup() {
   sliderSize = select("#sliderSize");
 
   inputName = select("#name");
-  inputPassword = select("#password");
+  inputPassword = select("#passwordInput");
   saveButton = select("#saveTgotchi");
 
   saveButton.mouseClicked(saveTgotchiData);
@@ -308,54 +340,74 @@ function WidthChange(mq) {
 }
 
 function draw() {
-  // background(0, 0, 0);
-  background(180, 360, 25);
 
-  cameraControl();
 
-  drawGrid();
+  if (loading) {
+    // background(0, 0, 0);
+    //     stroke (0,255,0);
+    //     noFill ();
+    //     rect (0,0,200,20);
+    //
+    //     noStroke ();
+    //     fill (255,100);
+    //     var w = 200 * counter/ totalSongs;
+    //     rect (0,0,w,20);
+    background(0);
+    rotate(angle);
+    strokeWeight(4);
+    stroke(0, 255, 0);
+    line(0, 0, 150, 0);
+    angle += 0.2;
 
-  // displayCapture();
+  } else {
 
-  if (!userData) {
+    background(0);
 
-    if (webcamUsable === undefined) {
-      // console.log('wait for webcam')
-    } else if (webcamUsable === false) {
-      // console.log('webcam access not allowed')
-      createRandomGraphics();
-    } else {
-      // console.log('webcam access granted!')
+    cameraControl();
+
+    drawGrid();
+
+    // displayCapture();
+
+    if (!userData) {
+
+      if (webcamUsable === undefined) {
+        // console.log('wait for webcam')
+      } else if (webcamUsable === false) {
+        // console.log('webcam access not allowed')
+        createRandomGraphics();
+      } else {
+        // console.log('webcam access granted!')
+
+        captureWebcamGraphics();
+
+      }
+    } else if (irlRl && webcamUsable) {
+
+      // // strobe effect
+      //   // displayRealLife = !displayRealLife;
+      //     if (frameCount % 2 ==== 0) {
+      //       displayRealLife = !displayRealLife;
+      //     }
+      //     if (displayRealLife) {
+      //       displayCapture();
+      //     }
+
+      displayCapture();
 
       captureWebcamGraphics();
 
+    } else {
+      drawTgotchiGraphics(); // if menu0
     }
-  } else if (irlRl && webcamUsable) {
-
-    // // strobe effect
-    //   // displayRealLife = !displayRealLife;
-    //     if (frameCount % 2 ==== 0) {
-    //       displayRealLife = !displayRealLife;
-    //     }
-    //     if (displayRealLife) {
-    //       displayCapture();
-    //     }
-
-    displayCapture();
-
-    captureWebcamGraphics();
-
-  } else {
-    drawTgotchiGraphics(); // if menu0
+    buildTgotchi();
   }
-
-  buildTgotchi();
-
 }
 
+
 function playBGmusic() {
-  if (!song.isPlaying()) {
-    song.play();
+  if (!song1.isPlaying()) {
+    songs[0].play();
   }
 }
 
@@ -403,67 +455,40 @@ function cameraControl() {
   switch (state) {
     case 'menu0':
       defaultCamera();
-
       break;
     case 'menu1':
-
-      // cameraZ = 0;
-      // if (cam360 <= 360) {
-      //   camSceneCenterX += cam360;
-      //   cam360++;
-      // }
       moveCamera(width / 10, width / 15, cameraZ);
-
       break;
     case 'menu2':
       moveGrid = true;
       // zoom in & place at bottom right
-
       moveCamera(width / 5, width / 5, width / 4);
-
       break;
     case 'menu3':
       moveGrid = false;
-
       moveCamera(-width / 7, -width / 10, width / 3, .05);
-      // if (cameraZ <= width / 3) {
-      //   cameraZ += ((width / 3 + .1) - cameraZ) * .02;
-      // }
-      // // place at center-ish
-      // if (cameraX >= -width / 8) {
-      //   cameraX += ((-width / 8 - .1) - cameraX) * .02;
-      // }
-      // if (cameraY >= -width / 10) {
-      //   cameraY += (-width / 10 - .1) * .02;
-      // }
       break;
     case 'menu4':
       // defaultCamera();
       moveCamera(0, 0, (height / 2) / tan(PI / 6), .04);
-      // if (cameraZ <= (height / 2) / tan(PI / 6)) {
-      //   cameraZ += (((height / 2) / tan(PI / 6) + .01) - cameraZ) * .04;
-      // }
-      // // place at center-ish
-      // if (cameraX <= 0) {
-      //   cameraX += (0.1 - cameraX) * .04;
-      // }
-      // if (cameraY <= 0) {
-      //   cameraY += (0.1 - cameraY) * .04;
-      // }
       break;
     case 'menu5':
-      if (east) {
-        if (cameraZ >= width / 3) {
-          cameraZ += ((width / 3 - .1) - cameraZ) * .02;
-        }
-        // place at bottom right
-        if (cameraX >= -width / 4) {
-          cameraX += ((-width / 4 - .1) - cameraX) * .1;
-        }
-        // if (cameraY <= width / 5) {
-        //   cameraY += ((width / 5 + .1) - cameraY) * .1;
-        // }
-      }
+      // if (east) {
+      //   if (cameraZ >= width / 3) {
+      //     cameraZ += ((width / 3 - .1) - cameraZ) * .02;
+      //   }
+      //   // place at bottom right
+      //   if (cameraX >= -width / 4) {
+      //     cameraX += ((-width / 4 - .1) - cameraX) * .1;
+      //   }
+      //   // if (cameraY <= width / 5) {
+      //   //   cameraY += ((width / 5 + .1) - cameraY) * .1;
+      //   // }
+      // }
+      break;
+    case 'menu6':
+      moveGrid = true;
+      moveCamera(0, width / 9, (height / 2) / tan(PI / 6) - 133, .04);
       break;
     case '360':
       cameraZ = 0;
@@ -495,39 +520,39 @@ function cameraControl() {
 }
 
 function writeConsoleStory(state) {
-  // could make this cleaner by storing steps as object keys rather than array indexes
-  switch (state) {
-    case 'menu0':
-      step = 0;
-      break;
-    case 'menu1':
-      step = 3;
-      break;
-    case 'menu2':
-      step = 4;
-      break;
-    case 'menu3':
-      step = 3;
-      break;
-    default:
-      // make default a blank step
-      step = 3;
-  }
-
-  consoleText.html(stepTextArray[step].text);
-  if (stepTextArray[step].end) {
-    consoleNext.html("");
-  } else {
-    consoleNext.html(">");
-  }
-
-  consoleNext.mouseClicked(function() {
-    step++
-    consoleText.html(stepTextArray[step].text);
-    if (stepTextArray[step].end) {
-      consoleNext.html("");
-    }
-  });
+  // // could make this cleaner by storing steps as object keys rather than array indexes
+  // switch (state) {
+  //   case 'menu0':
+  //     step = 0;
+  //     break;
+  //   case 'menu1':
+  //     step = 3;
+  //     break;
+  //   case 'menu2':
+  //     step = 4;
+  //     break;
+  //   case 'menu3':
+  //     step = 3;
+  //     break;
+  //   default:
+  //     // make default a blank step
+  //     step = 3;
+  // }
+  //
+  // consoleText.html(stepTextArray[step].text);
+  // if (stepTextArray[step].end) {
+  //   consoleNext.html("");
+  // } else {
+  //   consoleNext.html(">");
+  // }
+  //
+  // consoleNext.mouseClicked(function() {
+  //   step++
+  //   consoleText.html(stepTextArray[step].text);
+  //   if (stepTextArray[step].end) {
+  //     consoleNext.html("");
+  //   }
+  // });
 
 }
 
@@ -567,17 +592,20 @@ function captureWebcamGraphics() {
   // graphics.stroke(pixelColor[0], pixelColor[1], pixelColor[2]); // if you want to make variation on color outline...
 
   let stepSize = sliderSize.value();
+
   // save data snapshot in pixel array
   pixelArray = [];
 
   for (let y = 0; y < diameter + 5.85 * stepSize; y += stepSize) {
     for (let x = 0; x < diameter + 5.85 * stepSize; x += stepSize) {
       let i = y * capture.width + x;
-      let darkness = (255 - capture.pixels[i * 4]) / 255;
-      let radius = stepSize * darkness;
-      graphics.rectMode(CENTER);
-      graphics.rect(x, y, radius, radius);
-      pixelArray.push([x, y, radius]);
+      if (capture.pixels[i * 4]) {
+        let darkness = (255 - capture.pixels[i * 4]) / 255;
+        let radius = stepSize * darkness;
+        graphics.rectMode(CENTER);
+        graphics.rect(x, y, radius, radius);
+        pixelArray.push([x, y, radius]);
+      }
     }
   }
 }
@@ -643,7 +671,10 @@ function buildTgotchi() {
   } else if (state === 'menu5') {
 
     displayTgotchi();
-    castCircle();
+  } else if (state === 'menu6') {
+
+    displayTgotchi();
+    // castCircle();
   }
 }
 
@@ -865,8 +896,6 @@ function menu4() {
       // add to userData object
       userData.password = passwordInput.value();
 
-
-      console.log(userData);
       setTimeout(function() {
         state = 'menu5';
         menu5();
@@ -879,50 +908,60 @@ function menu5() {
   writeConsoleStory(state);
   // remove original menu
 
+  document.querySelector("#tgotchiComplete").innerHTML = `Your Traumagotchi, ${userName}, is soothed by ${userData.password}.`
+
+
   divMenu4.remove();
 
   divMenu5.show();
 
-  let emailInput = select("#emailInput");
+  // let emailInput = select("#emailInput");
+  // userData.email = emailInput.value();
 
-  userData.email = emailInput.value();
+
+
+
+
+  let agreeButton = select("#agreeButton");
+
+
+  agreeButton.mouseClicked(function() {
+    setTimeout(function() {
+      state = 'menu6';
+      menu6();
+    }, 750);
+  })
+
+  // or if we want to bypass cast circle:
+  // let nowPlay = select("#nowPlay");
+  // nowPlay.mouseClicked(function() {
+  //   // // comment out to disable pushing to firebase
+  //   createTgotchiNode();
+  //   window.location.href = 'play.html';
+  // })
+}
+
+function menu6() {
+  writeConsoleStory(state);
+  // remove original menu
+
+  divMenu5.remove();
+
+  divMenu6.show();
+
+
+
+
   userData.actionsHourly = [{
     action: 'none'
   }];
   userData.actionsFiveMinutes = [{
     action: 'none'
   }];
-
-  document.querySelector("#tgotchiComplete").innerHTML = `Your Traumagotchi, ${userName}, is soothed by ${userData.password}.`
-
-  let eastButton = select("#saveEast");
-  let southButton = select("#saveSouth");
-  let westButton = select("#saveWest");
-  let northButton = select("#saveNorth");
-  let belowButton = select("#saveBelow");
-  let aboveButton = select("#saveAbove");
-
-
-  //
-  // eastButton.mousePressed(function() {
-  //   east = true;
-  // });
-  // southButton.mousePressed(function() {
-  //   east = true;
-  // });
-  // westButton.mousePressed(function() {
-  //   east = true;
-  // });
-  // northButton.mousePressed(function() {
-  //   east = true;
-  // });
-  // belowButton.mousePressed(function() {
-  //   east = true;
-  // });
-  // aboveButton.mousePressed(function() {
-  //   east = true;
-  // });
-
+  // lark: add chatrooms here
+  userData.chatrooms = [{
+    emdr: 'false'
+  }];
 
   let nowPlay = select("#nowPlay");
   nowPlay.mouseClicked(function() {
@@ -931,3 +970,60 @@ function menu5() {
     window.location.href = 'play.html';
   })
 }
+
+// cast circle menu
+// function menu6() {
+//   writeConsoleStory(state);
+//   // remove original menu
+//
+//   divMenu5.remove();
+//
+//   divMenu6.show();
+//
+//   let eastButton = select("#saveEast");
+//   let southButton = select("#saveSouth");
+//   let westButton = select("#saveWest");
+//   let northButton = select("#saveNorth");
+//   let belowButton = select("#saveBelow");
+//   let aboveButton = select("#saveAbove");
+//
+//
+//   //
+//   // eastButton.mousePressed(function() {
+//   //   east = true;
+//   // });
+//   // southButton.mousePressed(function() {
+//   //   east = true;
+//   // });
+//   // westButton.mousePressed(function() {
+//   //   east = true;
+//   // });
+//   // northButton.mousePressed(function() {
+//   //   east = true;
+//   // });
+//   // belowButton.mousePressed(function() {
+//   //   east = true;
+//   // });
+//   // aboveButton.mousePressed(function() {
+//   //   east = true;
+//   // });
+//
+//
+//   userData.actionsHourly = [{
+//     action: 'none'
+//   }];
+//   userData.actionsFiveMinutes = [{
+//     action: 'none'
+//   }];
+//   // lark: add chatrooms here
+//   userData.chatrooms = [{
+//     emdr: 'false'
+//   }];
+//
+//   let nowPlay = select("#nowPlay");
+//   nowPlay.mouseClicked(function() {
+//     // // comment out to disable pushing to firebase
+//     createTgotchiNode();
+//     window.location.href = 'play.html';
+//   })
+// }

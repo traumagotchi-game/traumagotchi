@@ -155,7 +155,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
         if (!sound_snake_1.isPlaying()) {
           sound_snake_0.stop();
           sound_snake_1.loop();
-          console.log(`sound not playing so loop()`)
           // sound_snake_1.loop();
         }
         direction = 'up';
@@ -164,7 +163,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
     if (isOverDownArrow) {
       if (direction != 'up') {
         if (!sound_snake_1.isPlaying()) {
-          console.log(`sound not playing so loop & play`)
           // sound_snake_1.loop();
           sound_snake_0.stop();
           sound_snake_1.loop();
@@ -177,7 +175,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
         if (!sound_snake_0.isPlaying()) {
           sound_snake_1.stop();
           sound_snake_0.loop();
-          console.log(`not is playing so play`)
         }
         if (direction != 'right') {
           direction = 'left';
@@ -190,7 +187,6 @@ let snakeGameInstance = function(p) { // p could be any variable name
         if (!sound_snake_0.isPlaying()) {
           sound_snake_1.stop();
           sound_snake_0.loop();
-          console.log(`not is playing so play`)
         }
         direction = 'right';
       }

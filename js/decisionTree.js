@@ -3,6 +3,38 @@
 let tree = [{
     key: 'initial',
     choices: [{
+      display: 'shrine',
+      nextKey: 'shrine_0', // or initial
+      action: function() {
+        shrineTgotchiX = -200;
+        stateChange('shrine');
+      }
+    }, {
+      display: 'community',
+      nextKey: 'community_0', // or initial
+      action: function() {
+        communitySignup();
+        stateChange('community');
+      }
+    }, {
+      display: 'care',
+      nextKey: 'care_0',
+      action: function() {
+        stateChange('care');
+      }
+    }, {
+      display: 'play',
+      nextKey: 'initial',
+      action: function() {
+        // lark: consolidate code: pull state = 'game' out of init funcitons for game
+        selectGames();
+        initGameBank();
+      }
+    }]
+  },
+  {
+    key: 'care_0',
+    choices: [{
       display: 'eat',
       nextKey: 'eat_0',
       action: function() {}
@@ -14,13 +46,6 @@ let tree = [{
       display: 'bathe',
       nextKey: 'bathe_0',
       action: function() {}
-    }, {
-      display: 'play',
-      nextKey: 'initial',
-      action: function() {
-        selectGames();
-        initGameBank();
-      }
     }]
   },
   {
@@ -388,92 +413,91 @@ let tree = [{
       },
     ]
   },
-
-  {
-    key: 'play_0',
-    choices: [{
-      display: 'HTML5 games',
-      nextKey: 'play_00',
-      action: function() {
-
-      }
-    }, {
-      display: 'P5 games',
-      nextKey: 'play_01',
-      action: function() {
-
-      }
-    }, {
-      display: 'p5template',
-      nextKey: 'initial',
-      action: function() {
-        initP5templateGame();
-      }
-    }, {
-      display: 'breakout',
-      nextKey: 'initial',
-      action: function() {
-        initBreakoutGame();
-      }
-    }]
-  },
-  {
-    key: 'play_00',
-    choices: [{
-      display: 'collapse',
-      nextKey: 'initial',
-      action: function() {
-        initCollapseGame();
-      }
-    }, {
-      display: 'platform drop',
-      nextKey: 'initial',
-      action: function() {
-        initPlatformDropGame();
-      }
-    }, {
-      display: 'GAME BANK',
-      nextKey: 'initial',
-      action: function() {
-        selectGames();
-        initGameBank();
-      }
-    }, {
-      display: 'in dev',
-      nextKey: 'initial',
-      action: function() {
-
-      }
-    }]
-  },
-  {
-    key: 'play_01',
-    choices: [{
-      display: 'SCHMUP',
-      nextKey: 'initial',
-      action: function() {
-        initSchmupGame();
-      }
-    }, {
-      display: 'wacky mole',
-      nextKey: 'initial',
-      action: function() {
-        initWackymoleGame();
-      }
-    }, {
-      display: 'PLUCK',
-      nextKey: 'initial',
-      action: function() {
-        initPluckGame();
-      }
-    }, {
-      display: 'SNAKE',
-      nextKey: 'initial',
-      action: function() {
-        initSnakeGame();
-      }
-    }]
-  },
+  // {
+  //   key: 'play_0',
+  //   choices: [{
+  //     display: 'HTML5 games',
+  //     nextKey: 'play_00',
+  //     action: function() {
+  //
+  //     }
+  //   }, {
+  //     display: 'P5 games',
+  //     nextKey: 'play_01',
+  //     action: function() {
+  //
+  //     }
+  //   }, {
+  //     display: 'p5template',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initP5templateGame();
+  //     }
+  //   }, {
+  //     display: 'breakout',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initBreakoutGame();
+  //     }
+  //   }]
+  // },
+  // {
+  //   key: 'play_00',
+  //   choices: [{
+  //     display: 'collapse',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initCollapseGame();
+  //     }
+  //   }, {
+  //     display: 'platform drop',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initPlatformDropGame();
+  //     }
+  //   }, {
+  //     display: 'GAME BANK',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       selectGames();
+  //       initGameBank();
+  //     }
+  //   }, {
+  //     display: 'in dev',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //
+  //     }
+  //   }]
+  // },
+  // {
+  //   key: 'play_01',
+  //   choices: [{
+  //     display: 'SCHMUP',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initSchmupGame();
+  //     }
+  //   }, {
+  //     display: 'wacky mole',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initWackymoleGame();
+  //     }
+  //   }, {
+  //     display: 'PLUCK',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initPluckGame();
+  //     }
+  //   }, {
+  //     display: 'SNAKE',
+  //     nextKey: 'initial',
+  //     action: function() {
+  //       initSnakeGame();
+  //     }
+  //   }]
+  // },
   {
     key: 'howOften',
     choices: [{
@@ -690,7 +714,7 @@ function congratsAlert(_type, _numberPoints) {
 
 // functions for key eat_00
 function chortle() {
-  
+
   writeToConsoleBool = true;
   writeConsoleText(`chortle!!!`);
 

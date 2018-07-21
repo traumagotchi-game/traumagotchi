@@ -8,9 +8,6 @@ function selectGames() {
   game1 = random(games);
   findGame2();
 
-  // console.log(game1);
-  // console.log(game2);
-  // console.log(game3);
 }
 
 // initialize game back and start first game;
@@ -135,7 +132,7 @@ function initP5templateGame() {
 
   p5templateGame.stage = 'intro';
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
 
   drawIntroBGBool = true;
 
@@ -182,7 +179,7 @@ function initPluckGame() {
 
   pluckGame.stage = 'intro';
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
 
   drawIntroBGBool = true;
 
@@ -230,7 +227,7 @@ function initSnakeGame() {
 
   snakeGame.stage = 'intro';
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
 
   drawIntroBGBool = true;
 
@@ -275,7 +272,7 @@ function initSchmupGame() {
   schmupGame.stage = 'intro';
   drawIntroBGBool = true;
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
 
   displayGameTitle(`SCHMUP`, `Instructions: Press mouse to launch pink-defense`);
 
@@ -322,7 +319,7 @@ function initWackymoleGame() {
 
   wackymoleGame.stage = 'intro';
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
   drawIntroBGBool = true;
   displayGameTitle(`WACKYMOLE`, `Instructions: Click to wacky'em`);
 
@@ -364,7 +361,7 @@ function initBreakoutGame() {
 
   breakoutGame.stage = 'intro';
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
   drawIntroBGBool = true;
 
   displayGameTitle(`BREAKOUT`, `Instructions: Classic.`);
@@ -407,7 +404,7 @@ function initCollapseGame() {
   collapseGameCanvas.style.visibility = "visible";
 
   // hide care menu with state change
-  state = 'game';
+  stateChange('game');
 
   collapseGame.stage = 'intro';
   drawIntroBGBool = true;
@@ -452,7 +449,7 @@ function initPlatformDropGame() {
 
   console.log(`platform drop level is ${platformDropGame.level}`);
 
-  state = 'game';
+  stateChange('game');
   platformDropGame.stage = 'intro';
   drawIntroBGBool = true;
   displayGameTitle(`PLATFORM DROP`, `Instructions: Click on PINK blocks to guide your Gotchi to the prize.`);
@@ -522,7 +519,7 @@ function endGame(_game, _gameCanvas) {
     timer.style.display = "none";
 
     // console.log(`${_game} stage is ${_game.stage}`)
-    state = 'care';
+    stateChange('mainMenu');
     _gameCanvas.style.visibility = "hidden";
   }
 }

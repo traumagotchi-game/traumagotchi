@@ -3,10 +3,9 @@
 function gotData(data) {
   // need to retrieve firebase data with val() method
   tgotchiData = data.val();
+  tgotchiDataArray = Object.values(tgotchiData);
   // create array of keys (traumagotchi names)
   keys = Object.keys(tgotchiData);
-  // console.log(tgotchiData);
-  // console.log(keys);
 }
 
 function errData(err) {
@@ -38,7 +37,7 @@ function saveTgotchiData() {
       // }
       // console.log(date);
       userName = inputName.value();
-      sound_fizzDown_hiPitch.play();
+      songs[2].play();
       // // create json for data
       userData = {
         // name: inputName.value(),
