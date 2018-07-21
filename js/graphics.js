@@ -201,10 +201,10 @@ function displayShrineTgotchi(_tgotchi) {
     drawFlatGotchi();
   }
 
-  let shrineTgotchiDiameter = diameter / 5;
+  let shrineTgotchiDiameter = diameter * .23;
 
   push();
-  translate(shrineTgotchiX, 25, 300);
+  translate(shrineTgotchiX, 20, 300);
   // translate(-33, 25, 300);
   rotateX(angleTgotchi);
   rotateZ(angleTgotchi * 1.2);

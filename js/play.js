@@ -1058,7 +1058,7 @@ function stateChange(_state) {
         y.style.animation = "fadeout 1s";
       }
       setTimeout(function() {
-        y.style.background = "url(../assets/backgrounds/bg_staticGrid_1.png)";
+        y.style.background = "url(../assets/backgrounds/bg_staticGrid_0.png)";
         // y.style.background = "#ff0000";
         y.style.animation = "fadein 1s";
       }, 100);

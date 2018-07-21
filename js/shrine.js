@@ -278,8 +278,8 @@ function preload() {
   machineWorldFeelingsCompostShrineCenter = loadModel('assets/threeD/crystals.obj')
 
   // // L O A D A U D I O
-  song_B2 = loadSound('assets/audio/music/B2_Aja_loop.mp3');
-  song_universalBass = loadSound('assets/audio/music/UniversalBass_Aja_loop_fadeIn.mp3');
+  // song_B2 = loadSound('assets/audio/music/B2_Aja_loop.mp3');
+  // song_universalBass = loadSound('assets/audio/music/UniversalBass_Aja_loop_fadeIn.mp3');
   sound_click = loadSound('assets/audio/sfx/click.mp3');
   sound_thud1 = loadSound('assets/audio/sfx/thud1.mp3');
   sound_thud2 = loadSound('assets/audio/sfx/thud2.mp3');
@@ -832,9 +832,9 @@ function draw() {
 
 
 
-  if (song_B2.buffer && song_universalBass.buffer) {
-    playBGmusic();
-  }
+  // if (song_B2.buffer && song_universalBass.buffer) {
+  //   // playBGmusic();
+  // }
 
   switch (state) {
     case 'login':
