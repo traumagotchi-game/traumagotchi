@@ -103,7 +103,7 @@ let graphicsGrid;
 let graphicsBG;
 let graphicsBGArray = [];
 let graphicsCharm;
-let graphicsCrystal;
+let graphicsShrineText;
 
 let moveGrid = false;
 
@@ -621,7 +621,7 @@ function setup() {
 
   graphicsCharm = createGraphics(diameter / 2, diameter / 2);
 
-  graphicsCrystal = createGraphics(diameter * 4, diameter * 4.5);
+  graphicsShrineText = createGraphics(diameter * 4, diameter * 4.5);
 
   // initialize bg graphics array
   for (let i = 0; i < 32; i++) {

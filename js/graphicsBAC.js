@@ -243,15 +243,15 @@ function displayShrineTgotchi(_tgotchi) {
 
 function drawCrystalGraphics() {
 
-  // graphicsCrystal.background(200, 100, 0);
-  graphicsCrystal.background(0, 10, 0);
-  // graphicsCrystal.clear();
+  // graphicsShrineText.background(200, 100, 0);
+  graphicsShrineText.background(0, 10, 0);
+  // graphicsShrineText.clear();
 
-  graphicsCrystal.strokeWeight(0);
-  graphicsCrystal.fill(0, 255, 0);
+  graphicsShrineText.strokeWeight(0);
+  graphicsShrineText.fill(0, 255, 0);
 
-  // graphicsCrystal.stroke(0, 255, 0);
-  // graphicsCrystal.rect(0, 0, 20, 20)
+  // graphicsShrineText.stroke(0, 255, 0);
+  // graphicsShrineText.rect(0, 0, 20, 20)
   let strArray = [`if (newlyFallenSnow === true) {
   let state = cleanSlate;
   if (traumaGrid.slimeShard === 1 && traumaGrid.sourNectar === 1) {
@@ -328,21 +328,21 @@ function traumaDissolve(){
 
 
 
-  graphicsCrystal.text(machineWorldText, 0, 0, graphicsCrystal.width, graphicsCrystal.height);
+  graphicsShrineText.text(machineWorldText, 0, 0, graphicsShrineText.width, graphicsShrineText.height);
 
-  // graphicsCrystal.background(userData.tgotchiImage.backgroundColor[0], userData.tgotchiImage.backgroundColor[1], userData.tgotchiImage.backgroundColor[2]);
+  // graphicsShrineText.background(userData.tgotchiImage.backgroundColor[0], userData.tgotchiImage.backgroundColor[1], userData.tgotchiImage.backgroundColor[2]);
   //
   //
-  // graphicsCrystal.fill(userData.tgotchiImage.pixelColor[0], userData.tgotchiImage.pixelColor[1], userData.tgotchiImage.pixelColor[2]);
-  // graphicsCrystal.noStroke();
-  // // graphicsCrystal.stroke(userData.tgotchiImage.pixelColor[0], userData.tgotchiImage.pixelColor[1], userData.tgotchiImage.pixelColor[2]);
+  // graphicsShrineText.fill(userData.tgotchiImage.pixelColor[0], userData.tgotchiImage.pixelColor[1], userData.tgotchiImage.pixelColor[2]);
+  // graphicsShrineText.noStroke();
+  // // graphicsShrineText.stroke(userData.tgotchiImage.pixelColor[0], userData.tgotchiImage.pixelColor[1], userData.tgotchiImage.pixelColor[2]);
   //
   // let stepSize = userData.tgotchiImage.pixelSize;
   //
   // // pixel array is [x, y, radius] of all the different rectangles. for 3d make the radius the height....
   // userData.tgotchiImage.pixelArray.forEach(function(entry) {
-  //   graphicsCrystal.rectMode(CENTER);
-  //   graphicsCrystal.rect(entry[0], entry[1], entry[2], entry[2]);
+  //   graphicsShrineText.rectMode(CENTER);
+  //   graphicsShrineText.rect(entry[0], entry[1], entry[2], entry[2]);
   // });
 
 }
@@ -449,10 +449,10 @@ function drawShrineGrid() {
   // }
 
   push();
-  texture(graphicsCrystal);
+  texture(graphicsShrineText);
   // translate(0, 0, 0);
   translate(0, width / 9, -width * 3 / 2);
-  box(graphicsCrystal.width * 1.5, graphicsCrystal.height * 1.5);
+  box(graphicsShrineText.width * 1.5, graphicsShrineText.height * 1.5);
   pop();
 
 }
@@ -467,7 +467,7 @@ function displayShrineCenter() {
   // directionalLight(120, 200, 360, width / 2, width / 2, -100)
   //
   // specularMaterial(255);
-  // texture(graphicsCrystal);
+  // texture(graphicsShrineText);
   // normalMaterial();
   // ambientMaterial(10, 10, 10);
   ambientMaterial(0, 200, 0);
@@ -483,7 +483,7 @@ function displayShrineCenter() {
   pop();
 
 
-  texture(graphicsCrystal);
+  texture(graphicsShrineText);
 
   push();
   translate(100, -150, -250);
@@ -517,7 +517,7 @@ function displayShrineCenter() {
 
 
   // ambientMaterial(200, 100, 100);
-  // texture(graphicsCrystal);
+  // texture(graphicsShrineText);
   // texture(graphics);
 
   let shrineTgotchiDiameter = 20;
