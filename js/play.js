@@ -677,7 +677,7 @@ function setup() {
 
   //console
   consoleText = document.querySelector("#consoleText")
-  writeConsoleText(`Log into the Traumagrid. Visit the shrine or sign up for community chatrooms. Play games to earn points. With points you can schedule repetitive actions in the care menu. ミ☆`);
+  writeConsoleText(`Log into the Traumagrid. Visit the shrine. Play games to earn points. With points you can schedule repetitive actions in the care menu. ミ☆`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
