@@ -21,7 +21,6 @@ function draw2DArray(_graphics, _array, _cellWidth, _cellHeight) {
   }
 }
 
-
 function drawTgotchiGraphics() {
   graphics.background(userData.tgotchiImage.backgroundColor[0], userData.tgotchiImage.backgroundColor[1], userData.tgotchiImage.backgroundColor[2]);
 
@@ -43,6 +42,7 @@ function drawTgotchiGraphics() {
 
 function displayTgotchi() {
 
+  tgotchiDiameterController();
 
   // directionalLight(60, 200, 360, -width / 4, -width / 4, -70)
   // ambientLight(0, 0, 100)
@@ -62,7 +62,6 @@ function displayTgotchi() {
   if (!cubeEnabled && !sphereEnabled && !torusEnabled && !ringEnabled && !coneEnabled) {
     drawFlatGotchi();
   }
-
 
   push();
   translate(0, 0, 0);
@@ -88,9 +87,9 @@ function displayTgotchi() {
 
   if (ringEnabled) {
     push();
-    rotateX(PI / 2);
-    // rotateY(rotateRing);
-    rotateY(angleTgotchi * -.3);
+    // rotateX(PI / 2);
+    rotateX(PI / 4 + angleTgotchi * -0.05);
+    rotateY(angleTgotchi * -0.3);
     rotateZ(angleTgotchi * 1.1);
     torus(diameter * 1.2, diameter * 0.05, 24, 10);
     pop();
@@ -106,6 +105,17 @@ function displayTgotchi() {
     charmID = document.querySelector('input[name="charm"]:checked').value;
     displayCharm();
   }
+}
+
+function tgotchiDiameterController() {
+
+  if (!collisionActive) {
+
+  } else {
+
+    tgotchiAbsorbActionCube(executeAction, initialFrameCount, initialDiameter);
+  }
+
 }
 
 function drawShrineTgotchiGraphics(_tgotchi) {
@@ -154,7 +164,7 @@ function displayShrineTgotchi(_tgotchi) {
     writeConsoleText(`Traumagotchi named ${keys[shrineTgotchiCounter]} is visiting DeepInTheMachineWorldTraumaCompostShrine`)
   } else if (shrineTgotchiX >= 42) {
     writeToConsoleBool = true;
-    writeConsoleText(`( .⋅. shrine processing ${keys[shrineTgotchiCounter]} trauma .⋅. )`)
+    writeConsoleText(`( .⋅. shrine receives ${keys[shrineTgotchiCounter]}'s offering .⋅. )`)
   }
 
   if (!tgotchiEntryComplete) {
@@ -241,18 +251,19 @@ function displayShrineTgotchi(_tgotchi) {
 
 }
 
-function drawCrystalGraphics() {
+function drawBackgroundText() {
 
   // graphicsShrineText.background(200, 100, 0);
   graphicsShrineText.background(0, 10, 0);
   // graphicsShrineText.clear();
 
+  graphicsShrineText.textSize(16);
   graphicsShrineText.strokeWeight(0);
   graphicsShrineText.fill(0, 255, 0);
 
   // graphicsShrineText.stroke(0, 255, 0);
   // graphicsShrineText.rect(0, 0, 20, 20)
-  let strArray = [`if (newlyFallenSnow === true) {
+  let spellArray = [`if (newlyFallenSnow === true) {
   let state = cleanSlate;
   if (traumaGrid.slimeShard === 1 && traumaGrid.sourNectar === 1) {
     waterwheel += dontPanic;
@@ -263,8 +274,98 @@ function drawCrystalGraphics() {
   } else {
     mindfulOfTime++
   }
+  }
+  if (worldNight == 'descending'){
+  traumagrid.push[protectiveMask];
+  angelThoughts("don't panic", "step well");
+  } else if (forestNight == 'dawning'){
+  unveilCritter();
+  let worldTrees = [yewBranch, poplarBranch, ashBranch, sycamoreBranch];
+  }
+  pushMoreData(traumaGrid);`,
+    `if (state == cleanSlate){
+    newlyFallenSnowThaw == 'thawing';
+    charms.add(charmSatchel, charmAbacus, charmGift, charmJostle, charmSheen);
+    vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
+  }
+
+  slimeMorph('sky spirit');
+
+  for (let gentlePoise == actual; gentlePoise <= manifestCharm; gentlePoise ++){
+    holdingHandsAtSunset += gentlePoise;
+    glimpseHorizon();
+  }
+  if (worldNight == 'descending'){
+    traumagrid.push[protectiveMask];
+    angelThoughts("don't panic", "step well");
+  } else if (forestNight == 'dawning'){
+    unveilCritter();
+    let worldTrees = [yewBranch, poplarBranch, ashBranch, sycamoreBranch];
+  }
+  pushMoreData(traumaGrid);`,
+    `slimeMorph('sky spirit');
+
+  for (let clearBlueSky == actual; clearBlueSky <= manifestCharm; clearBlueSky ++){
+    skySpirit += clearBlueSky;
+    glimpseHorizon();
+  }
+  if (worldNight == 'descending'){
+    traumagrid.push[protectiveMask];
+    angelThoughts("don't panic", "step well");
+  } else if (forestNight == 'dawning'){
+    unveilCritter();
+    let worldTrees = [yewBranch, poplarBranch, ashBranch, sycamoreBranch];
+    scamperField = [auraHotSprings, auraEveningSky, auraSkyMatrix, auraCharm]
+  }
+  iluminatedManuscript.push(theSmellOfPaper, succulentNectar, charmGift)
+
+  function traumaDissolve(){
+  worldTree.add(
+    text: userInput;
+    end: true;
+  )
+  }`
+  ];
+
+
+
+  let textAnimationFrame = Math.floor(frameCount / 12);
+
+  if (textAnimationFrame != lastTextAnimationFrame) {
+    machineWorldText = random(spellArray)
+  }
+
+
+  lastTextAnimationFrame = textAnimationFrame;
+
+
+  graphicsShrineText.text(machineWorldText, 0, 0, graphicsShrineText.width, graphicsShrineText.height);
 }
-if (worldNight == 'descending'){
+
+function drawCirclingSpellText(_text) {
+
+  // graphicsShrineText.background(200, 100, 0);
+  graphicsShrineTextLarge.background(0, 10, 0);
+  // graphicsShrineTextLarge.clear();
+
+  graphicsShrineTextLarge.strokeWeight(0);
+  graphicsShrineTextLarge.fill(0, 255, 0);
+  graphicsShrineTextLarge.textSize(14);
+
+  // graphicsShrineTextLarge.stroke(0, 255, 0);
+  // graphicsShrineTextLarge.rect(0, 0, 20, 20)
+  let spellArray = [`if (newlyFallenSnow === true) {
+  let state = cleanSlate;
+  if (traumaGrid.slimeShard === 1 && traumaGrid.sourNectar === 1) {
+    waterwheel += dontPanic;
+    glimpseHorizon(mindfulnessCheck, sacredKey, theSmellOfPaper, angelThoughts, oasisBreeze);
+  } else if (traumaGrid.protectiveMask){
+    unveilCritter();
+    ringOfKeys.hypocaust.transmigrationShard[forestNight]();
+  } else {
+    mindfulOfTime++
+  }
+}`, `if (worldNight == 'descending'){
   traumagrid.push[protectiveMask];
   angelThoughts("don't panic", "step well");
 } else if (forestNight == 'dawning'){
@@ -272,28 +373,22 @@ if (worldNight == 'descending'){
   let worldTrees = [yewBranch, poplarBranch, ashBranch, sycamoreBranch];
 }
 pushMoreData(traumaGrid);`,
-  `if (state == cleanSlate){
-    newlyFallenSnowThaw == 'thawing';
-    charms.add(charmSatchel, charmAbacus, charmGift, charmJostle, charmSheen);
-    vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
-  }
-
-slimeMorph('sky spirit');
-
-for (let gentlePoise == actual; gentlePoise <= manifestCharm; gentlePoise ++){
-    holdingHandsAtSunset += gentlePoise;
-    glimpseHorizon();
+    `
+if (gentlePoise <= manifestCharm){
+  gentlePoise++;
+  glimpseHorizon();
 }
-if (worldNight == 'descending'){
-    traumagrid.push[protectiveMask];
-    angelThoughts("don't panic", "step well");
-} else if (forestNight == 'dawning'){
+
+vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
+charms.add(charmSatchel, charmAbacus, charmGift, charmJostle, charmSheen);
+vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
+
+slimeMorph('sky spirit');`, `else if (forestNight == 'dawning'){
     unveilCritter();
     let worldTrees = [yewBranch, poplarBranch, ashBranch, sycamoreBranch];
 }
 pushMoreData(traumaGrid);`,
-`slimeMorph('sky spirit');
-
+    `slimeMorph('sky spirit');
 for (let clearBlueSky == actual; clearBlueSky <= manifestCharm; clearBlueSky ++){
     skySpirit += clearBlueSky;
     glimpseHorizon();
@@ -306,44 +401,20 @@ if (worldNight == 'descending'){
     let worldTrees = [yewBranch, poplarBranch, ashBranch, sycamoreBranch];
     scamperField = [auraHotSprings, auraEveningSky, auraSkyMatrix, auraCharm]
 }
-iluminatedManuscript.push(theSmellOfPaper, succulentNectar, charmGift)
-
-function traumaDissolve(){
+`, `function traumaDissolve(){
   worldTree.add(
     text: userInput;
     end: true;
   )
-}`
+}
+vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
+charms.add(charmSatchel, charmAbacus, charmGift, charmJostle, charmSheen);
+vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
+
+slimeMorph('sky spirit');`
   ];
 
-
-  let textAnimationFrame = Math.floor(frameCount / 6);
-
-  if (textAnimationFrame != lastTextAnimationFrame) {
-    machineWorldText = random(strArray)
-  }
-
-
-  lastTextAnimationFrame = textAnimationFrame;
-
-
-
-  graphicsShrineText.text(machineWorldText, 0, 0, graphicsShrineText.width, graphicsShrineText.height);
-
-  // graphicsShrineText.background(userData.tgotchiImage.backgroundColor[0], userData.tgotchiImage.backgroundColor[1], userData.tgotchiImage.backgroundColor[2]);
-  //
-  //
-  // graphicsShrineText.fill(userData.tgotchiImage.pixelColor[0], userData.tgotchiImage.pixelColor[1], userData.tgotchiImage.pixelColor[2]);
-  // graphicsShrineText.noStroke();
-  // // graphicsShrineText.stroke(userData.tgotchiImage.pixelColor[0], userData.tgotchiImage.pixelColor[1], userData.tgotchiImage.pixelColor[2]);
-  //
-  // let stepSize = userData.tgotchiImage.pixelSize;
-  //
-  // // pixel array is [x, y, radius] of all the different rectangles. for 3d make the radius the height....
-  // userData.tgotchiImage.pixelArray.forEach(function(entry) {
-  //   graphicsShrineText.rectMode(CENTER);
-  //   graphicsShrineText.rect(entry[0], entry[1], entry[2], entry[2]);
-  // });
+  graphicsShrineTextLarge.text(spellArray[_text], 0, 0, graphicsShrineTextLarge.width, graphicsShrineTextLarge.height);
 
 }
 
@@ -460,7 +531,8 @@ function drawShrineGrid() {
 function displayShrineCenter() {
 
   drawShrineGrid();
-  drawCrystalGraphics();
+  // displayShrineShield();
+  drawBackgroundText();
 
   // directionalLight(60, 200, 360, -width / 4, -width / 4, -70)
   // // ambientLight(0, 0, 100)
@@ -470,120 +542,96 @@ function displayShrineCenter() {
   // texture(graphicsShrineText);
   // normalMaterial();
   // ambientMaterial(10, 10, 10);
-  ambientMaterial(0, 200, 0);
 
 
+  // rotating box center
+  for (let i = 0; i < 10; i++) {
+    ambientMaterial(i * 25, 200, 0);
+    push();
+    translate(0, i * 20 - 100, -133);
+    rotateY(angleTgotchi * i);
+    rotateX(PI);
+    box(sin(angleTgotchi * 2) * 20 + i * 5);
+    pop();
+  }
+
+
+  // older crystal center
+  // push();
+  // translate(0, 100, -33);
+  // // translate(0, 0, 0);
+  // rotateY(angleTgotchi);
+  // rotateX(PI);
+  // model(machineWorldFeelingsCompostShrineCenter);
+  // pop();
+
+
+  texture(graphicsShrineTextLarge);
 
   push();
-  translate(0, 100, -33);
-  // translate(0, 0, 0);
+  drawCirclingSpellText(0);
+  // translate(100, -150, -250);
+  translate(cos(angleTgotchi) * 100, -150, sin(angleTgotchi) * 100 - 200);
   rotateY(angleTgotchi);
-  rotateX(PI);
-  model(machineWorldFeelingsCompostShrineCenter);
-  pop();
+  box(100, 100, 10);
 
-
-  texture(graphicsShrineText);
-
-  push();
-  translate(100, -150, -250);
-  rotateY(angleTgotchi);
-  // box(100, 100, 10);
-
+  drawCirclingSpellText(1);
   rotateX(PI);
   translate(33, 60, 33);
   box(70, 70, 50);
   pop();
 
   push();
-  translate(-120, 150, -250);
+  drawCirclingSpellText(2);
+  // translate(-120, 150, -250);
+  translate(sin(angleTgotchi) * 120, 150, cos(angleTgotchi) * 120 - 150);
   rotateY(angleTgotchi);
-  // box(100, 100, 10);
+  box(100, 100, 10);
 
+  drawCirclingSpellText(3);
   rotateX(PI);
   translate(33, 60, 33);
   box(70, 70, 50);
   pop();
 
   push();
+  drawCirclingSpellText(4);
   translate(133, -150, -250);
   rotateY(-angleTgotchi);
   box(50, 50, 50);
 
+  drawCirclingSpellText(5);
   rotateX(PI);
   translate(-33, -60, 33);
   box(70, 70, 50);
   pop();
 
 
-  // ambientMaterial(200, 100, 100);
-  // texture(graphicsShrineText);
-  // texture(graphics);
-
-  let shrineTgotchiDiameter = 20;
-  let jMax = 4;
-  let iMax = 10; // for BAC
-  // let iMax = 18;
-
-  for (var j = 0; j < jMax; j++) {
-    push();
-    for (let i = 0; i < iMax; i++) {
-      translate(sin(frameCount * 0.0005 + j) * 100, sin(frameCount * 0.0005 + j) * 100, i * 0.1);
-      // translate(sin(frameCount * 0.00005 + j) * 50, sin(frameCount * 0.00005 + j) * 50, i * 0.1);
-      // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 200);
-      // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 200);
-      rotateZ(frameCount * 0.0002);
-      // translate(0, 0, 0);
-      rotateY(angleTgotchi * 0.1);
-      // sphere(20);
-
-
-      if (tgotchiDataArray) {
-
-        ambientMaterial(tgotchiDataArray[(j * iMax) + i].tgotchiImage.pixelColor[0], tgotchiDataArray[(j * iMax) + i].tgotchiImage.pixelColor[1], tgotchiDataArray[(j * iMax) + i].tgotchiImage.pixelColor[2]);
-        // ambientMaterial(tgotchiDataArray[(j*iMax) + i].tgotchiImage.backgroundColor[0], tgotchiDataArray[(j*iMax) + i].tgotchiImage.backgroundColor[1], tgotchiDataArray[(j*iMax) + i].tgotchiImage.backgroundColor[2]);
-
-        cubeEnabled = tgotchiDataArray[(j * iMax) + i].shape.cube;
-        coneEnabled = tgotchiDataArray[(j * iMax) + i].shape.cone;
-        sphereEnabled = tgotchiDataArray[(j * iMax) + i].shape.sphere;
-        torusEnabled = tgotchiDataArray[(j * iMax) + i].shape.torus;
-        ringEnabled = tgotchiDataArray[(j * iMax) + i].shape.ring;
-
-
-        if (cubeEnabled) {
-          box(shrineTgotchiDiameter);
-          ambientMaterial(tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[0], tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[1], tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[2]);
-        }
-        if (coneEnabled) {
-          box(shrineTgotchiDiameter / 5);
-          cone(shrineTgotchiDiameter, Math.floor(shrineTgotchiDiameter * .62));
-          ambientMaterial(tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[0], tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[1], tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[2]);
-        }
-        if (sphereEnabled) {
-          ambientMaterial(tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[0], tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[1], tgotchiDataArray[(j * iMax) + i].tgotchiImage.backgroundColor[2]);
-          sphere(shrineTgotchiDiameter * .62);
-        }
-        if (torusEnabled) {
-          torus(shrineTgotchiDiameter / 2, shrineTgotchiDiameter / 2, 3, 3);
-        }
-
-
-        let rotateRing = sin((frameCount * .01) * 2) * .3;
-
-        if (ringEnabled) {
-          // push();
-          rotateX(PI / 2);
-          // rotateY(rotateRing);
-          rotateY(angleTgotchi * -.3);
-          rotateZ(angleTgotchi * 1.1);
-          torus(shrineTgotchiDiameter * 1.2, shrineTgotchiDiameter * 0.05, 24, 10);
-          // pop();
-        }
-      }
-    }
-    pop();
-  }
   angleTgotchi += .01;
+}
+
+// this disabled - was double sin wave
+function displayShrineShield() {
+  // comment this back -- all circline little shrine tgotchi
+
+  let iMax = 5;
+
+  push();
+  for (let i = 0; i < iMax; i++) {
+    ambientMaterial(i * 13, 255, 0);
+    translate(sin(angleTgotchi / 3) * 3, sin(angleTgotchi / 3) * 3, i - 133);
+    // translate(sin(frameCount * 0.0005 / 5) * 3, sin(frameCount * 0.0005 / 5) * 3, i - 133);
+    // translate(sin(frameCount * 0.00005 + j) * 50, sin(frameCount * 0.00005 + j) * 50, i * 0.1);
+    // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 133);
+    // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 200);
+    rotateZ(frameCount * 0.0002);
+    // translate(0, 0, 0);
+    rotateY(angleTgotchi * 0.1)
+
+    torus(13, 13, 3, 3);
+    // sphere(2);
+  }
+  pop();
 }
 
 function displayCharm() {
@@ -617,7 +665,6 @@ function displayCharm() {
 
 function displayAction(_actionGraphicArray, _actionGraphicIndex) {
 
-  // console.log('displaying animation');
   push();
   // normalMaterial();
   translate(actionX, actionY, actionZ);
@@ -626,7 +673,7 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
   rotateZ(PI / 2);
   // console.log(_actionGraphicArray);
   texture(_actionGraphicArray[_actionGraphicIndex]);
-  box(50);
+  box(actionCubeDiameter);
   pop();
 
   if (actionAnimating && !swipeLeftComplete) {
@@ -639,25 +686,45 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
       swipeLeftComplete = true;
     }
   } else if (actionAnimating && swipeLeftComplete) {
-    if (actionX < -10) {
+    if (actionZ > diameter / 2 - actionCubeDiameter / 2) {
+      // if (actionX < -10) {
       // if (actionY < 0.5) {
       moveActionCube(0, 0, -80, 0.025);
       actionAngle += 0.02;
     } else {
+      collisionActive = true; // activates tgotchiAbsorbActionCube() and resets displayAnimation process
+      initialFrameCount = frameCount;
+      initialDiameter = diameter;
       actionAnimating = false;
       swipeLeftComplete = false;
-      actionX = 200;
-      actionY = 0;
-
-      actionZ = 200;
-      actionAngle = 0;
-      //  go back to initial menu when animation complete (this only gets triggered in one frame =p)
       printOnceBool = true; // so only writes actions to console once
-      executeAction = 'careMenu';
-      currentKey = 'initial';
-      stateChange('mainMenu');
-      nextMenu();
     }
+  }
+}
+
+function tgotchiAbsorbActionCube(_executeAction, _initialFrameCount, _initialDiameter) {
+  let sinAngle = (frameCount - _initialFrameCount) * 0.15;
+
+  if (sinAngle <= PI) {
+    let sinShift = sin(sinAngle)
+    diameter = _initialDiameter + sin(sinAngle) * 33;
+
+    if (actionCubeDiameter > 0) {
+      actionCubeDiameter -= 5;
+    } else {
+      actionCubeDiameter = 0;
+    }
+  } else {
+    collisionActive = false;
+    actionCubeDiameter = 66;
+    actionX = 200;
+    actionY = 0;
+    actionZ = 200;
+    actionAngle = 0;
+    executeAction = 'careMenu';
+    currentKey = 'initial';
+    stateChange('mainMenu');
+    nextMenu();
   }
 }
 

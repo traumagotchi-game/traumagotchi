@@ -9,13 +9,13 @@ let tree = [{
         shrineTgotchiX = -200;
         stateChange('shrine');
       }
-    }, {
-      display: 'community',
-      nextKey: 'community_0', // or initial
-      action: function() {
-        communitySignup();
-        stateChange('community');
-      }
+      // }, {
+      //   display: 'community',
+      //   nextKey: 'community_0', // or initial
+      //   action: function() {
+      //     communitySignup();
+      //     stateChange('community');
+      //   }
     }, {
       display: 'care',
       nextKey: 'care_0',
@@ -646,6 +646,12 @@ function nextMenu() {
         choice2.innerHTML = tree[i].choices[2].display;
         choice3.style.display = "block";
         choice3.innerHTML = tree[i].choices[3].display;
+      } else if (tree[i].key == 'initial') {
+        choiceMenuTitle.style.display = "none";
+        choice0.innerHTML = tree[i].choices[0].display;
+        choice1.innerHTML = tree[i].choices[1].display;
+        choice2.innerHTML = tree[i].choices[2].display;
+        choice3.style.display = "none";
       } else {
         // use global variable for colors here... (color3)
         // need to make it so choice0 doesn't indent with mouseOver
