@@ -13,6 +13,7 @@ let gameIntroOverlay;
 let state = 'menu0'
 
 let diameter = 100;
+let collisionActive = false;
 
 let pixelArray = [];
 let graphics;
@@ -75,8 +76,8 @@ let divMenu5;
 let divMenu6;
 
 // menu0
-let pixelColor = [0, 255, 0];
-let backgroundColor = [0, 0, 255];
+let pixelColor = [72, 0, 150];
+let backgroundColor = [183, 255, 40];
 let sliderSize;
 let inputName;
 let inputPassword;
@@ -561,21 +562,14 @@ function setPixelColor(jscolor) {
   pixelColor[0] = jscolor.rgb[0];
   pixelColor[1] = jscolor.rgb[1];
   pixelColor[2] = jscolor.rgb[2];
-  // here would set pixelColorHex = '#' + jscolor;
-  // or get the array of rgb values: r = jscolor.rgb[0]; g = jscolor.rgb[1], b = jscolor.rgb[2]
 }
 
 function setBackgroundColor(jscolor) {
-  // 'jscolor' instance can be used as a string
 
   backgroundColor[0] = jscolor.rgb[0];
   backgroundColor[1] = jscolor.rgb[1];
   backgroundColor[2] = jscolor.rgb[2];
 
-  console.log(jscolor)
-  console.log(jscolor.rgb)
-  // here would set pixelColorHex = '#' + jscolor;
-  // or get the array of rgb values: r = jscolor.rgb[0]; g = jscolor.rgb[1], b = jscolor.rgb[2]
 }
 
 function captureWebcamGraphics() {
@@ -599,8 +593,8 @@ function captureWebcamGraphics() {
   for (let y = 0; y < diameter + 5.85 * stepSize; y += stepSize) {
     for (let x = 0; x < diameter + 5.85 * stepSize; x += stepSize) {
       let i = y * capture.width + x;
-      if (capture.pixels[i * 4]) {
-        let darkness = (255 - capture.pixels[i * 4]) / 255;
+      if (capture.pixels[i * 8]) {
+        let darkness = (255 - capture.pixels[i * 8]) / 255;
         let radius = stepSize * darkness;
         graphics.rectMode(CENTER);
         graphics.rect(x, y, radius, radius);

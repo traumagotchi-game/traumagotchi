@@ -14,8 +14,6 @@ let drawGameOverBGBool = false;
 
 let gameBackgroundInstance = function(p) {
 
-  console.log("Game background");
-
   p.setup = function() {
 
     p.canvas = p.createCanvas(600, 450);

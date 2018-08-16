@@ -21,7 +21,6 @@ function draw2DArray(_graphics, _array, _cellWidth, _cellHeight) {
   }
 }
 
-
 function drawTgotchiGraphics() {
   graphics.background(userData.tgotchiImage.backgroundColor[0], userData.tgotchiImage.backgroundColor[1], userData.tgotchiImage.backgroundColor[2]);
 
@@ -43,6 +42,7 @@ function drawTgotchiGraphics() {
 
 function displayTgotchi() {
 
+  tgotchiDiameterController();
 
   // directionalLight(60, 200, 360, -width / 4, -width / 4, -70)
   // ambientLight(0, 0, 100)
@@ -62,7 +62,6 @@ function displayTgotchi() {
   if (!cubeEnabled && !sphereEnabled && !torusEnabled && !ringEnabled && !coneEnabled) {
     drawFlatGotchi();
   }
-
 
   push();
   translate(0, 0, 0);
@@ -88,9 +87,9 @@ function displayTgotchi() {
 
   if (ringEnabled) {
     push();
-    rotateX(PI / 2);
-    // rotateY(rotateRing);
-    rotateY(angleTgotchi * -.3);
+    // rotateX(PI / 2);
+    rotateX(PI / 4 + angleTgotchi * -0.05);
+    rotateY(angleTgotchi * -0.3);
     rotateZ(angleTgotchi * 1.1);
     torus(diameter * 1.2, diameter * 0.05, 24, 10);
     pop();
@@ -106,6 +105,17 @@ function displayTgotchi() {
     charmID = document.querySelector('input[name="charm"]:checked').value;
     displayCharm();
   }
+}
+
+function tgotchiDiameterController() {
+
+  if (!collisionActive) {
+
+  } else {
+
+    tgotchiAbsorbActionCube(executeAction, initialFrameCount, initialDiameter);
+  }
+
 }
 
 function drawShrineTgotchiGraphics(_tgotchi) {
@@ -154,7 +164,7 @@ function displayShrineTgotchi(_tgotchi) {
     writeConsoleText(`Traumagotchi named ${keys[shrineTgotchiCounter]} is visiting DeepInTheMachineWorldTraumaCompostShrine`)
   } else if (shrineTgotchiX >= 42) {
     writeToConsoleBool = true;
-    writeConsoleText(`( .⋅. shrine processing ${keys[shrineTgotchiCounter]} trauma .⋅. )`)
+    writeConsoleText(`( .⋅. shrine receives ${keys[shrineTgotchiCounter]}'s offering .⋅. )`)
   }
 
   if (!tgotchiEntryComplete) {
@@ -247,7 +257,7 @@ function drawBackgroundText() {
   graphicsShrineText.background(0, 10, 0);
   // graphicsShrineText.clear();
 
-  graphicsShrineText.textSize(14);
+  graphicsShrineText.textSize(16);
   graphicsShrineText.strokeWeight(0);
   graphicsShrineText.fill(0, 255, 0);
 
@@ -402,7 +412,7 @@ charms.add(charmSatchel, charmAbacus, charmGift, charmJostle, charmSheen);
 vision.add(planeOfTortoise, planeOfHummingbird, planeOfSpirit);
 
 slimeMorph('sky spirit');`
-];
+  ];
 
   graphicsShrineTextLarge.text(spellArray[_text], 0, 0, graphicsShrineTextLarge.width, graphicsShrineTextLarge.height);
 
@@ -600,27 +610,28 @@ function displayShrineCenter() {
   angleTgotchi += .01;
 }
 
-function displayShrineShield(){
+// this disabled - was double sin wave
+function displayShrineShield() {
   // comment this back -- all circline little shrine tgotchi
 
   let iMax = 5;
 
-    push();
-    for (let i = 0; i < iMax; i++) {
-      ambientMaterial(i * 13, 255, 0);
-      translate(sin(angleTgotchi / 3) * 3, sin(angleTgotchi / 3) * 3, i - 133);
-      // translate(sin(frameCount * 0.0005 / 5) * 3, sin(frameCount * 0.0005 / 5) * 3, i - 133);
-      // translate(sin(frameCount * 0.00005 + j) * 50, sin(frameCount * 0.00005 + j) * 50, i * 0.1);
-      // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 133);
-      // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 200);
-      rotateZ(frameCount * 0.0002);
-      // translate(0, 0, 0);
-      rotateY(angleTgotchi * 0.1)
+  push();
+  for (let i = 0; i < iMax; i++) {
+    ambientMaterial(i * 13, 255, 0);
+    translate(sin(angleTgotchi / 3) * 3, sin(angleTgotchi / 3) * 3, i - 133);
+    // translate(sin(frameCount * 0.0005 / 5) * 3, sin(frameCount * 0.0005 / 5) * 3, i - 133);
+    // translate(sin(frameCount * 0.00005 + j) * 50, sin(frameCount * 0.00005 + j) * 50, i * 0.1);
+    // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 133);
+    // translate(sin(frameCount * 0.0000001 + j / 50), sin(frameCount * 0.0000001 + j / 50), i * 0.01 - 200);
+    rotateZ(frameCount * 0.0002);
+    // translate(0, 0, 0);
+    rotateY(angleTgotchi * 0.1)
 
-      torus(13, 13, 3, 3);
-      // sphere(2);
-      }
-    pop();
+    torus(13, 13, 3, 3);
+    // sphere(2);
+  }
+  pop();
 }
 
 function displayCharm() {
@@ -654,7 +665,6 @@ function displayCharm() {
 
 function displayAction(_actionGraphicArray, _actionGraphicIndex) {
 
-  // console.log('displaying animation');
   push();
   // normalMaterial();
   translate(actionX, actionY, actionZ);
@@ -663,7 +673,7 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
   rotateZ(PI / 2);
   // console.log(_actionGraphicArray);
   texture(_actionGraphicArray[_actionGraphicIndex]);
-  box(50);
+  box(actionCubeDiameter);
   pop();
 
   if (actionAnimating && !swipeLeftComplete) {
@@ -676,25 +686,45 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
       swipeLeftComplete = true;
     }
   } else if (actionAnimating && swipeLeftComplete) {
-    if (actionX < -10) {
+    if (actionZ > diameter / 2 - actionCubeDiameter / 2) {
+      // if (actionX < -10) {
       // if (actionY < 0.5) {
       moveActionCube(0, 0, -80, 0.025);
       actionAngle += 0.02;
     } else {
+      collisionActive = true; // activates tgotchiAbsorbActionCube() and resets displayAnimation process
+      initialFrameCount = frameCount;
+      initialDiameter = diameter;
       actionAnimating = false;
       swipeLeftComplete = false;
-      actionX = 200;
-      actionY = 0;
-
-      actionZ = 200;
-      actionAngle = 0;
-      //  go back to initial menu when animation complete (this only gets triggered in one frame =p)
       printOnceBool = true; // so only writes actions to console once
-      executeAction = 'careMenu';
-      currentKey = 'initial';
-      stateChange('mainMenu');
-      nextMenu();
     }
+  }
+}
+
+function tgotchiAbsorbActionCube(_executeAction, _initialFrameCount, _initialDiameter) {
+  let sinAngle = (frameCount - _initialFrameCount) * 0.15;
+
+  if (sinAngle <= PI) {
+    let sinShift = sin(sinAngle)
+    diameter = _initialDiameter + sin(sinAngle) * 33;
+
+    if (actionCubeDiameter > 0) {
+      actionCubeDiameter -= 5;
+    } else {
+      actionCubeDiameter = 0;
+    }
+  } else {
+    collisionActive = false;
+    actionCubeDiameter = 66;
+    actionX = 200;
+    actionY = 0;
+    actionZ = 200;
+    actionAngle = 0;
+    executeAction = 'careMenu';
+    currentKey = 'initial';
+    stateChange('mainMenu');
+    nextMenu();
   }
 }
 

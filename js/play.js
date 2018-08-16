@@ -5,7 +5,10 @@ let canvasDiv;
 
 let state = 'login';
 
-let diameter = 100; // probably should get rid of this if it is constant
+let diameter = 100;
+let diameterMax;
+let initialFrameCount;
+let initialDiameter;
 
 let database;
 let keys;
@@ -141,9 +144,11 @@ let charmArray = [];
 let charmID;
 let charmMove;
 
+let collisionActive = false;
 let actionX = 200;
 let actionY = 0;
 let actionZ = 200;
+let actionCubeDiameter = 66;
 let actionAngle = 0;
 let actionAnimating = false;
 let swipeLeftComplete = false;
@@ -618,6 +623,9 @@ function setup() {
   // default cameraZ
   cameraZ = (height / 2) / tan(PI / 6);
 
+  // max diameter for care action and breathe expand
+  diameterMax = diameter * 1.33;
+
   // not buffering in time
   // song_B2.setVolume(0.00);
   // song_universalBass.setVolume(0.2);
@@ -1019,9 +1027,6 @@ function stateChange(_state) {
   state = _state;
   let y = document.getElementById("fakeBackground");
 
-  console.log(`state is ${state}`)
-
-  // angelabelle: changes to css background image would go here
   switch (_state) {
 
     case 'mainMenu':
@@ -1234,10 +1239,10 @@ function login() {
       loginMenu.remove();
     } else {
       // bug: createPOnce is for drawing DOM elements in draw loop: need to set flag so this doesn't appear over and over, or create DOM element that toggles off/on
-      createPOnce(`hm try again`, "loginMenu")
+      createPOnce(`hm spelling error?`, "loginMenu")
     }
   } else {
-    createPOnce(`slow connection... </br> wait a sec`, "loginMenu")
+    createPOnce(`slow connection... </br> take a deep breathe and try again`, "loginMenu")
   }
 }
 
