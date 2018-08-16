@@ -608,6 +608,7 @@ function setup() {
   // canvas = createCanvas(windowWidth / 2, windowWidth * 3 / 8, WEBGL);
   // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetWidth * 3 / 4, WEBGL);
   canvas = createCanvas(600, 450, WEBGL);
+  // canvas = createCanvas(800, 600, WEBGL);
   canvas.parent("canvasDiv");
   canvas.class("gameCanvas");
   canvas.id("p5Canvas");

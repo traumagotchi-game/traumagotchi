@@ -7,6 +7,7 @@ let title_medium;
 let title_mediumRewound = false;
 let title_mobile;
 let title_mobileRewound = false;
+
 let browser = true;
 let size;
 let rectWidth = 800;
@@ -15,6 +16,9 @@ let menu;
 let canvasDiv;
 let lastTime;
 let song;
+let alertIndex = 0;
+let alertArray = [`Make a Traumagotchi </br> !! </br> !!`, `Machine healing on the Interwebs </br> *♡+`, `Deep Machine Trauma Compost Shrine </br> <3`, `All sorts of nice things for it to do </br> ..｡*ﾟ+`];
+
 
 
 function preload() {
@@ -58,6 +62,7 @@ function setup() {
   frameRate(30);
 
   setInterval(animateTitleTimer, 5000);
+  setInterval(changeAlert, 4000);
 
   // media query event handler
   if (matchMedia) {
@@ -105,30 +110,24 @@ function windowResized() {
 }
 
 function WidthChange(mq) {
-  let notice = createP("Sorry mobile phones not supported ;( You need to be on a browser to play this game.")
-  notice.style("margin: 100px 10px auto 10px");
-  notice.id("notice");
-  notice.hide();
+  // let notice = createP("Sorry mobile phones not supported ;( You need to be on a browser to play this game.")
+  // notice.style("margin: 100px 10px auto 10px");
+  // notice.id("notice");
+  // notice.hide();
 
   if (mq.matches) {
     // window width is at least 500px
     document.querySelector("#newTgotchi").style.visibility = 'visible';
     document.querySelector("#loadTgotchi").style.visibility = 'visible';
-    document.querySelector("#alertText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
-    // document.querySelector("#newTgotchi").style.display = 'block';
-    // document.querySelector("#loadTgotchi").style.display = 'block';
+    // document.querySelector("#alertText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
     browser = true;
-    // console.log(browser);
 
   } else {
     document.querySelector("#newTgotchi").style.visibility = 'hidden';
     document.querySelector("#loadTgotchi").style.visibility = 'hidden';
-    document.querySelector("#alertText").innerHTML = `Sorry not phone-playable yet. Come back when you are on a computer.`;
-
-    // document.querySelector("#newTgotchi").style.display = 'none';
-    // document.querySelector("#loadTgotchi").style.display = 'none';
+    document.querySelector("#alertText").innerHTML = `Sorry phone, to make a Traumagotchi you have to be on a computer.`;
     browser = false;
-    // console.log(browser);
+
   }
 }
 
@@ -158,12 +157,24 @@ function updateLoop() {
     rect(width / 2, height / 2, 1000, 100)
 
     animation(title, canvasDiv.offsetWidth / 2, canvasDiv.offsetHeight / 2);
+
+    // if (changeAlert) {
+    //   document.querySelector("#alertText").innerHTML = alertArray[alertIndex % alertArray.length];
+    //   alertIndex++;
+    //   changeAlert = false;
+    //   console.log(alertIndex);
+    // }
   } else {
     rect(width / 2, height * .8, 1000, 50)
     animation(title_mobile, canvasDiv.offsetWidth / 2, canvasDiv.offsetHeight * .8);
 
   }
 
+}
+
+function changeAlert(){
+    document.querySelector("#alertText").innerHTML = alertArray[alertIndex % alertArray.length];
+    alertIndex++;
 }
 
 function checkFrameStates() {
@@ -180,6 +191,7 @@ function checkFrameStates() {
   //title 330
   if (title_mobile.getFrame() == 1) {
     title_mobileRewound = true;
+
   }
 
   if (title_mobileRewound) {
@@ -202,6 +214,7 @@ function checkFrameStates() {
 
 function animateTitleTimer() {
   titleRewound = false;
+  changeAlert = true;
   title_mobileRewound = false;
   title_mediumRewound = false;
 }
