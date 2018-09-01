@@ -65,6 +65,8 @@
 					<a href="index.html"><img class="image center" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" ></a>
 				</div>
 				<div id="canvasDiv">
+					<canvas id="testWEBGLCanvas" class="" width="600" height="450" style="z-index: 5;">Uh oh! You might need to check "Use hardware acceleration when available" in your browser settings.</canvas>
+
 					<canvas id="collapseGameCanvas" class="gameCanvas" width="600" height="450" style="z-index: 5;">Your browser does not support canvas. Please try again with a different browser.</canvas>
 					<canvas id="platformDropGameCanvas" class="gameCanvas" width="600" height="450" style="z-index: 5;"></canvas>
 					<div id="gameIntroOverlay">
@@ -119,93 +121,6 @@
 					<button type="button" id="menuItem2">play</button>
 					<button type="button" id="menuItem3" style="display: none;">;D</button>
 				</div>
-				<div class="blackDiv" id="communityMenu" class="communityMenu">
-					<!-- <div class="" id="divMenu1"> -->
-					<p>These groups are private to Traumagotchi only. Humans may not view content of the chatrooms.</p>
-					<!-- <p style="font-size: 12px;">click one or more</p> -->
-					<div class="align-left" id="communityCheckboxes" class="myCheckbox">
-						<!-- <label class="myCheckbox">
-								<input type="checkbox" id="mindwipeCheckbox" name="mindwipe" value="mindwipe">
-								<span class="checkmark"></span>
-								</label>
-							<label for="mindwipe">Mindwipe Consortium</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="emdrCheckbox" name="emdr" value="emdr">
-								<span class="checkmark"></span>
-							</label>
-							<label for="emdr">EMDR Playground</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="psoasCheckbox" name="psoas" value="psoas">
-								<span class="checkmark"></span>
-							</label>
-							<label for="psoas">Psoas Release</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="asmrCheckbox" name="asmr" value="asmr">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="asmr">ASMR</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="reliquificationCheckbox" name="reliquification" value="reliquification">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="reliquification">Reliquification</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="treCheckbox" name="tre" value="tre">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="tre">TRE: Trauma Release Exercises</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="longfinEelsCheckbox" name="longfinEels" value="longfinEels">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="longfinEels">Longfin Eels</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="cbtCheckbox" name="cbt" value="cbt">
-								<span class="checkmark"></span>
-							</label>
-							<label for="cbt">Talk and CBT</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="yogaCheckbox" name="yoga" value="yoga">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="yoga">Trauma-informed Yoga</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="deprivationCheckbox" name="deprivation" value="deprivation">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="deprivation">Sensory Deprivation Orb</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="dramaCheckbox" name="drama" value="drama">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="drama">Making new memories: Drama Therapy</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="sexCheckbox" name="sex" value="sex">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="sex">Orgasmic Sludge</label><br>
-
-							<label class="myCheckbox">
-								<input type="checkbox" id="meditationCheckbox" name="meditation" value="meditation">
-								<span class="checkmark"></span>
-							</labeL>
-							<label for="meditation">Meditation and grounding</label><br> -->
-
-					</div>
-					<button type="button" id="saveTgotchiGroups">Sign up</button>
-					<!-- </div> -->
-				</div>
 				<div class="blackDiv" id="gameMenu">
 					<!-- <div id="playInstructions">
 
@@ -216,6 +131,12 @@
 				<div class="greenDiv" id="alertMenu">
 					<p>Sorry you need more points for that!</p>
 				</div>
+				<div class="customizationMenu" id="userInputMenu">
+					<button type="button" id="userInputMenuTitle" style="color: #000; display: block; width: 100%;">RELEASE WORDS</button>
+					<textarea name="userInput" id="userInputField" rows="6" cols="33" maxlength="333" wrap="hard">。o○☆ Type words here</textarea>
+					<button type="button" id="userInputButton">Sign up</button>
+				</div>
+
 			</div>
 
 		</div>

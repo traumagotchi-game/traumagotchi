@@ -75,7 +75,6 @@ let schmupGameInstance = function(p) {
   function localMousePressed() {
     sound_skitter.play();
     p.bullets.push(Bullet({}));
-    console.log("PEW!");
     return false;
     p.bullets = p.bullets.filter(function(bullet) {
       return bullet.active;

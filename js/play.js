@@ -1,3 +1,63 @@
+/* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
+Assistance: Angelabelle Abarientos
+DeepMachineIncantation Text: Porpentine Charity Heartscape
+
+Special thanks to Dan Schiffman's Coding Train for teaching me everything I
+needed to know to build this.
+
+When it is completed in October 2018, all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+
+_ .-') _     ('-.     ('-.     _ (`-.
+( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
+\     .'_ (,------.(,------. _.`     \
+,`'--..._) |  .---' |  .---'(__...--''
+|  |  \  ' |  |     |  |     |  /  | |
+|  |   ' |(|  '--. (|  '--.  |  |_.' |
+|  |   / : |  .--'  |  .--'  |  .___.'
+|  '--'  / |  `---. |  `---. |  |
+`-------'  `------' `------' `--'
+
+__   __ _______ _______ __   __ ___ __    _ _______
+|  |_|  |   _   |       |  | |  |   |  |  | |       |
+|       |  |_|  |       |  |_|  |   |   |_| |    ___|
+|       |       |       |       |   |       |   |___
+|       |       |      _|       |   |  _    |    ___|
+| ||_|| |   _   |     |_|   _   |   | | |   |   |___
+|_|   |_|__| |__|_______|__| |__|___|_|  |__|_______|
+
+,---.    ,---.   ____      .-_'''-.  .-./`)     _______
+|    \  /    | .'  __ `.  '_( )_   \ \ .-.')   /   __  \
+|  ,  \/  ,  |/   '  \  \|(_ o _)|  '/ `-' \  | ,_/  \__)
+|  |\_   /|  ||___|  /  |. (_,_)/___| `-'`"`,-./  )
+|  _( )_/ |  |   _.-`   ||  |  .-----..---. \  '_ '`)
+| (_ o _) |  |.'   _    |'  \  '-   .'|   |  > (_)  )  __
+|  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
+|  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
+'--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+MIT License
+
+Copyright (c) 2018 Lark Like Alder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 'use strict';
 
 let canvas;
@@ -6,7 +66,7 @@ let canvasDiv;
 let state = 'login';
 
 let diameter = 100;
-let diameterMax;
+let charmDistance;
 let initialFrameCount;
 let initialDiameter;
 
@@ -14,6 +74,7 @@ let database;
 let keys;
 let tgotchiData;
 let tgotchiDataArray;
+let numberTgotchi;
 let userData;
 let userName;
 let currentLoginTime;
@@ -87,8 +148,7 @@ let loginLandingPage = false;
 let writeToConsoleBool = true;
 let printOnceBool = true;
 
-// community menu
-let communityMenu;
+
 
 // care menu
 let careMenu;
@@ -99,6 +159,9 @@ let choice0;
 let choice1;
 let choice2;
 let choice3;
+
+// user menu for shrine
+let userInputMenu;
 
 let currentKey = 'initial';
 let currentIndex = 0;
@@ -116,6 +179,8 @@ let moveGrid = false;
 
 let gridOffset = 0;
 let angleTgotchi = 0;
+let rotateVelocity = .005;
+let angleBreathe = 0;
 
 let cubeEnabled = false;
 let coneEnabled = false;
@@ -279,8 +344,8 @@ let sound_fizzDown_hiPitch;
 let sound_fizzDown_sad;
 // let sound_metallic_0;
 let sound_metallic_1;
-// let sound_powerup_0;
-// let sound_powerup_1;
+let sound_powerup_0;
+let sound_powerup_1;
 let sound_skitter;
 let sound_snake_0;
 let sound_snake_1;
@@ -290,7 +355,7 @@ let sound_wack;
 let machineWorldFeelingsCompostShrineCenter;
 let machineWorldText = 'seed';
 let lastTextAnimationFrame;
-let shrineTgotchiCounter = 0;
+let shrineTgotchiCounter = 33;
 let shrineTgotchiX = -200;
 let tgotchiEntryComplete = false;
 
@@ -316,30 +381,11 @@ function preload() {
   sound_collide_light = loadSound('assets/audio/sfx/collide_light.mp3');
   sound_collide_heavy = loadSound('assets/audio/sfx/collide_heavy.mp3');
   sound_skitter = loadSound('assets/audio/sfx/skitter.mp3');
-  // sound_powerup_0 = loadSound('assets/audio/sfx/powerup_0.mp3');
-  // sound_powerup_1 = loadSound('assets/audio/sfx/powerup_1.mp3');
+  sound_powerup_0 = loadSound('assets/audio/sfx/powerup_0.mp3');
+  sound_powerup_1 = loadSound('assets/audio/sfx/powerup_1.mp3');
   sound_snake_0 = loadSound('assets/audio/sfx/snake_0.mp3');
   sound_snake_1 = loadSound('assets/audio/sfx/snake_1.mp3');
   sound_wack = loadSound('assets/audio/sfx/wack.mp3');
-
-  // // // L O A D A U D I O ----> trying absolute links
-  // song_B2 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/B2_aja_loop.mp3');
-  // song_universalBass = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/universalBass_aja_loop_fadeIn.mp3');
-  // sound_click = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/click.mp3');
-  // sound_thud1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/thud1.mp3');
-  // sound_thud2 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/thud2.mp3');
-  // sound_beep1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/beep1.mp3');
-  // sound_fizzDown_computery = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_computery.mp3');
-  // sound_fizzDown_loPitch = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_loPitch.mp3');
-  // sound_fizzDown_hiPitch = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_hiPitch.mp3');
-  // sound_fizzDown_sad = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/fizzDown_sad.mp3');
-  // sound_metallic_0 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/metallic_0.mp3');
-  // sound_metallic_1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/metallic_1.mp3');
-  // sound_collide_light = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/collide_light.mp3');
-  // sound_collide_heavy = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/collide_heavy.mp3');
-  // sound_skitter = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/skitter.mp3');
-  // sound_powerup_0 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/powerup_0.mp3');
-  // sound_powerup_1 = loadSound('https://raw.githubusercontent.com/LarkVCR/traumagotchiSound/powerup_1.mp3');
 
 
 
@@ -599,9 +645,25 @@ function preload() {
 
 function setup() {
 
+  const testWEBGLCanvas = document.querySelector("#testWEBGLCanvas");
+  // Initialize the GL context
+  const gl = testWEBGLCanvas.getContext("webgl") || testWEBGLCanvas.getContext("experimental-webgl");
+
+  // Only continue if WebGL is available and working
+  if (gl === null) {
+    alert(`Uh oh! You might need to check "Use hardware acceleration when available" in your browser settings.
+
+    Chrome and Firefox work best.`);
+    return;
+  }
+
   // if avoiding preload, load with callback. only thing is that it doesn't buffer well on slow connections, so throws everthing off.
   // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3', playBGmusic);
 
+  // not buffering in time
+  // song_B2.setVolume(0.00);
+  // song_universalBass.setVolume(0.2);
+  // sound_click.setVolume(0.1);
 
   // use canvasDiv size to set size of p5 canvas
   canvasDiv = document.querySelector("#canvasDiv");
@@ -613,6 +675,7 @@ function setup() {
   // canvas = createCanvas(windowWidth / 2, windowWidth * 3 / 8, WEBGL);
   // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetWidth * 3 / 4, WEBGL);
   canvas = createCanvas(600, 450, WEBGL);
+
   // canvas = createCanvas(800, 600, WEBGL);
   canvas.parent("canvasDiv");
   canvas.class("gameCanvas");
@@ -623,13 +686,7 @@ function setup() {
   // default cameraZ
   cameraZ = (height / 2) / tan(PI / 6);
 
-  // max diameter for care action and breathe expand
-  diameterMax = diameter * 1.33;
-
-  // not buffering in time
-  // song_B2.setVolume(0.00);
-  // song_universalBass.setVolume(0.2);
-  // sound_click.setVolume(0.1);
+  charmDistance = diameter;
 
   // media query event handler
   if (matchMedia) {
@@ -677,7 +734,7 @@ function setup() {
 
   //console
   consoleText = document.querySelector("#consoleText")
-  writeConsoleText(`Log into the Traumagrid. Visit the shrine. Play games to earn points. With points you can schedule repetitive actions in the care menu. ミ☆`);
+  writeConsoleText(`Log into the Traumagrid. ミ☆`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
@@ -697,7 +754,6 @@ function setup() {
   alertMenu = document.querySelector("#alertMenu");
 
 
-
   // game controller
   // window.addEventListener('keydown', function(e) {
   //   // console.log(e.keyCode)
@@ -711,7 +767,6 @@ function setup() {
   //   // console.log(`key up is ${e.key} and keycode is ${e.keyCode}`)
   //   console.log(`key is up and is keyCodePressed is ${keyCodePressed}`)
   // })
-
 
 
   // p5 games
@@ -745,7 +800,6 @@ function setup() {
   gameBackgroundCanvas.style.visibility = "hidden";
 
 
-
   // HTML5 games
   collapseGame = new CollapseGame();
   window.collapseGame = collapseGame;
@@ -758,9 +812,7 @@ function setup() {
   platformDropGameCanvas = document.querySelector("#platformDropGameCanvas");
   platformDropGameCanvas.style.visibility = "hidden";
 
-
-
-  communityMenu = document.querySelector("#communityMenu");
+  userInputMenu = document.querySelector("#userInputMenu");
   careMenu = document.querySelector("#careMenu");
 
   // care menu decision tree!
@@ -806,7 +858,6 @@ function setup() {
     });
   }
 
-
   // Initialize Firebase
   let config = {
     apiKey: "AIzaSyDf1V8E4N8LGUYDX1QQ1tURMQXCCULuefQ",
@@ -825,8 +876,6 @@ function setup() {
   // originally
   let ref = database.ref('tgotchi');
   ref.on('value', gotData, errData);
-
-
 }
 
 // for now, hard-coding canvas size and not making it responsive
@@ -856,9 +905,7 @@ function WidthChange(mq) {
 
 function draw() {
 
-
-
-
+  angleTgotchi += rotateVelocity;
 
   if (song_B2.buffer && song_universalBass.buffer) {
     playBGmusic();
@@ -872,7 +919,7 @@ function draw() {
     case 'mainMenu':
       displayMainCanvas();
       careMenu.style.display = "block";
-      communityMenu.style.display = "none";
+      userInputMenu.style.display = "none";
       gameMenu.style.display = "none";
       gameIntroOverlay.style.display = "none";
       pointsOverlay.style.display = "none";
@@ -882,12 +929,12 @@ function draw() {
 
       displayShrine();
       break;
-    case 'community':
-      careMenu.style.display = "none";
-      communityMenu.style.display = "block";
-      writeToConsoleBool = true;
-      writeConsoleText(`Traumagotchi need community to heal. </br>`);
-      break;
+    // case 'community':
+    //   careMenu.style.display = "none";
+    //   userInputMenu.style.display = "block";
+    //   writeToConsoleBool = true;
+    //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
+    //   break;
     case 'care':
       displayMainCanvas();
 
@@ -1111,8 +1158,8 @@ function playBGmusic() {
       sound_fizzDown_sad.setVolume(0.2);
       // sound_metallic_0.setVolume(0.4);
       sound_metallic_1.setVolume(0.4);
-      // sound_powerup_0.setVolume(0.2);
-      // sound_powerup_1.setVolume(0.2);
+      sound_powerup_0.setVolume(0.2);
+      sound_powerup_1.setVolume(0.2);
       sound_skitter.setVolume(0.2);
       sound_snake_0.setVolume(0.07);
       sound_snake_1.setVolume(0.07);
@@ -1278,7 +1325,6 @@ function communitySignup() {
     meditationEnabled = false;
   }
 
-  console.log('here');
   let mindwipeCheckbox = createCheckbox('Mindwipe Consortium', mindwipeEnabled);
   let emdrCheckbox = createCheckbox("EMDR Playground", emdrEnabled);
   let psoasCheckbox = createCheckbox("Psoas Release", psoasEnabled);

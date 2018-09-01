@@ -72,8 +72,9 @@ function displayTgotchi() {
     box(diameter);
   }
   if (coneEnabled) {
-    box(diameter / 5);
-    cone(diameter, Math.floor(diameter * .62));
+    ellipsoid(diameter * .9, diameter * .2, diameter * .9);
+    // box(diameter / 5);
+    // cone(diameter, Math.floor(diameter * .62));
   }
   if (sphereEnabled) {
     sphere(diameter * .62);
@@ -95,7 +96,7 @@ function displayTgotchi() {
     pop();
   }
 
-  angleTgotchi += .01;
+  // angleTgotchi += .005;
 
 
   if (userData.charm) {
@@ -109,10 +110,12 @@ function displayTgotchi() {
 
 function tgotchiDiameterController() {
 
+
   if (!collisionActive) {
-
+    let sinAngle = (angleBreathe) * 0.15;
+    diameter = 100 + sin(sinAngle) * 5;
+    angleBreathe += .3
   } else {
-
     tgotchiAbsorbActionCube(executeAction, initialFrameCount, initialDiameter);
   }
 
@@ -161,10 +164,12 @@ function displayShrineTgotchi(_tgotchi) {
 
   if (shrineTgotchiX == -200) {
     writeToConsoleBool = true;
-    writeConsoleText(`Traumagotchi named ${keys[shrineTgotchiCounter]} is visiting DeepInTheMachineWorldTraumaCompostShrine`)
+    writeConsoleText(`There are currently ${numberTgotchi} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
+    ---> Traumagotchi named ${keys[shrineTgotchiCounter]} is leaving an offering. `)
   } else if (shrineTgotchiX >= 42) {
     writeToConsoleBool = true;
-    writeConsoleText(`( .⋅. shrine receives ${keys[shrineTgotchiCounter]}'s offering .⋅. )`)
+    writeConsoleText(`There are currently ${numberTgotchi} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
+    ---> ( .⋅. shrine receives ${keys[shrineTgotchiCounter]}'s offering .⋅. )`)
   }
 
   if (!tgotchiEntryComplete) {
@@ -189,7 +194,7 @@ function displayShrineTgotchi(_tgotchi) {
 
       // change console text here
 
-      if (shrineTgotchiCounter == tgotchiDataArray.length) {
+      if (shrineTgotchiCounter >= tgotchiDataArray.length) {
         shrineTgotchiCounter = 0;
 
       }
@@ -223,8 +228,9 @@ function displayShrineTgotchi(_tgotchi) {
     box(shrineTgotchiDiameter);
   }
   if (coneEnabled) {
-    box(shrineTgotchiDiameter / 5);
-    cone(shrineTgotchiDiameter, Math.floor(shrineTgotchiDiameter * .62));
+    ellipsoid(shrineTgotchiDiameter * .9, shrineTgotchiDiameter * .2, shrineTgotchiDiameter * .9);
+    // box(shrineTgotchiDiameter / 5);
+    // cone(shrineTgotchiDiameter, Math.floor(shrineTgotchiDiameter * .62));
   }
   if (sphereEnabled) {
     sphere(shrineTgotchiDiameter * .62);
@@ -329,7 +335,7 @@ function drawBackgroundText() {
 
 
 
-  let textAnimationFrame = Math.floor(frameCount / 12);
+  let textAnimationFrame = Math.floor(frameCount / 60);
 
   if (textAnimationFrame != lastTextAnimationFrame) {
     machineWorldText = random(spellArray)
@@ -651,10 +657,10 @@ function displayCharm() {
   let moveCharmX = sin((frameCount * .01) * 2) * 10;
   let moveCharmY = sin((frameCount * .01) * 3) * 10;
 
-  // bottom grid
+
   push();
   texture(graphicsCharm);
-  translate(diameter + moveCharmX, diameter + moveCharmY, diameter / 2);
+  translate(charmDistance + moveCharmX, charmDistance + moveCharmY, charmDistance / 2);
   rotateX(angleTgotchi);
   rotateY(angleTgotchi * 2);
   rotateZ(PI / 2);
@@ -677,7 +683,11 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
   pop();
 
   if (actionAnimating && !swipeLeftComplete) {
-    // actionX -= 5;
+
+    if (!sound_fizzDown_loPitch.isPlaying()) {
+      sound_fizzDown_loPitch.play();
+    }
+
     if (actionX > -41) {
       // console.log(actionX);
       moveActionCube(-42, -33, 200, 0.07);
@@ -702,7 +712,25 @@ function displayAction(_actionGraphicArray, _actionGraphicIndex) {
   }
 }
 
+// function playSoundOnce(_sound) {
+//
+//
+//   if (!_sound.isPlaying()) {
+//     _sound.play();
+//   }
+//
+//   _sound.onended(function() {
+//     _sound.stop()
+//   })
+//
+// }
+
 function tgotchiAbsorbActionCube(_executeAction, _initialFrameCount, _initialDiameter) {
+
+  if (!sound_powerup_0.isPlaying()) {
+    sound_powerup_0.play();
+  }
+
   let sinAngle = (frameCount - _initialFrameCount) * 0.15;
 
   if (sinAngle <= PI) {
@@ -898,6 +926,159 @@ function drawGrid() {
   pop();
 
 }
+
+function drawLoadingScreenGrid() {
+
+  graphicsGrid.background(0);
+  // hsb mode
+  // graphicsGrid.background(180, 360, 25);
+
+  graphicsGrid.stroke(0, 255, 0);
+  graphicsGrid.strokeWeight(8);
+  // graphicsGrid.rect(100, 100, 100, 100);
+
+  // draw outline
+  graphicsGrid.line(0, 0, 0, graphicsGrid.height);
+  graphicsGrid.line(0, 0, graphicsGrid.width, 0);
+  graphicsGrid.line(0, graphicsGrid.height, 0, 0);
+  graphicsGrid.line(graphicsGrid.width, 0, 0, 0);
+
+  // draw lines from middle
+  // draw lines to top
+  for (let x = gridOffset; x < graphicsGrid.width; x += graphicsGrid.width / 5) {
+    graphicsGrid.line(x, 0, x, graphicsGrid.width);
+  }
+  // to right
+  for (let y = 0; y < graphicsGrid.height; y += graphicsGrid.height / 10) {
+    graphicsGrid.line(0, y, graphicsGrid.height, y);
+  }
+
+
+  // to move forward in space
+  gridOffset -= 20;
+  if (gridOffset >= graphicsGrid.width / 10) {
+    gridOffset = 0;
+
+  }
+
+  // push();
+  // // specularMaterial(150, 350, 50);
+  // texture(graphicsGrid);
+  // translate(0, 0, -width);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  // // fill(250);
+  // // rect(graphicsGrid.width, graphicsGrid.height);
+  // // sphere(graphicsGrid.width/2);
+  // // torus(graphicsGrid.width/3, graphicsGrid.width/7);
+  // pop();
+
+
+
+
+  // // bottom grid
+  // push();
+  // texture(graphicsGrid);
+  // translate(0, width / 2 - width / 4, -width / 5);
+  // rotateX(PI / 2);
+  // rotateZ(PI * 3 / 2);
+  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // // plane(graphicsGrid.width, graphicsGrid.height);
+  // pop();
+  //
+  // // top grid
+  // push();
+  // translate(0, -width / 2 + width / 4, -width / 5);
+  // rotateX(PI / 2);
+  // rotateZ(PI);
+  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // // plane(graphicsGrid.width, graphicsGrid.height);
+  // pop();
+  //
+  // // left grid
+  // push();
+  // translate(-width / 2 + width / 6, 0, -width / 5);
+  // rotateY(PI / 2);
+  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // // plane(graphicsGrid.width, graphicsGrid.height);
+  // pop();
+  //
+  // // right grid
+  // push();
+  // translate(width / 2 - width / 6, 0, -width / 5);
+  // rotateY(PI / 2);
+  // rotateZ(PI * 3 / 2);
+  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // // plane(graphicsGrid.width, graphicsGrid.height);
+  // pop();
+
+
+  push()
+  rotateZ(angleTgotchi * 2);
+  // bottom grid
+  push();
+  texture(graphicsGrid);
+  translate(0, width / 2 - width / 4, - width / 8);
+  rotateX(PI / 2);
+  rotateZ(PI * 3 / 2);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // top grid
+  push();
+  translate(0, -width / 2 + width / 4, - width / 8);
+  rotateX(PI / 2);
+  rotateZ(PI);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // left grid
+  push();
+  translate(-width / 2 + width / 6, 0, - width / 8);
+  rotateY(PI / 2);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // right grid
+  push();
+  translate(width / 2 - width / 6, 0, - width / 8);
+  rotateY(PI / 2);
+  rotateZ(PI * 3 / 2);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  pop();
+
+  graphicsBG.noStroke();
+  graphicsBG.colorMode(RGB);
+  graphicsBG.background(40, 0, 80);
+  graphicsBG.textSize(16);
+  graphicsBG.strokeWeight(0);
+  graphicsBG.fill(0, 255, 0);
+
+  graphicsBG.text(`LOADING TRAUMAGRID`, 0, graphicsBG.width / 3, graphicsBG.width, graphicsBG.height);
+
+  push();
+  texture(graphicsBG);
+  translate(0, 0, 0);
+  rotateX(angleTgotchi);
+  rotateY(angleTgotchi * 2);
+  // rotateZ(PI / 2);
+  box(width / 4);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // push();
+  // texture(graphicsBG);
+  // // translate(0, 0, 0);
+  // translate(0, 0, -width / 5);
+  // box(graphicsBG.width, graphicsBG.height);
+  // pop();
+}
+
 
 
 function defaultCamera() {

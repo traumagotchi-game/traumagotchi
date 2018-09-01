@@ -1,3 +1,63 @@
+/* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
+Assistance: Angelabelle Abarientos
+DeepMachineIncantation Text: Porpentine Charity Heartscape
+
+Special thanks to Dan Schiffman's Coding Train for teaching me everything I
+needed to know to build this.
+
+When it is completed in October 2018, all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+
+_ .-') _     ('-.     ('-.     _ (`-.
+( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
+\     .'_ (,------.(,------. _.`     \
+,`'--..._) |  .---' |  .---'(__...--''
+|  |  \  ' |  |     |  |     |  /  | |
+|  |   ' |(|  '--. (|  '--.  |  |_.' |
+|  |   / : |  .--'  |  .--'  |  .___.'
+|  '--'  / |  `---. |  `---. |  |
+`-------'  `------' `------' `--'
+
+__   __ _______ _______ __   __ ___ __    _ _______
+|  |_|  |   _   |       |  | |  |   |  |  | |       |
+|       |  |_|  |       |  |_|  |   |   |_| |    ___|
+|       |       |       |       |   |       |   |___
+|       |       |      _|       |   |  _    |    ___|
+| ||_|| |   _   |     |_|   _   |   | | |   |   |___
+|_|   |_|__| |__|_______|__| |__|___|_|  |__|_______|
+
+,---.    ,---.   ____      .-_'''-.  .-./`)     _______
+|    \  /    | .'  __ `.  '_( )_   \ \ .-.')   /   __  \
+|  ,  \/  ,  |/   '  \  \|(_ o _)|  '/ `-' \  | ,_/  \__)
+|  |\_   /|  ||___|  /  |. (_,_)/___| `-'`"`,-./  )
+|  _( )_/ |  |   _.-`   ||  |  .-----..---. \  '_ '`)
+| (_ o _) |  |.'   _    |'  \  '-   .'|   |  > (_)  )  __
+|  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
+|  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
+'--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+                                                           
+MIT License
+
+Copyright (c) 2018 Lark Like Alder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 "use strict";
 
 let canvas;
@@ -35,9 +95,6 @@ function preload() {
 }
 
 function setup() {
-  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3', playBGmusic);
-  song.setVolume(0.3);
-  song.loop();
 
   // use canvasDiv size to set size of p5 canvas
   canvasDiv = document.querySelector("#canvasDiv");
@@ -56,7 +113,6 @@ function setup() {
 
 
   menu = select("#homePageMenu");
-  // menu.position(0, height / 2 + 50);
 
   //bug ! created draw loop using window requestAnimationFrame in refresh()
   frameRate(30);
@@ -89,19 +145,6 @@ function refresh() {
   lastTime = now;
 }
 
-// function updateLoop() {
-//   // this is the new (frameDependant) draw loop
-//   // this does the same thing as sleep function, without putting everything else in the game to sleep
-//   if (frameCount % 30 == 0) {
-//     runSketch();
-//   }
-// }
-
-function playBGmusic() {
-  if (!song.isPlaying()) {
-    song.play();
-  }
-}
 
 function windowResized() {
 
@@ -110,16 +153,14 @@ function windowResized() {
 }
 
 function WidthChange(mq) {
-  // let notice = createP("Sorry mobile phones not supported ;( You need to be on a browser to play this game.")
-  // notice.style("margin: 100px 10px auto 10px");
-  // notice.id("notice");
-  // notice.hide();
 
   if (mq.matches) {
     // window width is at least 500px
     document.querySelector("#newTgotchi").style.visibility = 'visible';
     document.querySelector("#loadTgotchi").style.visibility = 'visible';
     // document.querySelector("#alertText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
+    song.setVolume(0.3);
+    song.loop();
     browser = true;
 
   } else {
@@ -135,35 +176,19 @@ function WidthChange(mq) {
 function draw() {}
 
 function updateLoop() {
-  // background(0);
+
   clear();
 
   checkFrameStates();
 
-  // console.log(`width: ${width}
-  //    height: ${height}`)
-  // console.log(`divWidth: ${canvasDiv.offsetWidth}
-  //    divHeight: ${canvasDiv.offsetHeight}`)
-  // console.log(`windowWidth: ${windowWidth}
-  //    windowHeight: ${windowHeight}`)
-
-
   fill(22, 22, 22);
   rectMode(CENTER);
-
-  // drawGrid();
 
   if (browser) {
     rect(width / 2, height / 2, 1000, 100)
 
     animation(title, canvasDiv.offsetWidth / 2, canvasDiv.offsetHeight / 2);
 
-    // if (changeAlert) {
-    //   document.querySelector("#alertText").innerHTML = alertArray[alertIndex % alertArray.length];
-    //   alertIndex++;
-    //   changeAlert = false;
-    //   console.log(alertIndex);
-    // }
   } else {
     rect(width / 2, height * .8, 1000, 50)
     animation(title_mobile, canvasDiv.offsetWidth / 2, canvasDiv.offsetHeight * .8);
@@ -217,52 +242,4 @@ function animateTitleTimer() {
   changeAlert = true;
   title_mobileRewound = false;
   title_mediumRewound = false;
-}
-
-function drawGrid() {
-  strokeWeight(1.5);
-  stroke(0);
-  // stroke(120, 360, 360);
-
-  // draw lines from middle
-  // draw lines to top
-  for (let i = 0; i < width; i += 50) {
-    line(width / 2, height / 2, i, 0);
-  }
-  // to right
-  for (let i = 0; i < height; i += 50) {
-    line(width / 2, height / 2, width, i);
-  }
-  // to bottom
-  for (let i = 0; i <= width; i += 50) {
-    line(width / 2, height / 2, i, height);
-  }
-  // to left
-  for (let i = 0; i < height; i += 50) {
-    line(width / 2, height / 2, 0, i);
-  }
-
-  // draw concentric rectangles
-  rectMode(CENTER);
-  fill(0, 0, 0)
-  rect(width / 2, height / 2, rectWidth + 40, rectWidth * 3 / 4 + 40);
-
-  noFill();
-
-  easing = windowWidth * .00009
-  // easing = .15;
-  size = width;
-  // moved this assingment to global scope
-  // rectWidth = 200;
-
-  // let easing = .15;
-  // let size = width;
-  // let rectWidth = 200;
-
-  for (let i = 0; i <= 20; i++) {
-    size += (rectWidth - size) * easing;
-    // stroke(120, 0 + i * 5, 0 + i * 5);
-    // stroke(120, 360, 360 - i * 15);
-    rect(width / 2, height / 2, size, size * 3 / 4);
-  }
 }

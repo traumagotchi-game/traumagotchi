@@ -1,3 +1,63 @@
+/* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
+Assistance: Angelabelle Abarientos
+DeepMachineIncantation Text: Porpentine Charity Heartscape
+
+Special thanks to Dan Schiffman's Coding Train for teaching me everything I
+needed to know to build this.
+
+When it is completed in October 2018, all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+
+_ .-') _     ('-.     ('-.     _ (`-.
+( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
+\     .'_ (,------.(,------. _.`     \
+,`'--..._) |  .---' |  .---'(__...--''
+|  |  \  ' |  |     |  |     |  /  | |
+|  |   ' |(|  '--. (|  '--.  |  |_.' |
+|  |   / : |  .--'  |  .--'  |  .___.'
+|  '--'  / |  `---. |  `---. |  |
+`-------'  `------' `------' `--'
+
+__   __ _______ _______ __   __ ___ __    _ _______
+|  |_|  |   _   |       |  | |  |   |  |  | |       |
+|       |  |_|  |       |  |_|  |   |   |_| |    ___|
+|       |       |       |       |   |       |   |___
+|       |       |      _|       |   |  _    |    ___|
+| ||_|| |   _   |     |_|   _   |   | | |   |   |___
+|_|   |_|__| |__|_______|__| |__|___|_|  |__|_______|
+
+,---.    ,---.   ____      .-_'''-.  .-./`)     _______
+|    \  /    | .'  __ `.  '_( )_   \ \ .-.')   /   __  \
+|  ,  \/  ,  |/   '  \  \|(_ o _)|  '/ `-' \  | ,_/  \__)
+|  |\_   /|  ||___|  /  |. (_,_)/___| `-'`"`,-./  )
+|  _( )_/ |  |   _.-`   ||  |  .-----..---. \  '_ '`)
+| (_ o _) |  |.'   _    |'  \  '-   .'|   |  > (_)  )  __
+|  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
+|  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
+'--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+MIT License
+
+Copyright (c) 2018 Lark Like Alder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 'use strict';
 
 
@@ -43,6 +103,7 @@ let database;
 let keys;
 let tgotchiData;
 let tgotchiDataArray;
+let numberTgotchi;
 let frameCounter = 0;
 
 // dom
@@ -94,6 +155,7 @@ let processorData;
 let charmData;
 let charmID;
 let charmMove;
+let charmDistance;
 // menu4
 // let password
 // menu5
@@ -117,7 +179,8 @@ let totalSongs = 3;
 let loading = true;
 let counter = 0;
 
-let angle = 0;
+// let angle = 0;
+let angleBreathe = 0;
 
 // function soundLoaded(song) {
 //   // L O A D A U D I O
@@ -145,9 +208,24 @@ function loadItem(index, filename) {
 }
 
 function setup() {
+
+  const testWEBGLCanvas = document.querySelector("#testWEBGLCanvas");
+  // Initialize the GL context
+  const gl = testWEBGLCanvas.getContext("webgl") || testWEBGLCanvas.getContext("experimental-webgl");
+
+  // Only continue if WebGL is available and working
+  if (gl === null) {
+    alert(`Uh oh! You might need to check "Use hardware acceleration when available" in your browser settings.
+
+    Chrome and Firefox work best.`);
+    return;
+  }
+
+  // for loading animation
   loadItem(0, 'assets/audio/music/EagleInk_Aja_loop.mp3');
   loadItem(1, 'assets/audio/sfx/click.mp3');
   loadItem(2, 'assets/audio/sfx/fizzDown_hiPitch.mp3');
+
   // song1 = loadSound('assets/audio/music/EagleInk_Aja_loop.mp3', soundLoaded);
   // sound_click = loadSound('assets/audio/sfx/click.mp3', soundLoaded);
 
@@ -182,6 +260,8 @@ function setup() {
   // console.log(canvasDiv.offsetWidth);
   // canvas.style(`left:${canvasDivWidth}px`);
 
+  charmDistance = diameter;
+  
   frameRate(30);
 
   // add sound to buttons
@@ -342,6 +422,7 @@ function WidthChange(mq) {
 
 function draw() {
 
+  angleTgotchi += .01;
 
   if (loading) {
     // background(0, 0, 0);
@@ -354,11 +435,13 @@ function draw() {
     //     var w = 200 * counter/ totalSongs;
     //     rect (0,0,w,20);
     background(0);
-    rotate(angle);
-    strokeWeight(4);
-    stroke(0, 255, 0);
-    line(0, 0, 150, 0);
-    angle += 0.2;
+    // rotate(angle);
+    // strokeWeight(4);
+    // stroke(0, 255, 0);
+    // line(0, 0, 150, 0);
+    // angle += 0.2;
+    cameraControl();
+    drawLoadingScreenGrid();
 
   } else {
 
@@ -502,21 +585,6 @@ function cameraControl() {
       break;
   }
 
-  // // place at bottom right
-  // if (cameraX <= 220) {
-  //   // cameraX += 2;
-  //   // with ease: added 0.1 to target value so that it wil exit condition
-  //   cameraX += (220.1 - cameraX) * .1;
-  // }
-  // if (cameraY <= 120) {
-  //   cameraY += (120.1 - cameraY) * .1;
-  // }
-
-  // // to move forward in space
-  // gridOffset += 1;
-  // if (gridOffset >= graphicsGrid.width / 10) {
-  //   gridOffset = 0;
-  // }
 
 }
 
@@ -686,7 +754,8 @@ function customizeShape() {
     box(diameter);
   }
   if (coneEnabled) {
-    cone(diameter, Math.floor(diameter * .62));
+    ellipsoid(diameter * .9, diameter * .2, diameter * .9);
+    // cone(diameter, Math.floor(diameter * .62));
   }
   if (sphereEnabled) {
     sphere(diameter * .62);
@@ -708,7 +777,7 @@ function customizeShape() {
     pop();
   }
 
-  angleTgotchi += .01;
+
 }
 
 function displayProcessor() {

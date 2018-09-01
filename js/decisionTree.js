@@ -4,7 +4,7 @@ let tree = [{
     key: 'initial',
     choices: [{
       display: 'shrine',
-      nextKey: 'shrine_0', // or initial
+      nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0', // or initial
       action: function() {
         shrineTgotchiX = -200;
         stateChange('shrine');
@@ -29,6 +29,29 @@ let tree = [{
         // lark: consolidate code: pull state = 'game' out of init funcitons for game
         selectGames();
         initGameBank();
+      }
+    }]
+  },
+  {
+    key: 'deepInTheMachineWorld</br>traumaCompostShrine_0',
+    choices: [{
+      display: '(work in progress: very soon you can release words and leave charms here)',
+      nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0',
+      action: function() {
+        // toggleUserInputMenu(`release these words`, `RELEASE`);
+      }
+    }, {
+      display: '...',
+      nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0',
+      action: function() {
+        // toggleUserInputMenu(`release these words`, `RELEASE`);
+      }
+    }, {
+      display: 'ok, leave shrine',
+      nextKey: 'initial',
+      action: function() {
+        state = 'care';
+        // toggleUserInputMenu(`set your intention`, `CAST INTENTION`)
       }
     }]
   },
@@ -694,6 +717,11 @@ function getMenuName(key) {
   let menuName = key.split('_')[0];
   // return value in all caps
   return menuName.toUpperCase();
+}
+
+function toggleUserInputMenu(_title, _buttonText){
+  careMenu.style.display = "none";
+  userInputMenu.style.display = "block";
 }
 
 function writeAction2Console(action) {

@@ -4,6 +4,8 @@ function gotData(data) {
   // need to retrieve firebase data with val() method
   tgotchiData = data.val();
   tgotchiDataArray = Object.values(tgotchiData);
+  numberTgotchi = tgotchiDataArray.length;
+  
   // create array of keys (traumagotchi names)
   keys = Object.keys(tgotchiData);
 }
