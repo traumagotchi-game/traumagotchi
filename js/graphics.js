@@ -127,15 +127,18 @@ function drawShrineTgotchiGraphics(_tgotchi) {
 
   graphicsShrineTgotchi.fill(_tgotchi.tgotchiImage.pixelColor[0], _tgotchi.tgotchiImage.pixelColor[1], _tgotchi.tgotchiImage.pixelColor[2]);
   graphicsShrineTgotchi.noStroke();
+
   // graphicsShrineTgotchi.stroke(_tgotchi.tgotchiImage.pixelColor[0], _tgotchi.tgotchiImage.pixelColor[1], _tgotchi.tgotchiImage.pixelColor[2]);
 
   let stepSize = _tgotchi.tgotchiImage.pixelSize;
 
   // pixel array is [x, y, radius] of all the different rectangles. for 3d make the radius the height....
-  _tgotchi.tgotchiImage.pixelArray.forEach(function(entry) {
-    graphicsShrineTgotchi.rectMode(CENTER);
-    graphicsShrineTgotchi.rect(entry[0], entry[1], entry[2], entry[2]);
-  });
+  if (_tgotchi.tgotchiImage.pixelArray) {
+    _tgotchi.tgotchiImage.pixelArray.forEach(function(entry) {
+      graphicsShrineTgotchi.rectMode(CENTER);
+      graphicsShrineTgotchi.rect(entry[0], entry[1], entry[2], entry[2]);
+    });
+  }
 
   // for 3d,
 }
@@ -263,6 +266,7 @@ function drawBackgroundText() {
   graphicsShrineText.background(0, 10, 0);
   // graphicsShrineText.clear();
 
+  graphicsShrineText.textFont('monospace');
   graphicsShrineText.textSize(16);
   graphicsShrineText.strokeWeight(0);
   graphicsShrineText.fill(0, 255, 0);
@@ -357,6 +361,7 @@ function drawCirclingSpellText(_text) {
   graphicsShrineTextLarge.strokeWeight(0);
   graphicsShrineTextLarge.fill(0, 255, 0);
   graphicsShrineTextLarge.textSize(14);
+  graphicsShrineTextLarge.textFont('monospace');
 
   // graphicsShrineTextLarge.stroke(0, 255, 0);
   // graphicsShrineTextLarge.rect(0, 0, 20, 20)
@@ -372,7 +377,7 @@ function drawCirclingSpellText(_text) {
     mindfulOfTime++
   }
 }`, `if (worldNight == 'descending'){
-  traumagrid.push[protectiveMask];
+  traumagrid.push(protectiveMask);
   angelThoughts("don't panic", "step well");
 } else if (forestNight == 'dawning'){
   unveilCritter();
@@ -640,6 +645,134 @@ function displayShrineShield() {
   pop();
 }
 
+function releaseWordsAnimation() {
+
+  if (releaseWords.length < 40) {
+    releaseTextSize = 36;
+  } else if (releaseWords.length < 100) {
+    releaseTextSize = 24;
+  } else if (releaseWords.length < 200) {
+    releaseTextSize = 16;
+  } else {
+    releaseTextSize = 12;
+  }
+
+  graphicsShrineRelease.noStroke();
+  graphicsShrineRelease.textAlign(CENTER);
+  graphicsShrineRelease.colorMode(RGB);
+  // graphicsShrineRelease.clear();
+  // graphicsShrineRelease.background(0);
+  // graphicsShrineRelease.background(0, 0, 0, 0);
+  let redVal = (frameCount * 20) % 255;
+  console.log(redVal);
+  graphicsShrineRelease.background(255 - redVal, redVal, 57);
+  graphicsShrineRelease.textSize(releaseTextSize);
+  graphicsShrineRelease.strokeWeight(0);
+  graphicsShrineRelease.fill(0);
+  graphicsShrineRelease.textFont('monospace');
+  graphicsShrineRelease.text(`${releaseWords}`, 5, 5, graphicsShrineRelease.width - 10, graphicsShrineRelease.height - 10);
+
+
+  push();
+  texture(graphicsShrineRelease);
+  translate(0, 0, releasePositionZ);
+  // rotateX(PI/2);
+  // rotateY(angleTgotchi / 4);
+  // rotateZ(angleTgotchi / 5);
+  rotateX(releaseRotationX);
+  rotateY(0);
+  rotateZ(0);
+  box(graphicsShrineRelease.width * releaseScale, graphicsShrineRelease.height * releaseScale, 10, 10);
+  // plane(graphicsShrineRelease.width, graphicsShrineRelease.height);
+  pop();
+
+  releasePositionVel += releasePositionAcc
+  releasePositionZ -= releasePositionVel;
+
+  releaseRotationX -= .03;
+
+  releaseScale -= 0.02;
+
+  if (releasePositionZ < -100) {
+    releasingWords = false;
+    if (!sound_powerup_1.isPlaying()) {
+      sound_powerup_1.play();
+    }
+    releasePositionZ = 33;
+    releaseRotationX = 0;
+    releasePositionVel = 0;
+    releasePositionAcc = 0.1;
+    releaseScale = 1;
+    document.querySelector("#releaseWordsInput").value = ''
+  }
+
+
+}
+
+function setIntentionAnimation() {
+
+    if (intentionWords.length < 40) {
+      releaseTextSize = 22;
+    } else if (intentionWords.length < 100) {
+      releaseTextSize = 16;
+    } else if (intentionWords.length < 200) {
+      releaseTextSize = 12;
+    } else {
+      releaseTextSize = 10;
+    }
+
+    graphicsShrineRelease.noStroke();
+    graphicsShrineRelease.textAlign(CENTER);
+    graphicsShrineRelease.colorMode(RGB);
+    // graphicsShrineRelease.clear();
+    // graphicsShrineRelease.background(0);
+    // graphicsShrineRelease.background(0, 0, 0, 0);
+    graphicsShrineRelease.background(172, 212, 57);
+    graphicsShrineRelease.textSize(releaseTextSize);
+    graphicsShrineRelease.strokeWeight(0);
+    // graphicsShrineRelease.fill(172, 212, 57);
+    // graphicsShrineRelease.fill(255, 33, random(200, 255));
+      graphicsShrineRelease.fill(random(200, 255), 33, 66);
+    // graphicsShrineRelease.fill(0);
+    graphicsShrineRelease.textFont('monospace');
+    graphicsShrineRelease.text(`${intentionWords}`, 5, 5, graphicsShrineRelease.width - 10, graphicsShrineRelease.height - 10);
+
+
+    push();
+    texture(graphicsShrineRelease);
+    translate(0, 0, releasePositionZ);
+    // rotateX(PI/2);
+    // rotateY(angleTgotchi / 4);
+    // rotateZ(angleTgotchi / 5);
+    rotateX(releaseRotationX);
+    rotateY(0);
+    rotateZ(0);
+    box(graphicsShrineRelease.width * releaseScale, graphicsShrineRelease.height * releaseScale, 10, 10);
+    // plane(graphicsShrineRelease.width, graphicsShrineRelease.height);
+    pop();
+
+    releasePositionVel += releasePositionAcc
+    releasePositionZ -= releasePositionVel;
+
+    releaseRotationX += 0.05;
+
+    releaseScale -= 0.02;
+
+    if (releasePositionZ < -100) {
+      settingIntention = false;
+      if (!sound_powerup_0.isPlaying()) {
+        sound_powerup_0.play();
+      }
+      releasePositionZ = 33;
+      releaseRotationX = 0;
+      releasePositionVel = 0;
+      releasePositionAcc = 0.1;
+      releaseScale = 1;
+      document.querySelector("#setIntentionInput").value = ''
+    }
+
+}
+
 function displayCharm() {
 
 
@@ -781,6 +914,7 @@ function moveActionCube(_actionX, _actionY, _actionZ, ease = .1) {
 
 
 }
+
 
 // for drawing tgotchi graphics at back of grid when there is no shape set
 function drawFlatGotchi() {
@@ -961,63 +1095,13 @@ function drawLoadingScreenGrid() {
 
   }
 
-  // push();
-  // // specularMaterial(150, 350, 50);
-  // texture(graphicsGrid);
-  // translate(0, 0, -width);
-  // plane(graphicsGrid.width, graphicsGrid.height);
-  // // fill(250);
-  // // rect(graphicsGrid.width, graphicsGrid.height);
-  // // sphere(graphicsGrid.width/2);
-  // // torus(graphicsGrid.width/3, graphicsGrid.width/7);
-  // pop();
-
-
-
-
-  // // bottom grid
-  // push();
-  // texture(graphicsGrid);
-  // translate(0, width / 2 - width / 4, -width / 5);
-  // rotateX(PI / 2);
-  // rotateZ(PI * 3 / 2);
-  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
-  // // plane(graphicsGrid.width, graphicsGrid.height);
-  // pop();
-  //
-  // // top grid
-  // push();
-  // translate(0, -width / 2 + width / 4, -width / 5);
-  // rotateX(PI / 2);
-  // rotateZ(PI);
-  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
-  // // plane(graphicsGrid.width, graphicsGrid.height);
-  // pop();
-  //
-  // // left grid
-  // push();
-  // translate(-width / 2 + width / 6, 0, -width / 5);
-  // rotateY(PI / 2);
-  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
-  // // plane(graphicsGrid.width, graphicsGrid.height);
-  // pop();
-  //
-  // // right grid
-  // push();
-  // translate(width / 2 - width / 6, 0, -width / 5);
-  // rotateY(PI / 2);
-  // rotateZ(PI * 3 / 2);
-  // box(graphicsGrid.width, graphicsGrid.height, 10, 10);
-  // // plane(graphicsGrid.width, graphicsGrid.height);
-  // pop();
-
 
   push()
   rotateZ(angleTgotchi * 2);
   // bottom grid
   push();
   texture(graphicsGrid);
-  translate(0, width / 2 - width / 4, - width / 8);
+  translate(0, width / 2 - width / 4, -width / 8);
   rotateX(PI / 2);
   rotateZ(PI * 3 / 2);
   box(graphicsGrid.width, graphicsGrid.height, 10, 10);
@@ -1026,7 +1110,7 @@ function drawLoadingScreenGrid() {
 
   // top grid
   push();
-  translate(0, -width / 2 + width / 4, - width / 8);
+  translate(0, -width / 2 + width / 4, -width / 8);
   rotateX(PI / 2);
   rotateZ(PI);
   box(graphicsGrid.width, graphicsGrid.height, 10, 10);
@@ -1035,7 +1119,7 @@ function drawLoadingScreenGrid() {
 
   // left grid
   push();
-  translate(-width / 2 + width / 6, 0, - width / 8);
+  translate(-width / 2 + width / 6, 0, -width / 8);
   rotateY(PI / 2);
   box(graphicsGrid.width, graphicsGrid.height, 10, 10);
   // plane(graphicsGrid.width, graphicsGrid.height);
@@ -1043,7 +1127,7 @@ function drawLoadingScreenGrid() {
 
   // right grid
   push();
-  translate(width / 2 - width / 6, 0, - width / 8);
+  translate(width / 2 - width / 6, 0, -width / 8);
   rotateY(PI / 2);
   rotateZ(PI * 3 / 2);
   box(graphicsGrid.width, graphicsGrid.height, 10, 10);
@@ -1078,7 +1162,6 @@ function drawLoadingScreenGrid() {
   // box(graphicsBG.width, graphicsBG.height);
   // pop();
 }
-
 
 
 function defaultCamera() {

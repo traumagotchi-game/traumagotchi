@@ -160,8 +160,22 @@ let choice1;
 let choice2;
 let choice3;
 
-// user menu for shrine
-let userInputMenu;
+// menu for shrine & animation variables
+let releaseWordsMenu;
+let releaseWordsButton;
+let releaseWords;
+let releasingWords = false;
+let setIntentionMenu;
+let setIntentionButton;
+let intentionWords;
+let settingIntention = false;
+let releasePositionZ = 33;
+let releaseRotationX = 0;
+let releasePositionVel = 0;
+let releasePositionAcc = 0.1;
+let releaseScale = 1;
+let releaseTextSize = 16;
+
 
 let currentKey = 'initial';
 let currentIndex = 0;
@@ -174,6 +188,7 @@ let graphicsBGArray = [];
 let graphicsCharm;
 let graphicsShrineText;
 let graphicsShrineTextLarge;
+let graphicsShrineRelease;
 
 let moveGrid = false;
 
@@ -338,7 +353,7 @@ let sound_thud2;
 let sound_beep1;
 let sound_collide_heavy;
 let sound_collide_light;
-// let sound_fizzDown_computery;
+let sound_fizzDown_computery;
 let sound_fizzDown_loPitch;
 let sound_fizzDown_hiPitch;
 let sound_fizzDown_sad;
@@ -362,9 +377,6 @@ let tgotchiEntryComplete = false;
 
 function preload() {
 
-  // L O A D 3
-  machineWorldFeelingsCompostShrineCenter = loadModel('assets/threeD/crystals.obj')
-
   // // L O A D A U D I O
   song_B2 = loadSound('assets/audio/music/B2_Aja_loop.mp3');
   song_universalBass = loadSound('assets/audio/music/UniversalBass_Aja_loop_fadeIn.mp3');
@@ -372,7 +384,7 @@ function preload() {
   sound_thud1 = loadSound('assets/audio/sfx/thud1.mp3');
   sound_thud2 = loadSound('assets/audio/sfx/thud2.mp3');
   sound_beep1 = loadSound('assets/audio/sfx/beep1.mp3');
-  // sound_fizzDown_computery = loadSound('assets/audio/sfx/fizzDown_computery.mp3');
+  sound_fizzDown_computery = loadSound('assets/audio/sfx/fizzDown_computery.mp3');
   sound_fizzDown_loPitch = loadSound('assets/audio/sfx/fizzDown_loPitch.mp3');
   sound_fizzDown_hiPitch = loadSound('assets/audio/sfx/fizzDown_hiPitch.mp3');
   sound_fizzDown_sad = loadSound('assets/audio/sfx/fizzDown_sad.mp3');
@@ -709,6 +721,8 @@ function setup() {
 
   graphicsShrineTextLarge = createGraphics(diameter, diameter);
 
+  graphicsShrineRelease = createGraphics(diameter * 3, diameter);
+
   // initialize bg graphics array
   for (let i = 0; i < 32; i++) {
     graphicsBGArray[i] = [];
@@ -812,8 +826,9 @@ function setup() {
   platformDropGameCanvas = document.querySelector("#platformDropGameCanvas");
   platformDropGameCanvas.style.visibility = "hidden";
 
-  userInputMenu = document.querySelector("#userInputMenu");
   careMenu = document.querySelector("#careMenu");
+  releaseWordsMenu = document.querySelector("#releaseWordsMenu");
+  setIntentionMenu = document.querySelector("#setIntentionMenu");
 
   // care menu decision tree!
   treeLength = tree.length;
@@ -847,6 +862,35 @@ function setup() {
     currentKey = tree[currentIndex].choices[3].nextKey;
     tree[currentIndex].choices[3].action();
     nextMenu();
+  })
+
+  // user input menu
+  releaseWordsButton = document.querySelector("#releaseWordsButton");
+
+  releaseWordsButton.addEventListener("click", () => {
+    releaseWords = document.querySelector("#releaseWordsInput").value;
+    releasingWords = true;
+    if (!sound_fizzDown_computery.isPlaying()) {
+      sound_fizzDown_computery.play();
+    }
+    setTimeout(function() {
+      careMenu.style.display = "block";
+      releaseWordsMenu.style.display = "none";
+    }, 2000);
+  })
+
+  setIntentionButton = document.querySelector("#setIntentionButton");
+
+  setIntentionButton.addEventListener("click", () => {
+    intentionWords = document.querySelector("#setIntentionInput").value;
+    settingIntention = true;
+    if (!sound_fizzDown_hiPitch.isPlaying()) {
+      sound_fizzDown_hiPitch.play();
+    }
+    setTimeout(function() {
+      careMenu.style.display = "block";
+      setIntentionMenu.style.display = "none";
+    }, 2000);
   })
 
   // add sound to buttons
@@ -919,7 +963,8 @@ function draw() {
     case 'mainMenu':
       displayMainCanvas();
       careMenu.style.display = "block";
-      userInputMenu.style.display = "none";
+      releaseWordsMenu.style.display = "none";
+      setIntentionMenu.style.display = "none";
       gameMenu.style.display = "none";
       gameIntroOverlay.style.display = "none";
       pointsOverlay.style.display = "none";
@@ -929,12 +974,12 @@ function draw() {
 
       displayShrine();
       break;
-    // case 'community':
-    //   careMenu.style.display = "none";
-    //   userInputMenu.style.display = "block";
-    //   writeToConsoleBool = true;
-    //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
-    //   break;
+      // case 'community':
+      //   careMenu.style.display = "none";
+      //   releaseWordsMenu.style.display = "block";
+      //   writeToConsoleBool = true;
+      //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
+      //   break;
     case 'care':
       displayMainCanvas();
 
@@ -1152,7 +1197,7 @@ function playBGmusic() {
       sound_thud2.setVolume(0.4);
       sound_collide_heavy.setVolume(0.3);
       sound_collide_light.setVolume(0.4);
-      // sound_fizzDown_computery.setVolume(0.2);
+      sound_fizzDown_computery.setVolume(0.2);
       sound_fizzDown_loPitch.setVolume(0.2);
       sound_fizzDown_hiPitch.setVolume(0.2);
       sound_fizzDown_sad.setVolume(0.2);
@@ -1213,6 +1258,13 @@ function displayShrine() {
 
   cameraZ = (height / 2) / tan(PI / 6);
 
+  if (releasingWords) {
+    releaseWordsAnimation();
+  }
+
+  if (settingIntention) {
+    setIntentionAnimation();
+  }
 
   displayShrineCenter();
 
@@ -1222,27 +1274,6 @@ function displayShrine() {
     displayShrineTgotchi(tgotchiDataArray[shrineTgotchiCounter]);
 
   }
-
-  // if (tgotchiDataArray) {
-  //
-  //   let delay = 1000;
-  //   let shrineTimerTimeout = setTimeout(function request() {
-  //     clearTimeout(shrineTimerTimeout);
-  //
-  //     shrineTgotchiCounter++;
-  //
-  //     if (shrineTgotchiCounter == tgotchiDataArray.length) {
-  //       shrineTgotchiCounter = 0;
-  //     }
-  //
-  //     shrineTimerTimeout = setTimeout(request, delay)
-  //   }, delay)
-  //
-  //   drawShrineTgotchiGraphics(tgotchiDataArray[shrineTgotchiCounter]);
-  //   displayShrineTgotchi(tgotchiDataArray[shrineTgotchiCounter]);
-  //
-  // }
-
 }
 
 function login() {

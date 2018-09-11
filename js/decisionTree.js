@@ -21,6 +21,7 @@ let tree = [{
       nextKey: 'care_0',
       action: function() {
         stateChange('care');
+
       }
     }, {
       display: 'play',
@@ -35,23 +36,28 @@ let tree = [{
   {
     key: 'deepInTheMachineWorld</br>traumaCompostShrine_0',
     choices: [{
-      display: '(work in progress: very soon you can release words and leave charms here)',
+      display: 'release words',
       nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0',
       action: function() {
-        // toggleUserInputMenu(`release these words`, `RELEASE`);
+        toggleReleaseWordsMenu();
       }
+      // }, {
+      //   display: 'leave charm',
+      //   nextKey: 'shrine_0',
+      //   action: function() {}
     }, {
-      display: '...',
+      display: 'set intention',
       nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0',
       action: function() {
-        // toggleUserInputMenu(`release these words`, `RELEASE`);
+        toggleSetIntentionMenu();
       }
     }, {
-      display: 'ok, leave shrine',
+      display: 'leave shrine',
       nextKey: 'initial',
       action: function() {
-        state = 'care';
-        // toggleUserInputMenu(`set your intention`, `CAST INTENTION`)
+        stateChange('mainMenu');
+        writeToConsoleBool = true;
+        writeConsoleText(``)
       }
     }]
   },
@@ -250,7 +256,7 @@ let tree = [{
   {
     key: 'rest_01', //Sink
     choices: [{
-        display: '(into slime)', //SLIME ANIMATION!!! How deep can you go before you feel scared? Before you feel safe? (Warm as a hydrothermal vent.)
+        display: 'slime ooze through fingerwebs', //SLIME ANIMATION!!! How deep can you go before you feel scared? Before you feel safe? (Warm as a hydrothermal vent.)
         nextKey: 'howOften',
         action: function() {
           actionFunction = slime;
@@ -270,7 +276,7 @@ let tree = [{
         }
       },
       {
-        display: 'self-harm of choice',
+        display: 'bleach smoothie',
         nextKey: 'howOften',
         action: function() {
           actionFunction = selfHarm;
@@ -403,7 +409,7 @@ let tree = [{
   {
     key: 'bathe_02', //float
     choices: [{
-        display: 'Repeat mantra ', //User Input
+        display: 'A calming word to repeat', //User Input
         nextKey: 'howOften',
         action: function() {
           actionFunction = mantra;
@@ -635,33 +641,6 @@ function nextMenu() {
   for (let i = 0; i < treeLength; i++) {
     if (currentKey === tree[i].key) {
 
-      // // original menu (doesn't account for 3 instead of 4 display options)
-      // choice0.innerHTML = tree[i].choices[0].display;
-      // choice1.innerHTML = tree[i].choices[1].display;
-      // choice2.innerHTML = tree[i].choices[2].display;
-      // choice3.innerHTML = tree[i].choices[3].display;
-
-
-
-      // // // (simplest solution) toggles on and off fourth option depending if one is provided in the tree.
-      // // // if (option exists){ then show it! }
-      // if (tree[i].choices[3]) {
-      //   choice0.innerHTML = tree[i].choices[0].display;
-      //   choice1.innerHTML = tree[i].choices[1].display;
-      //   choice2.innerHTML = tree[i].choices[2].display;
-      //   choice3.style.display = "block";
-      //   choice3.innerHTML = tree[i].choices[3].display;
-      // } else {
-      //   choice0.innerHTML = tree[i].choices[0].display;
-      //   choice1.innerHTML = tree[i].choices[1].display;
-      //   choice2.innerHTML = tree[i].choices[2].display;
-      //   choice3.style.display = "none";
-      // }
-
-      // if inside a care menu (eat, rest, bathe), this displays menu title at top....
-      // buggy causes a little flash as the display settings turn on and off....
-      // to view, activate/uncomment button with id "menuTitle" in HTML
-
       if (tree[i].choices[3]) {
         choiceMenuTitle.style.display = "none";
         choice0.innerHTML = tree[i].choices[0].display;
@@ -676,8 +655,7 @@ function nextMenu() {
         choice2.innerHTML = tree[i].choices[2].display;
         choice3.style.display = "none";
       } else {
-        // use global variable for colors here... (color3)
-        // need to make it so choice0 doesn't indent with mouseOver
+
         choiceMenuTitle.style.display = "block";
         choiceMenuTitle.style.backgroundColor = '#00aa00';
         choiceMenuTitle.style.color = '#000';
@@ -688,21 +666,6 @@ function nextMenu() {
         choice2.innerHTML = tree[i].choices[2].display;
         choice3.style.display = "none";
       }
-
-
-      // // trying to see if menu title could be at bottom (!) little weird. would have to disable button click for it...
-      // if (tree[i].choices[3]) {
-      //   choice0.innerHTML = tree[i].choices[0].display;
-      //   choice1.innerHTML = tree[i].choices[1].display;
-      //   choice2.innerHTML = tree[i].choices[2].display;
-      //   choice3.innerHTML = tree[i].choices[3].display;
-      // } else {
-      //   choice0.innerHTML = tree[i].choices[0].display;
-      //   choice1.innerHTML = tree[i].choices[1].display;
-      //   choice2.innerHTML = tree[i].choices[2].display;
-      //   choice3.style.textAlign = 'right';
-      //   choice3.innerHTML = getMenuName(tree[i].key);
-      // }
 
 
       currentIndex = i;
@@ -719,9 +682,14 @@ function getMenuName(key) {
   return menuName.toUpperCase();
 }
 
-function toggleUserInputMenu(_title, _buttonText){
+function toggleReleaseWordsMenu() {
   careMenu.style.display = "none";
-  userInputMenu.style.display = "block";
+  releaseWordsMenu.style.display = "block";
+}
+
+function toggleSetIntentionMenu() {
+  careMenu.style.display = "none";
+  setIntentionMenu.style.display = "block";
 }
 
 function writeAction2Console(action) {

@@ -75,26 +75,26 @@ input, textarea {
   border-style: ridge;
 }
 
-#divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #divMenu6, #careMenu, #userInputMenu, #gameMenu, #gameIntroOverlay, #pointsOverlay, #gameEndOverlay, #timer, #pointStats {
+#divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #divMenu6, #careMenu, #releaseWordsMenu, #setIntentionMenu, #gameMenu, #gameIntroOverlay, #pointsOverlay, #gameEndOverlay, #timer, #pointStats {
   display: none;
 }
 
-#userInputMenu {
+#releaseWordsMenu, #setIntentionMenu {
   font-size: 14px;
 }
 
-#userInputMenu label {
+#setIntentionMenu label {
   font-family: 'Courier New', 'Courier';
 }
 
-#userInputMenu button {
-  /* .userInputMenu button { */
-  /* width: 80px; */
-  /* width: 100%; */
+#releaseWordsMenu label {
+  font-family: 'Courier New', 'Courier';
+}
+
+#releaseWordsMenu button {
+
   color: #ACD02D;
   background-color: #161616;
-  /* -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s; */
   border: 1px solid #ACD02D;
   text-align: center;
   font-family: "Aldrich", "Courier", monospace;
@@ -104,11 +104,8 @@ input, textarea {
   margin-top: 15px;
 }
 
-#userInputMenu textarea {
-  display: block;
-  width: 94.5%;
-  font-size: 16px;
-  /* color: #ACD02D;
+#setIntentionMenu button {
+  color: #ACD02D;
   background-color: #161616;
   border: 1px solid #ACD02D;
   text-align: center;
@@ -116,7 +113,19 @@ input, textarea {
   font-size: 16px;
   line-height: 1.8;
   padding: .3em;
-  margin-top: 15px; */
+  margin-top: 15px;
+}
+
+#releaseWordsMenu textarea {
+  display: block;
+  width: 94.5%;
+  font-size: 16px;
+}
+
+#setIntentionMenu textarea {
+  display: block;
+  width: 94.5%;
+  font-size: 16px;
 }
 
 #alertMenu {
@@ -156,7 +165,7 @@ input, textarea {
   max-width: 600px;
 }
 
-#menuTitle, #userInputMenuTitle {
+#menuTitle, #releaseWordsMenuTitle, #setIntentionMenuTitle {
   outline: none;
   text-align: center;
   background-color: #ACD02D !important;
