@@ -3,34 +3,34 @@
 let tree = [{
     key: 'initial',
     choices: [{
-      display: 'shrine',
+      display: 'VISIT つ━━✫・*。 <br>traumaCompostShrine ',
       nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0', // or initial
       action: function() {
         shrineTgotchiX = -200;
         stateChange('shrine');
       }
       // }, {
-      //   display: 'community',
+      //   display: 'community',©
       //   nextKey: 'community_0', // or initial
       //   action: function() {
       //     communitySignup();
       //     stateChange('community');
       //   }
     }, {
-      display: 'care',
-      nextKey: 'care_0',
+      display: 'SCHEDULE ↴↴<br> ▂ ▃ ▄ virtualSelfCare',
+      nextKey: 'virtualSelfCare_0',
       action: function() {
         stateChange('care');
-
+        executeAction = 'careMenu';
       }
-    }, {
-      display: 'play',
-      nextKey: 'initial',
-      action: function() {
-        // lark: consolidate code: pull state = 'game' out of init funcitons for game
-        selectGames();
-        initGameBank();
-      }
+    // }, {
+    //   display: 'play',
+    //   nextKey: 'initial',
+    //   action: function() {
+    //     // lark: consolidate code: pull state = 'game' out of init funcitons for game
+    //     selectGames();
+    //     initGameBank();
+      // }
     }]
   },
   {
@@ -62,7 +62,8 @@ let tree = [{
     }]
   },
   {
-    key: 'care_0',
+    key: 'virtualSelfCare_0',
+    // key: 'care_0',
     choices: [{
       display: 'eat',
       nextKey: 'eat_0',
@@ -540,20 +541,9 @@ let tree = [{
         }
       },
       {
-        display: 'hourly',
+        display: 'every five minutes',
         nextKey: 'howOften',
         action: function() {
-          // change this
-          let hourlyCost = 150;
-
-          if (userData.points >= hourlyCost) {
-
-            userData.points -= hourlyCost;
-            pushMoreData({
-              points: userData.points
-            })
-
-            pointStats.innerHTML = `${userData.points} points`;
 
             let newActionsHourly = {
               action: lastActionName,
@@ -569,25 +559,14 @@ let tree = [{
             lastActionInput = null;
             actionFunction();
 
-            congratsAlert('hour', hourlyCost);
+            congratsAlert('five minutes', lastActionName);
 
-          } else {
-            sorryNeedPoints(hourlyCost);
-          }
         }
       },
       {
-        display: 'every five minutes',
+        display: 'every 60 seconds',
         nextKey: 'howOften',
         action: function() {
-          let fiveMinuteCost = 500;
-          if (userData.points >= fiveMinuteCost) {
-
-            userData.points -= fiveMinuteCost;
-            pushMoreData({
-              points: userData.points
-            });
-            pointStats.innerHTML = `${userData.points} points`;
 
             let newActionsFiveMinutes = {
               action: lastActionName,
@@ -604,11 +583,8 @@ let tree = [{
             lastActionInput = null;
             actionFunction();
 
-            congratsAlert('five minutes', fiveMinuteCost);
+            congratsAlert('60 seconds', lastActionName);
 
-          } else {
-            sorryNeedPoints(fiveMinuteCost);
-          }
         }
       }
     ]
@@ -652,7 +628,7 @@ function nextMenu() {
         choiceMenuTitle.style.display = "none";
         choice0.innerHTML = tree[i].choices[0].display;
         choice1.innerHTML = tree[i].choices[1].display;
-        choice2.innerHTML = tree[i].choices[2].display;
+        // choice2.innerHTML = tree[i].choices[2].display;
         choice3.style.display = "none";
       } else {
 
@@ -705,8 +681,8 @@ function sorryNeedPoints(_numberPoints) {
 }
 
 
-function congratsAlert(_type, _numberPoints) {
-  alertMenu.innerHTML = `recurring every ${_type}. <br> using: ${_numberPoints} points`
+function congratsAlert(_type, _actionName) {
+  alertMenu.innerHTML = `${_actionName} recurring every ${_type}.`
   alertMenu.style.display = "block";
   setTimeout(function() {
     alertMenu.style.display = "none";

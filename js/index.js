@@ -34,7 +34,7 @@ __   __ _______ _______ __   __ ___ __    _ _______
 |  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
 |  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
 '--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
-                                                           
+
 MIT License
 
 Copyright (c) 2018 Lark Like Alder
@@ -158,7 +158,7 @@ function WidthChange(mq) {
     // window width is at least 500px
     document.querySelector("#newTgotchi").style.visibility = 'visible';
     document.querySelector("#loadTgotchi").style.visibility = 'visible';
-    // document.querySelector("#alertText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
+    // document.querySelector("#homepageSplashyText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
     song.setVolume(0.3);
     song.loop();
     browser = true;
@@ -166,7 +166,7 @@ function WidthChange(mq) {
   } else {
     document.querySelector("#newTgotchi").style.visibility = 'hidden';
     document.querySelector("#loadTgotchi").style.visibility = 'hidden';
-    document.querySelector("#alertText").innerHTML = `Sorry phone, to make a Traumagotchi you have to be on a computer.`;
+    document.querySelector("#homepageSplashyText").innerHTML = `Sorry phone, to make a Traumagotchi you have to be on a computer.`;
     browser = false;
 
   }
@@ -198,7 +198,7 @@ function updateLoop() {
 }
 
 function changeAlert(){
-    document.querySelector("#alertText").innerHTML = alertArray[alertIndex % alertArray.length];
+    document.querySelector("#homepageSplashyText").innerHTML = alertArray[alertIndex % alertArray.length];
     alertIndex++;
 }
 

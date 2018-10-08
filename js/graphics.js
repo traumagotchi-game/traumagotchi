@@ -168,7 +168,7 @@ function displayShrineTgotchi(_tgotchi) {
   if (shrineTgotchiX == -200) {
     writeToConsoleBool = true;
     writeConsoleText(`There are currently ${numberTgotchi} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
-    ---> Traumagotchi named ${keys[shrineTgotchiCounter]} is leaving an offering. `)
+    ---> Traumagotchi named ${keys[shrineTgotchiCounter]} is leaving a quiet offering. `)
   } else if (shrineTgotchiX >= 42) {
     writeToConsoleBool = true;
     writeConsoleText(`There are currently ${numberTgotchi} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
@@ -177,14 +177,11 @@ function displayShrineTgotchi(_tgotchi) {
 
   if (!tgotchiEntryComplete) {
     if (shrineTgotchiX < -34) {
-      // console.log(actionX);
       moveShrineTgotchi(-33, 0.07);
     } else {
-      // tgotchiEntryComplete = true;
       let tgotchiExitTimeout = setTimeout(function() {
         clearTimeout(tgotchiExitTimeout);
         tgotchiEntryComplete = true;
-        // tgotchiVisitOver = true;
       }, 2000)
     }
   } else if (tgotchiEntryComplete) {
@@ -223,7 +220,6 @@ function displayShrineTgotchi(_tgotchi) {
 
   push();
   translate(shrineTgotchiX, 20, 300);
-  // translate(-33, 25, 300);
   rotateX(angleTgotchi);
   rotateZ(angleTgotchi * 1.2);
 
@@ -567,16 +563,6 @@ function displayShrineCenter() {
   }
 
 
-  // older crystal center
-  // push();
-  // translate(0, 100, -33);
-  // // translate(0, 0, 0);
-  // rotateY(angleTgotchi);
-  // rotateX(PI);
-  // model(machineWorldFeelingsCompostShrineCenter);
-  // pop();
-
-
   texture(graphicsShrineTextLarge);
 
   push();
@@ -660,17 +646,74 @@ function releaseWordsAnimation() {
   graphicsShrineRelease.noStroke();
   graphicsShrineRelease.textAlign(CENTER);
   graphicsShrineRelease.colorMode(RGB);
-  // graphicsShrineRelease.clear();
-  // graphicsShrineRelease.background(0);
-  // graphicsShrineRelease.background(0, 0, 0, 0);
   let redVal = (frameCount * 20) % 255;
-  console.log(redVal);
   graphicsShrineRelease.background(255 - redVal, redVal, 57);
   graphicsShrineRelease.textSize(releaseTextSize);
   graphicsShrineRelease.strokeWeight(0);
   graphicsShrineRelease.fill(0);
   graphicsShrineRelease.textFont('monospace');
   graphicsShrineRelease.text(`${releaseWords}`, 5, 5, graphicsShrineRelease.width - 10, graphicsShrineRelease.height - 10);
+
+
+  push();
+  texture(graphicsShrineRelease);
+  translate(0, 0, releasePositionZ);
+  rotateX(releaseRotationX);
+  rotateY(0);
+  rotateZ(0);
+  box(graphicsShrineRelease.width * releaseScale, graphicsShrineRelease.height * releaseScale, 10, 10);
+  pop();
+
+  releasePositionVel += releasePositionAcc
+  releasePositionZ -= releasePositionVel;
+
+  releaseRotationX -= .03;
+
+  releaseScale -= 0.02;
+
+  if (releasePositionZ < -100) {
+    releasingWords = false;
+    // if (!sound_powerup_1.isPlaying()) {
+    //   sound_powerup_1.play();
+    // }
+    releasePositionZ = 33;
+    releaseRotationX = 0;
+    releasePositionVel = 0;
+    releasePositionAcc = 0.1;
+    releaseScale = 1;
+    document.querySelector("#releaseWordsInput").value = ''
+  }
+
+
+}
+
+function setIntentionAnimation() {
+
+  if (intentionWords.length < 40) {
+    releaseTextSize = 22;
+  } else if (intentionWords.length < 100) {
+    releaseTextSize = 16;
+  } else if (intentionWords.length < 200) {
+    releaseTextSize = 12;
+  } else {
+    releaseTextSize = 10;
+  }
+
+  graphicsShrineRelease.noStroke();
+  graphicsShrineRelease.textAlign(CENTER);
+  graphicsShrineRelease.colorMode(RGB);
+  // graphicsShrineRelease.clear();
+  // graphicsShrineRelease.background(0);
+  // graphicsShrineRelease.background(0, 0, 0, 0);
+  graphicsShrineRelease.background(172, 212, 57);
+  graphicsShrineRelease.textSize(releaseTextSize);
+  graphicsShrineRelease.strokeWeight(0);
+  // graphicsShrineRelease.fill(172, 212, 57);
+  // graphicsShrineRelease.fill(255, 33, random(200, 255));
+  graphicsShrineRelease.fill(random(200, 255), 33, 66);
+  // graphicsShrineRelease.fill(0);
+  graphicsShrineRelease.textFont('monospace');
+  graphicsShrineRelease.text(`${intentionWords}`, 5, 5, graphicsShrineRelease.width - 10, graphicsShrineRelease.height - 10);
 
 
   push();
@@ -689,87 +732,22 @@ function releaseWordsAnimation() {
   releasePositionVel += releasePositionAcc
   releasePositionZ -= releasePositionVel;
 
-  releaseRotationX -= .03;
+  releaseRotationX += 0.05;
 
   releaseScale -= 0.02;
 
   if (releasePositionZ < -100) {
-    releasingWords = false;
-    if (!sound_powerup_1.isPlaying()) {
-      sound_powerup_1.play();
-    }
+    settingIntention = false;
+    // if (!sound_powerup_0.isPlaying()) {
+    //   sound_powerup_0.play();
+    // }
     releasePositionZ = 33;
     releaseRotationX = 0;
     releasePositionVel = 0;
     releasePositionAcc = 0.1;
     releaseScale = 1;
-    document.querySelector("#releaseWordsInput").value = ''
+    document.querySelector("#setIntentionInput").value = ''
   }
-
-
-}
-
-function setIntentionAnimation() {
-
-    if (intentionWords.length < 40) {
-      releaseTextSize = 22;
-    } else if (intentionWords.length < 100) {
-      releaseTextSize = 16;
-    } else if (intentionWords.length < 200) {
-      releaseTextSize = 12;
-    } else {
-      releaseTextSize = 10;
-    }
-
-    graphicsShrineRelease.noStroke();
-    graphicsShrineRelease.textAlign(CENTER);
-    graphicsShrineRelease.colorMode(RGB);
-    // graphicsShrineRelease.clear();
-    // graphicsShrineRelease.background(0);
-    // graphicsShrineRelease.background(0, 0, 0, 0);
-    graphicsShrineRelease.background(172, 212, 57);
-    graphicsShrineRelease.textSize(releaseTextSize);
-    graphicsShrineRelease.strokeWeight(0);
-    // graphicsShrineRelease.fill(172, 212, 57);
-    // graphicsShrineRelease.fill(255, 33, random(200, 255));
-      graphicsShrineRelease.fill(random(200, 255), 33, 66);
-    // graphicsShrineRelease.fill(0);
-    graphicsShrineRelease.textFont('monospace');
-    graphicsShrineRelease.text(`${intentionWords}`, 5, 5, graphicsShrineRelease.width - 10, graphicsShrineRelease.height - 10);
-
-
-    push();
-    texture(graphicsShrineRelease);
-    translate(0, 0, releasePositionZ);
-    // rotateX(PI/2);
-    // rotateY(angleTgotchi / 4);
-    // rotateZ(angleTgotchi / 5);
-    rotateX(releaseRotationX);
-    rotateY(0);
-    rotateZ(0);
-    box(graphicsShrineRelease.width * releaseScale, graphicsShrineRelease.height * releaseScale, 10, 10);
-    // plane(graphicsShrineRelease.width, graphicsShrineRelease.height);
-    pop();
-
-    releasePositionVel += releasePositionAcc
-    releasePositionZ -= releasePositionVel;
-
-    releaseRotationX += 0.05;
-
-    releaseScale -= 0.02;
-
-    if (releasePositionZ < -100) {
-      settingIntention = false;
-      if (!sound_powerup_0.isPlaying()) {
-        sound_powerup_0.play();
-      }
-      releasePositionZ = 33;
-      releaseRotationX = 0;
-      releasePositionVel = 0;
-      releasePositionAcc = 0.1;
-      releaseScale = 1;
-      document.querySelector("#setIntentionInput").value = ''
-    }
 
 }
 

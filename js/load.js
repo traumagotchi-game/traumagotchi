@@ -5,7 +5,7 @@ function gotData(data) {
   tgotchiData = data.val();
   tgotchiDataArray = Object.values(tgotchiData);
   numberTgotchi = tgotchiDataArray.length;
-  
+
   // create array of keys (traumagotchi names)
   keys = Object.keys(tgotchiData);
 }
@@ -19,12 +19,16 @@ function saveTgotchiData() {
 
 
   let newName = true;
-  keys.forEach(function(key) {
-    if (key === inputName.value()) {
-      newName = false;
-      alert(`sorry there is already another traumagotchi named ${inputName.value()}`)
-    }
-  })
+  if (keys) {
+    keys.forEach(function(key) {
+      if (key === inputName.value()) {
+        newName = false;
+        alert(`sorry there is already another traumagotchi named ${inputName.value()}`)
+      }
+    })
+  } else {
+    alert(`Slow connection detected. Try again?`)
+  }
 
   if (newName) {
     if (/^\S+$/.test(inputName.value())) {

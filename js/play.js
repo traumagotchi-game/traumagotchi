@@ -175,6 +175,12 @@ let releasePositionVel = 0;
 let releasePositionAcc = 0.1;
 let releaseScale = 1;
 let releaseTextSize = 16;
+let offeringReleasePositionVel = 0;
+let offeringReleasePositionAcc = 0.1;
+let offeringReleasePositionZ = 287;
+let offeringReleasePositionX = -33;
+let offeringReleaseRotationX = 0;
+let offeringReleaseScale = 1;
 
 
 let currentKey = 'initial';
@@ -969,9 +975,10 @@ function draw() {
       gameIntroOverlay.style.display = "none";
       pointsOverlay.style.display = "none";
       gameEndOverlay.style.display = "none";
+      menuItem2.style.display = "none"
       break;
     case 'shrine':
-
+      menuItem2.style.display = "block"
       displayShrine();
       break;
       // case 'community':
@@ -981,6 +988,7 @@ function draw() {
       //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
       //   break;
     case 'care':
+      menuItem2.style.display = "block"
       displayMainCanvas();
 
       // if (userName) {
@@ -1299,8 +1307,10 @@ function login() {
 
 
       loginStatus.innerHTML = `logged in as ${userName}`;
-      pointStats.innerHTML = `${userData.points} points`;
-      pointStats.style.display = 'block';
+
+      // disable display points
+      // pointStats.innerHTML = `${userData.points} points`;
+      // pointStats.style.display = 'block';
 
       loginLandingPage = true;
 
@@ -1599,7 +1609,7 @@ function printActiveActions() {
     } else {
       // hourly list of actions
       if (userData.actionsHourly.length > 1) {
-        actionsHourlyList = '∘◦ hourly ◦∘</br>'
+        actionsHourlyList = '∘◦ every five minutes ◦∘</br>'
         for (let i = 1; i < userData.actionsHourly.length; i++) {
 
           if (i < userData.actionsHourly.length - 1) {
@@ -1611,7 +1621,7 @@ function printActiveActions() {
         }
       }
       if (userData.actionsFiveMinutes.length > 1) {
-        actionsFiveMinutesList = '</br> ∘◦ every five minutes ◦∘ </br>'
+        actionsFiveMinutesList = '</br> ∘◦ every sixty seconds ◦∘ </br>'
         //five minutely list of actions
         for (let i = 1; i < userData.actionsFiveMinutes.length; i++) {
           if (i < userData.actionsFiveMinutes.length - 1) {

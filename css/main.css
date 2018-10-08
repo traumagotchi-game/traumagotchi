@@ -43,17 +43,32 @@ body {
   background-position: center;
 }
 
+.splashyBack {
+  /* align-self: flex-end; */
+  max-width: 300px;
+  padding: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #00ff50;
+  background: url(../assets/backgrounds/alertBoxBack.svg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 10;
+}
+
+.splashyText {
+  max-width: 170px;
+  /* margin: 10px;
+  padding: 10px; */
+}
+
 a {
   text-decoration: none;
   border-bottom: none;
   /*display: block;*/
 }
 
-
-/* styling inputs  */
-
-
-/* angelabelle: trying to figure out how to turn off text appearing in input field for the js.color inputs  */
 
 
 /* all inputs */
@@ -522,6 +537,7 @@ button {
 button:hover {
   cursor: pointer;
 }
+
 
 #login, #saveTgotchi, #playButton, #saveTgotchiShape, #saveProcessor, #saveCharm, #savePassword, #nowPlay {
   border-color: #7fff00 #ACD02D #00aa00;
