@@ -91,7 +91,7 @@ function preload() {
   title_mobile.looping = false;
   title_medium.looping = false;
 
-  song = loadSound('assets/audio/music/rooksFeather_traces.mp3');
+  // song = loadSound('assets/audio/music/rooksFeather_traces.mp3');
 }
 
 function setup() {
@@ -159,8 +159,8 @@ function WidthChange(mq) {
     document.querySelector("#newTgotchi").style.visibility = 'visible';
     document.querySelector("#loadTgotchi").style.visibility = 'visible';
     // document.querySelector("#homepageSplashyText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
-    song.setVolume(0.3);
-    song.loop();
+    // song.setVolume(0.3);
+    // song.loop();
     browser = true;
 
   } else {

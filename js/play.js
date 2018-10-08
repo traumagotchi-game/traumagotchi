@@ -248,40 +248,6 @@ let cameraColor2 = [66, 125, 255]; // bottom right
 let cameraColorAmbient = [71, 71, 71];
 
 
-// sprites
-let playerImgs = [];
-let fruit = [];
-
-let collisionAnimation_128 = [];
-let confettiPop_pink_128 = [];
-let confettiPop_green_128 = [];
-
-let sprite32 = [];
-let sprite64 = [];
-let sprite128 = [];
-let arrowUp = [];
-let arrowDown = [];
-let arrowRight = [];
-let arrowLeft = [];
-let sprite32x100_purple = [];
-let sprite32x100_yellow = [];
-
-let ball = [];
-let slimePlatform = [];
-let schmupper = [];
-let schmupThings = [];
-let plucker = [];
-let charms = [];
-
-// backgrounds
-let gameBG_0;
-let gameBG_1;
-let gameBG_2;
-let gameBG_3;
-let gameBG_4;
-let gameBG_texture;
-let gameBG_textureSm;
-
 // action images
 let actionsHourlySinceLast = '';
 let actionsFiveMinutesSinceLast = '';
@@ -384,7 +350,7 @@ let tgotchiEntryComplete = false;
 function preload() {
 
   // // L O A D A U D I O
-  song_B2 = loadSound('assets/audio/music/B2_Aja_loop.mp3');
+  // song_B2 = loadSound('assets/audio/music/B2_Aja_loop.mp3');
   song_universalBass = loadSound('assets/audio/music/UniversalBass_Aja_loop_fadeIn.mp3');
   sound_click = loadSound('assets/audio/sfx/click.mp3');
   sound_thud1 = loadSound('assets/audio/sfx/thud1.mp3');
@@ -398,77 +364,10 @@ function preload() {
   sound_metallic_1 = loadSound('assets/audio/sfx/metallic_1.mp3');
   sound_collide_light = loadSound('assets/audio/sfx/collide_light.mp3');
   sound_collide_heavy = loadSound('assets/audio/sfx/collide_heavy.mp3');
-  sound_skitter = loadSound('assets/audio/sfx/skitter.mp3');
   sound_powerup_0 = loadSound('assets/audio/sfx/powerup_0.mp3');
   sound_powerup_1 = loadSound('assets/audio/sfx/powerup_1.mp3');
-  sound_snake_0 = loadSound('assets/audio/sfx/snake_0.mp3');
-  sound_snake_1 = loadSound('assets/audio/sfx/snake_1.mp3');
   sound_wack = loadSound('assets/audio/sfx/wack.mp3');
 
-
-
-  // L O A D S P R I T E S
-  // have to manually set numberFrames
-
-  for (let i = 0; i <= 3; i++) {
-    fruit[i] = loadImage(`assets/sprites/fruit/fruit_${i}.png`);
-  }
-
-  for (let i = 0; i <= 1; i++) {
-    schmupper[i] = loadImage(`assets/sprites/schmupper/schmupper_${i}.png`);
-  }
-
-  for (let i = 0; i <= 2; i++) {
-    schmupThings[i] = loadImage(`assets/sprites/schmupThings/schmupThing_${i}.png`);
-  }
-
-  for (let i = 0; i <= 1; i++) {
-    plucker[i] = loadImage(`assets/sprites/plucker/plucker_${i}.png`);
-  }
-
-  for (let i = 0; i <= 0; i++) {
-    charms[i] = loadImage(`assets/charms/charm_fourLeafClover.png`);
-  }
-
-  for (let i = 0; i <= 5; i++) {
-    ball[i] = loadImage(`assets/sprites/ball/ball_${i}.png`);
-  }
-
-  for (let i = 0; i <= 8; i++) {
-    slimePlatform[i] = loadImage(`assets/sprites/slimePlatform/slimePlatform_${i}.png`);
-  }
-
-  for (let i = 0; i <= 10; i++) {
-    collisionAnimation_128[i] = loadImage(`assets/sprites/collisionAnimation_128/collisionAnimation_128_${i}.png`);
-  }
-
-  for (let i = 0; i <= 7; i++) {
-    confettiPop_pink_128[i] = loadImage(`assets/sprites/confettiPop_pink_128/confettiPop_pink_${i}.png`);
-  }
-  for (let i = 0; i <= 6; i++) {
-    confettiPop_green_128[i] = loadImage(`assets/sprites/confettiPop_green_128/confettiPop_green_${i}.png`);
-  }
-
-  sprite32[0] = loadImage(`assets/sprites/placeholders/32x32_0.png`)
-  sprite64[0] = loadImage(`assets/sprites/placeholders/64x64_0.png`)
-  sprite128[0] = loadImage(`assets/sprites/placeholders/128x128_0.png`)
-  sprite32x100_purple[0] = loadImage(`assets/sprites/placeholders/32x100_purple_0.png`)
-  sprite32x100_yellow[0] = loadImage(`assets/sprites/placeholders/32x100_yellow_0.png`)
-
-  arrowUp[0] = loadImage(`assets/sprites/placeholders/arrowUp.png`)
-  arrowDown[0] = loadImage(`assets/sprites/placeholders/arrowDown.png`)
-  arrowRight[0] = loadImage(`assets/sprites/placeholders/arrowRight.png`)
-  arrowLeft[0] = loadImage(`assets/sprites/placeholders/arrowLeft.png`)
-
-  // L O A D B G
-
-  gameBG_0 = loadImage(`assets/backgrounds/gameBG_0.png`)
-  gameBG_1 = loadImage(`assets/backgrounds/gameBG_1.png`)
-  gameBG_2 = loadImage(`assets/backgrounds/gameBG_2.png`)
-  gameBG_3 = loadImage(`assets/backgrounds/gameBG_3.png`)
-  gameBG_4 = loadImage(`assets/backgrounds/gameBG_4.png`)
-  gameBG_texture = loadImage(`assets/backgrounds/gameBG_texture.png`)
-  gameBG_textureSm = loadImage(`assets/backgrounds/gameBG_textureSm.png`)
 
   // L O A D A C T I O N I M A G E S
   for (let i = 0; i <= 4; i++) {
@@ -774,64 +673,6 @@ function setup() {
   alertMenu = document.querySelector("#alertMenu");
 
 
-  // game controller
-  // window.addEventListener('keydown', function(e) {
-  //   // console.log(e.keyCode)
-  //   console.log(`key is ${e.key} and keycode is ${e.keyCode}`)
-  //   keyCodePressed = e.keyCode;
-  // })
-  //
-  // window.addEventListener('keyup', function(e) {
-  //   keyCodePressed = false;
-  //
-  //   // console.log(`key up is ${e.key} and keycode is ${e.keyCode}`)
-  //   console.log(`key is up and is keyCodePressed is ${keyCodePressed}`)
-  // })
-
-
-  // p5 games
-  p5templateGame = new p5(p5TemplateInstance, 'canvasDiv');
-  p5templateGameCanvas = document.querySelector("#p5templateGameCanvas");
-  p5templateGameCanvas.style.visibility = "hidden";
-
-
-  schmupGame = new p5(schmupGameInstance, 'canvasDiv');
-  schmupGameCanvas = document.querySelector("#schmupGameCanvas");
-  schmupGameCanvas.style.visibility = "hidden";
-
-  snakeGame = new p5(snakeGameInstance, 'canvasDiv');
-  snakeGameCanvas = document.querySelector("#snakeGameCanvas");
-  snakeGameCanvas.style.visibility = "hidden";
-
-  pluckGame = new p5(pluckGameInstance, 'canvasDiv');
-  pluckGameCanvas = document.querySelector("#pluckGameCanvas");
-  pluckGameCanvas.style.visibility = "hidden";
-
-  wackymoleGame = new p5(wackymoleGameInstance, 'canvasDiv');
-  wackymoleGameCanvas = document.querySelector("#wackymoleGameCanvas");
-  wackymoleGameCanvas.style.visibility = "hidden";
-
-  breakoutGame = new p5(breakoutGameInstance, 'canvasDiv');
-  breakoutGameCanvas = document.querySelector("#breakoutGameCanvas");
-  breakoutGameCanvas.style.visibility = "hidden";
-
-  gameBackground = new p5(gameBackgroundInstance, 'canvasDiv');
-  gameBackgroundCanvas = document.querySelector("#gameBackgroundCanvas");
-  gameBackgroundCanvas.style.visibility = "hidden";
-
-
-  // HTML5 games
-  collapseGame = new CollapseGame();
-  window.collapseGame = collapseGame;
-
-  platformDropGame = new PlatformDropGame();
-  window.platformDropGame = platformDropGame;
-
-  collapseGameCanvas = document.querySelector("#collapseGameCanvas");
-  collapseGameCanvas.style.visibility = "hidden";
-  platformDropGameCanvas = document.querySelector("#platformDropGameCanvas");
-  platformDropGameCanvas.style.visibility = "hidden";
-
   careMenu = document.querySelector("#careMenu");
   releaseWordsMenu = document.querySelector("#releaseWordsMenu");
   setIntentionMenu = document.querySelector("#setIntentionMenu");
@@ -957,169 +798,172 @@ function draw() {
 
   angleTgotchi += rotateVelocity;
 
-  if (song_B2.buffer && song_universalBass.buffer) {
+  if (song_universalBass.buffer) {
     playBGmusic();
   }
 
-  switch (state) {
-    case 'login':
-      displayLoginScreen();
-      // displayShrine(); // comment out
-      break;
-    case 'mainMenu':
-      displayMainCanvas();
-      careMenu.style.display = "block";
-      releaseWordsMenu.style.display = "none";
-      setIntentionMenu.style.display = "none";
-      gameMenu.style.display = "none";
-      gameIntroOverlay.style.display = "none";
-      pointsOverlay.style.display = "none";
-      gameEndOverlay.style.display = "none";
-      menuItem2.style.display = "none"
-      break;
-    case 'shrine':
-      menuItem2.style.display = "block"
-      displayShrine();
-      break;
-      // case 'community':
-      //   careMenu.style.display = "none";
-      //   releaseWordsMenu.style.display = "block";
-      //   writeToConsoleBool = true;
-      //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
-      //   break;
-    case 'care':
-      menuItem2.style.display = "block"
-      displayMainCanvas();
+  if (!keys) {
 
-      // if (userName) {
-      //   drawTgotchiGraphics();
-      //   displayTgotchi();
-      //   // displayProcessor();
-      // }
+    background(0);
+    cameraControl();
+    drawLoadingScreenGrid();
 
-      switch (executeAction) {
-        case 'landingPage':
-          break;
-        case 'initialLoginCareMenu':
-          printRecentActivity();
-          break;
-        case 'careMenu':
-          printActiveActions();
-          break;
-        case 'chortle':
-          displayAction(chortleImgs, chortleImgsIndex);
-          break;
-        case 'laughterTears':
-          displayAction(haventLaughedImgs, haventLaughedImgsIndex);
-          break;
-        case 'haventLaughed':
-          displayAction(haventLaughedImgs, haventLaughedImgsIndex);
-          break;
-        case 'seaOtterSalad':
-          displayAction(seaOtterSaladImgs, seaOtterSaladImgsIndex);
-          break;
-        case 'strangeThing':
-          displayAction(strangeThingImgs, strangeThingImgsIndex);
-          break;
-        case 'puppers':
-          displayAction(puppersImgs, puppersImgsIndex);
-          break;
-        case 'farmersMarket':
-          displayAction(farmersMarketImgs, farmersMarketImgsIndex);
-          break;
-        case 'hotDog':
-          displayAction(hotDogImgs, hotDogImgsIndex);
-          break;
-          break;
-        case 'complicated':
-          displayAction(complicatedImgs, complicatedImgsIndex);
-          break;
-        case 'shrine':
-          displayAction(shrineImgs, shrineImgsIndex);
-          break;
-        case 'singleHugeTear':
-          displayAction(singleHugeTearImgs, singleHugeTearImgsIndex);
-          break;
-        case 'brisk':
-          displayAction(briskImgs, briskImgsIndex);
-          break;
-        case 'tearsLikeNails':
-          displayAction(tearsLikeNailsImgs, tearsLikeNailsImgsIndex);
-          break;
-        case 'slime':
-          displayAction(slimeImgs, slimeImgsIndex);
-          break;
-        case 'fourTwenty':
-          displayAction(fourTwentyImgs, fourTwentyImgsIndex);
-          break;
-        case 'selfHarm':
-          displayAction(selfHarmImgs, selfHarmImgsIndex);
-          break;
-        case 'disassociate':
-          displayAction(disassociateImgs, disassociateImgsIndex);
-          break;
-        case 'sleep':
-          displayAction(sleepImgs, sleepImgsIndex);
-          break;
-        case 'dream':
-          displayAction(dreamImgs, dreamImgsIndex);
-          break;
-        case 'newCharm':
-          //NOT DONE YET LARK!
-          // placeholder is abstract
-          break;
-        case 'abstract':
-          displayAction(abstractImgs, abstractImgsIndex);
-          break;
-        case 'moisturizer':
-          displayAction(moisturizerImgs, moisturizerImgsIndex);
-          break;
-        case 'changeColor':
-          //NOT DONE YET LARK!
-          // placeholder is newLook
-          break;
-        case 'newLook':
-          displayAction(newLookImgs, newLookImgsIndex);
-          break;
-        case 'hotTub':
-          displayAction(hotTubImgs, hotTubImgsIndex);
-          break;
-        case 'hotDog':
-          displayAction(hotDogImgs, hotDogImgsIndex);
-          break;
-        case 'ocean':
-          displayAction(oceanImgs, oceanImgsIndex);
-          break;
-        case 'sewer':
-          displayAction(sewerImgs, sewerImgsIndex);
-          break;
-        case 'mantra':
-          displayAction(mantraImgs, mantraImgsIndex);
-          break;
-        case 'scream':
-          displayAction(screamImgs, screamImgsIndex);
-          break;
-        case 'catwalk':
-          displayAction(catwalkImgs, catwalkImgsIndex);
-          break;
-        case 'none':
-          break;
-        default:
-          break;
-      }
-      break;
-    case 'game':
+  } else {
 
-      careMenu.style.display = "none";
-      gameMenu.style.display = "block";
-      gameIntroOverlay.style.display = "block";
-      pointsOverlay.style.display = "block";
-      gameEndOverlay.style.display = "block";
-      gameBackgroundCanvas.style.visibility = "visible";
+    switch (state) {
+      case 'login':
+        displayLoginScreen();
+        // displayShrine(); // comment out
+        break;
+      case 'mainMenu':
+        displayMainCanvas();
+        careMenu.style.display = "block";
+        releaseWordsMenu.style.display = "none";
+        setIntentionMenu.style.display = "none";
+        gameMenu.style.display = "none";
+        gameIntroOverlay.style.display = "none";
+        pointsOverlay.style.display = "none";
+        gameEndOverlay.style.display = "none";
+        menuItem2.style.display = "none"
+        break;
+      case 'shrine':
+        menuItem2.style.display = "block"
+        displayShrine();
+        break;
+        // case 'community':
+        //   careMenu.style.display = "none";
+        //   releaseWordsMenu.style.display = "block";
+        //   writeToConsoleBool = true;
+        //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
+        //   break;
+      case 'care':
+        menuItem2.style.display = "block"
+        displayMainCanvas();
 
-      break;
-    default:
-      break;
+
+        switch (executeAction) {
+          case 'landingPage':
+            break;
+          case 'initialLoginCareMenu':
+            printRecentActivity();
+            break;
+          case 'careMenu':
+            printActiveActions();
+            break;
+          case 'chortle':
+            displayAction(chortleImgs, chortleImgsIndex);
+            break;
+          case 'laughterTears':
+            displayAction(haventLaughedImgs, haventLaughedImgsIndex);
+            break;
+          case 'haventLaughed':
+            displayAction(haventLaughedImgs, haventLaughedImgsIndex);
+            break;
+          case 'seaOtterSalad':
+            displayAction(seaOtterSaladImgs, seaOtterSaladImgsIndex);
+            break;
+          case 'strangeThing':
+            displayAction(strangeThingImgs, strangeThingImgsIndex);
+            break;
+          case 'puppers':
+            displayAction(puppersImgs, puppersImgsIndex);
+            break;
+          case 'farmersMarket':
+            displayAction(farmersMarketImgs, farmersMarketImgsIndex);
+            break;
+          case 'hotDog':
+            displayAction(hotDogImgs, hotDogImgsIndex);
+            break;
+          case 'complicated':
+            displayAction(complicatedImgs, complicatedImgsIndex);
+            break;
+          case 'shrine':
+            displayAction(shrineImgs, shrineImgsIndex);
+            break;
+          case 'singleHugeTear':
+            displayAction(singleHugeTearImgs, singleHugeTearImgsIndex);
+            break;
+          case 'brisk':
+            displayAction(briskImgs, briskImgsIndex);
+            break;
+          case 'tearsLikeNails':
+            displayAction(tearsLikeNailsImgs, tearsLikeNailsImgsIndex);
+            break;
+          case 'slime':
+            displayAction(slimeImgs, slimeImgsIndex);
+            break;
+          case 'fourTwenty':
+            displayAction(fourTwentyImgs, fourTwentyImgsIndex);
+            break;
+          case 'selfHarm':
+            displayAction(selfHarmImgs, selfHarmImgsIndex);
+            break;
+          case 'disassociate':
+            displayAction(disassociateImgs, disassociateImgsIndex);
+            break;
+          case 'sleep':
+            displayAction(sleepImgs, sleepImgsIndex);
+            break;
+          case 'dream':
+            displayAction(dreamImgs, dreamImgsIndex);
+            break;
+          case 'newCharm':
+            //NOT DONE YET LARK!
+            // placeholder is abstract
+            break;
+          case 'abstract':
+            displayAction(abstractImgs, abstractImgsIndex);
+            break;
+          case 'moisturizer':
+            displayAction(moisturizerImgs, moisturizerImgsIndex);
+            break;
+          case 'changeColor':
+            //NOT DONE YET LARK!
+            // placeholder is newLook
+            break;
+          case 'newLook':
+            displayAction(newLookImgs, newLookImgsIndex);
+            break;
+          case 'hotTub':
+            displayAction(hotTubImgs, hotTubImgsIndex);
+            break;
+          case 'hotDog':
+            displayAction(hotDogImgs, hotDogImgsIndex);
+            break;
+          case 'ocean':
+            displayAction(oceanImgs, oceanImgsIndex);
+            break;
+          case 'sewer':
+            displayAction(sewerImgs, sewerImgsIndex);
+            break;
+          case 'mantra':
+            displayAction(mantraImgs, mantraImgsIndex);
+            break;
+          case 'scream':
+            displayAction(screamImgs, screamImgsIndex);
+            break;
+          case 'catwalk':
+            displayAction(catwalkImgs, catwalkImgsIndex);
+            break;
+          case 'none':
+            break;
+          default:
+            break;
+        }
+        break;
+        // case 'game':
+        //
+        //   careMenu.style.display = "none";
+        //   gameMenu.style.display = "block";
+        //   gameIntroOverlay.style.display = "block";
+        //   pointsOverlay.style.display = "block";
+        //   gameEndOverlay.style.display = "block";
+        //   gameBackgroundCanvas.style.visibility = "visible";
+        //
+        //   break;
+      default:
+        break;
+    }
   }
 }
 
@@ -1151,17 +995,6 @@ function stateChange(_state) {
       }, 100);
       break;
 
-    case 'community':
-      if (y.style.animation == "fadein 1s") {
-        y.style.animation = "fadeout 1s";
-      }
-      setTimeout(function() {
-        // y.style.background = "#00ff00";
-        y.style.background = "url(../assets/backgrounds/bg_staticGrid_0.png)";
-        y.style.animation = "fadein 1s";
-      }, 100);
-      break;
-
     case 'care':
       if (y.style.animation == "fadein 1s") {
         y.style.animation = "fadeout 1s";
@@ -1173,31 +1006,15 @@ function stateChange(_state) {
       }, 100);
       break;
 
-    case 'play':
-      if (y.style.animation == "fadein 1s") {
-        y.style.animation = "fadeout 1s";
-      }
-      setTimeout(function() {
-        // y.style.background = "#0000ff";
-        y.style.background = "url(../assets/backgrounds/bg_staticGrid_0.png)";
-        y.style.animation = "fadein 1s";
-      }, 100);
-      break;
   }
 }
 
 function playBGmusic() {
 
-  // lark - should there be different songs for different states? If not, this if statement could be:
-  // if (state != 'game'){
   if (state == 'login' || state == 'mainMenu' || state == 'care' || state == 'shrine' || state == 'community') {
-    if (song_B2.isPlaying()) {
-      song_B2.stop();
-    }
 
     if (!song_universalBass.isPlaying()) {
       // set volumes here, since it is after buffering and only triggers every-so-often
-      song_B2.setVolume(0.1);
       song_universalBass.setVolume(0.3);
       sound_click.setVolume(0.4);
       sound_beep1.setVolume(0.4);
@@ -1213,19 +1030,9 @@ function playBGmusic() {
       sound_metallic_1.setVolume(0.4);
       sound_powerup_0.setVolume(0.2);
       sound_powerup_1.setVolume(0.2);
-      sound_skitter.setVolume(0.2);
-      sound_snake_0.setVolume(0.07);
-      sound_snake_1.setVolume(0.07);
       sound_wack.setVolume(0.2);
 
       song_universalBass.loop();
-    }
-  } else if (state == 'game') {
-    if (song_universalBass.isPlaying()) {
-      song_universalBass.stop();
-    }
-    if (!song_B2.isPlaying()) {
-      song_B2.loop();
     }
   }
 
@@ -1332,167 +1139,6 @@ function login() {
   } else {
     createPOnce(`slow connection... </br> take a deep breathe and try again`, "loginMenu")
   }
-}
-
-function communitySignup() {
-
-  if (userData.community) {
-    mindwipeEnabled = userData.community.mindwipe;
-    emdrEnabled = userData.community.emdr;
-    psoasEnabled = userData.community.psoas;
-    asmrEnabled = userData.community.asmr;
-    reliquificationEnabled = userData.community.reliquification;
-    treEnabled = userData.community.tre;
-    longfinEelsEnabled = userData.community.longfinEels;
-    cbtEnabled = userData.community.cbt;
-    yogaEnabled = userData.community.yoga;
-    deprivationEnabled = userData.community.deprivation;
-    dramaEnabled = userData.community.drama;
-    sexEnabled = userData.community.sex;
-    meditationEnabled = userData.community.meditation;
-  } else {
-    mindwipeEnabled = false;
-    emdrEnabled = false;
-    psoasEnabled = false;
-    asmrEnabled = false;
-    reliquificationEnabled = false;
-    treEnabled = false;
-    longfinEelsEnabled = false;
-    cbtEnabled = false;
-    yogaEnabled = false;
-    deprivationEnabled = false;
-    dramaEnabled = false;
-    sexEnabled = false;
-    meditationEnabled = false;
-  }
-
-  let mindwipeCheckbox = createCheckbox('Mindwipe Consortium', mindwipeEnabled);
-  let emdrCheckbox = createCheckbox("EMDR Playground", emdrEnabled);
-  let psoasCheckbox = createCheckbox("Psoas Release", psoasEnabled);
-  let asmrCheckbox = createCheckbox("ASMR", asmrEnabled);
-  let reliquificationCheckbox = createCheckbox("Reliquification", reliquificationEnabled);
-  let treCheckbox = createCheckbox("TRE: Trauma Release Exercises", treEnabled);
-  let longfinEelsCheckbox = createCheckbox("Longfin Eels", longfinEelsEnabled);
-  let cbtCheckbox = createCheckbox("Talk and CBT", cbtEnabled);
-  let yogaCheckbox = createCheckbox("Yoga", yogaEnabled);
-  let deprivationCheckbox = createCheckbox("Sensory Deprivation Orb", deprivationEnabled);
-  let dramaCheckbox = createCheckbox("Making new memories: Drama Therapy", dramaEnabled);
-  let sexCheckbox = createCheckbox("Orgasmix Sludge", sexEnabled);
-  let meditationCheckbox = createCheckbox("Meditation and grounding", meditationEnabled);
-
-  mindwipeCheckbox.parent('#communityCheckboxes');
-  emdrCheckbox.parent('#communityCheckboxes');
-  psoasCheckbox.parent('#communityCheckboxes');
-  asmrCheckbox.parent('#communityCheckboxes');
-  reliquificationCheckbox.parent('#communityCheckboxes');
-  treCheckbox.parent('#communityCheckboxes');
-  longfinEelsCheckbox.parent('#communityCheckboxes');
-  cbtCheckbox.parent('#communityCheckboxes');
-  yogaCheckbox.parent('#communityCheckboxes');
-  deprivationCheckbox.parent('#communityCheckboxes');
-  dramaCheckbox.parent('#communityCheckboxes');
-  sexCheckbox.parent('#communityCheckboxes');
-  meditationCheckbox.parent('#communityCheckboxes');
-
-  // let mindwipeCheckbox = select("#mindwipeCheckbox");
-  // let emdrCheckbox = select("#emdrCheckbox");
-  // let psoasCheckbox = select("#psoasCheckbox");
-  // let asmrCheckbox = select("#asmrCheckbox");
-  // let reliquificationCheckbox = select("#reliquificationCheckbox");
-  // let treCheckbox = select("#treCheckbox");
-  // let longfinEelsCheckbox = select("#longfinEelsCheckbox");
-  // let cbtCheckbox = select("#cbtCheckbox");
-  // let yogaCheckbox = select("#yogaCheckbox");
-  // let deprivationCheckbox = select("#deprivationCheckbox");
-  // let dramaCheckbox = select("#dramaCheckbox");
-  // let sexCheckbox = select("#sexCheckbox");
-  // let meditationCheckbox = select("#meditationCheckbox");
-
-  let saveTgotchiGroups = select("#saveTgotchiGroups");
-
-  // if (userData.community){
-  //   mindwipeCheckbox.checked());
-  // }
-
-  mindwipeCheckbox.changed(function() {
-    mindwipeEnabled = !mindwipeEnabled;
-  });
-  emdrCheckbox.changed(function() {
-    emdrEnabled = !emdrEnabled;
-  });
-  psoasCheckbox.changed(function() {
-    psoasEnabled = !psoasEnabled;
-  });
-  asmrCheckbox.changed(function() {
-    asmrEnabled = !asmrEnabled;
-  });
-  reliquificationCheckbox.changed(function() {
-    reliquificationEnabled = !reliquificationEnabled;
-  });
-  treCheckbox.changed(function() {
-    treEnabled = !treEnabled;
-  });
-  longfinEelsCheckbox.changed(function() {
-    longfinEelsEnabled = !longfinEelsEnabled;
-  });
-  cbtCheckbox.changed(function() {
-    cbtEnabled = !cbtEnabled;
-  });
-  yogaCheckbox.changed(function() {
-    yogaEnabled = !yogaEnabled;
-  });
-  deprivationCheckbox.changed(function() {
-    deprivationEnabled = !deprivationEnabled;
-  });
-  dramaCheckbox.changed(function() {
-    dramaEnabled = !dramaEnabled;
-  });
-  sexCheckbox.changed(function() {
-    sexEnabled = !sexEnabled;
-  });
-  meditationCheckbox.changed(function() {
-    meditationEnabled = !meditationEnabled;
-  });
-
-
-  saveTgotchiGroups.mouseClicked(function() {
-
-    mindwipeCheckbox.remove();
-    emdrCheckbox.remove();
-    psoasCheckbox.remove();
-    asmrCheckbox.remove();
-    reliquificationCheckbox.remove();
-    treCheckbox.remove();
-    longfinEelsCheckbox.remove();
-    cbtCheckbox.remove();
-    yogaCheckbox.remove();
-    deprivationCheckbox.remove();
-    dramaCheckbox.remove();
-    sexCheckbox.remove();
-    meditationCheckbox.remove();
-
-    userData.community = {
-      mindwipe: mindwipeEnabled,
-      emdr: emdrEnabled,
-      psoas: psoasEnabled,
-      asmr: asmrEnabled,
-      reliquification: reliquificationEnabled,
-      tre: treEnabled,
-      longfinEels: longfinEelsEnabled,
-      cbt: cbtEnabled,
-      yoga: yogaEnabled,
-      deprivation: deprivationEnabled,
-      drama: dramaEnabled,
-      sex: sexEnabled,
-      meditation: meditationEnabled
-    };
-
-    createTgotchiNode();
-
-    setTimeout(function() {
-      state = 'mainMenu';
-    }, 750);
-  })
 }
 
 function cameraControl() {

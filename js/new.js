@@ -261,7 +261,7 @@ function setup() {
   // canvas.style(`left:${canvasDivWidth}px`);
 
   charmDistance = diameter;
-  
+
   frameRate(30);
 
   // add sound to buttons
@@ -424,22 +424,8 @@ function draw() {
 
   angleTgotchi += .01;
 
-  if (loading) {
-    // background(0, 0, 0);
-    //     stroke (0,255,0);
-    //     noFill ();
-    //     rect (0,0,200,20);
-    //
-    //     noStroke ();
-    //     fill (255,100);
-    //     var w = 200 * counter/ totalSongs;
-    //     rect (0,0,w,20);
+  if (loading || !keys) {
     background(0);
-    // rotate(angle);
-    // strokeWeight(4);
-    // stroke(0, 255, 0);
-    // line(0, 0, 150, 0);
-    // angle += 0.2;
     cameraControl();
     drawLoadingScreenGrid();
 

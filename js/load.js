@@ -19,6 +19,7 @@ function saveTgotchiData() {
 
 
   let newName = true;
+
   if (keys) {
     keys.forEach(function(key) {
       if (key === inputName.value()) {
@@ -27,7 +28,8 @@ function saveTgotchiData() {
       }
     })
   } else {
-    alert(`Slow connection detected. Try again?`)
+    // drawLoadingScreenGrid();
+    // createPOnce(`slow connection... </br> take a deep breathe and try again`, "rightColumn")
   }
 
   if (newName) {

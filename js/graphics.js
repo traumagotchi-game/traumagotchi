@@ -1046,7 +1046,7 @@ function drawLoadingScreenGrid() {
   // graphicsGrid.background(180, 360, 25);
 
   graphicsGrid.stroke(0, 255, 0);
-  graphicsGrid.strokeWeight(8);
+  graphicsGrid.strokeWeight(6);
   // graphicsGrid.rect(100, 100, 100, 100);
 
   // draw outline
@@ -1067,7 +1067,7 @@ function drawLoadingScreenGrid() {
 
 
   // to move forward in space
-  gridOffset -= 20;
+  gridOffset -= 10;
   if (gridOffset >= graphicsGrid.width / 10) {
     gridOffset = 0;
 
@@ -1116,8 +1116,10 @@ function drawLoadingScreenGrid() {
 
   graphicsBG.noStroke();
   graphicsBG.colorMode(RGB);
-  graphicsBG.background(40, 0, 80);
-  graphicsBG.textSize(16);
+  graphicsBG.background(20, 20, 20);
+  // graphicsBG.background(40, 0, 80);
+  graphicsBG.textSize(14);
+  graphicsBG.textAlign(CENTER);
   graphicsBG.strokeWeight(0);
   graphicsBG.fill(0, 255, 0);
 
@@ -1126,8 +1128,8 @@ function drawLoadingScreenGrid() {
   push();
   texture(graphicsBG);
   translate(0, 0, 0);
-  rotateX(angleTgotchi);
-  rotateY(angleTgotchi * 2);
+  rotateX(angleTgotchi * 2);
+  rotateY(angleTgotchi * 1.8);
   // rotateZ(PI / 2);
   box(width / 4);
   // plane(graphicsGrid.width, graphicsGrid.height);
@@ -1140,7 +1142,6 @@ function drawLoadingScreenGrid() {
   // box(graphicsBG.width, graphicsBG.height);
   // pop();
 }
-
 
 function defaultCamera() {
   cameraX = 0;
