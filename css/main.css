@@ -64,11 +64,10 @@ body {
 }
 
 a {
-  text-decoration: none;
-  border-bottom: none;
+  text-decoration: underline;
+  color: #00ff00;
   /*display: block;*/
 }
-
 
 
 /* all inputs */
@@ -94,6 +93,10 @@ input, textarea {
   display: none;
 }
 
+#rightColumn {
+  z-index: 8;
+}
+
 #releaseWordsMenu, #setIntentionMenu {
   font-size: 14px;
 }
@@ -107,7 +110,6 @@ input, textarea {
 }
 
 #releaseWordsMenu button {
-
   color: #ACD02D;
   background-color: #161616;
   border: 1px solid #ACD02D;
@@ -538,7 +540,6 @@ button:hover {
   cursor: pointer;
 }
 
-
 #login, #saveTgotchi, #playButton, #saveTgotchiShape, #saveProcessor, #saveCharm, #savePassword, #nowPlay {
   border-color: #7fff00 #ACD02D #00aa00;
   background-color: #ACD02D;
@@ -718,18 +719,47 @@ a {
   overflow: hidden;
 }
 
-#fakeBackground {
+.fullScreen {
   width: 100%;
   height: 100%;
   display: block;
-  position: relative;
-  background: url(../assets/backgrounds/bg_staticGrid_0.png);
-  background-color: black;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   position: absolute;
+}
+
+#codeDiv {
+  text-align: left;
+  font-family: "Courier", monospace;
+  font-size: 16px;
+  margin-top: 15px;
+  white-space: pre-wrap;
+  z-index: 6;
+  display: none;
+}
+
+#codeSpan {
+  background-color: #000;
+  line-height: 1.7em;
+  padding: .5em;
+}
+
+#codeSparkleDiv {
+  text-align: right;
+  font-family: "Courier", monospace;
+  font-size: 12px;
+  margin-top: 15px;
+  white-space: pre-wrap;
+  z-index: 6;
+  overflow-x: hidden;
+  display: none;
+}
+
+#fakeBackground {
+  background: url(../assets/backgrounds/bg_staticGrid_0.png);
+  background-color: black;
   z-index: -1;
   animation: none;
   /* -webkit-transition: opacity 10s ease-in-out;

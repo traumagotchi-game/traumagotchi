@@ -3,19 +3,12 @@
 let tree = [{
     key: 'initial',
     choices: [{
-      display: 'VISIT つ━━✫・*。 <br>traumaCompostShrine ',
+      display: 'VISIT <br>☁ミ✲｡･ ﾟtraumaCompostShrine ',
       nextKey: 'deepInTheMachineWorld</br>traumaCompostShrine_0', // or initial
       action: function() {
         shrineTgotchiX = -200;
         stateChange('shrine');
       }
-      // }, {
-      //   display: 'community',©
-      //   nextKey: 'community_0', // or initial
-      //   action: function() {
-      //     communitySignup();
-      //     stateChange('community');
-      //   }
     }, {
       display: 'SCHEDULE ↴↴<br> ▂ ▃ ▄ virtualSelfCare',
       nextKey: 'virtualSelfCare_0',
@@ -23,13 +16,22 @@ let tree = [{
         stateChange('care');
         executeAction = 'careMenu';
       }
-    // }, {
-    //   display: 'play',
-    //   nextKey: 'initial',
-    //   action: function() {
-    //     // lark: consolidate code: pull state = 'game' out of init funcitons for game
-    //     selectGames();
-    //     initGameBank();
+    }, {
+      display: 'VIEW CODE <br>━━✫・* healing incantations',
+      nextKey: 'viewCode_0',
+      action: function() {
+        codeSparkleDiv.style.display = "block";
+        codeDiv.style.display = "block";
+        displayCode();
+        stateChange('viewCode');
+      }
+      // }, {
+      //   display: 'play',
+      //   nextKey: 'initial',
+      //   action: function() {
+      //     // lark: consolidate code: pull state = 'game' out of init funcitons for game
+      //     selectGames();
+      //     initGameBank();
       // }
     }]
   },
@@ -56,8 +58,8 @@ let tree = [{
       nextKey: 'initial',
       action: function() {
         stateChange('mainMenu');
-        writeToConsoleBool = true;
-        writeConsoleText(``)
+        printOnceBool = true;
+        printActiveActions();
       }
     }]
   },
@@ -422,12 +424,10 @@ let tree = [{
       {
         display: 'Scream', //User Input
         nextKey: 'howOften',
-        // nextKey: 'userInput',
         action: function() {
           actionFunction = scream;
           lastActionName = 'scream'; // name of action
           lastActionPastTense = 'screamed'; // action Name
-          // change this to userInput
           lastActionInput = 'aaaAAAaaaaaarrr';
         }
       },
@@ -536,7 +536,6 @@ let tree = [{
         nextKey: 'initial',
         action: function() {
           lastActionInput = null;
-
           actionFunction();
         }
       },
@@ -545,21 +544,21 @@ let tree = [{
         nextKey: 'howOften',
         action: function() {
 
-            let newActionsHourly = {
-              action: lastActionName,
-              actionPastTense: lastActionPastTense,
-              initialTimestamp: Date.now()
-            }
+          let newActionsHourly = {
+            action: lastActionName,
+            actionPastTense: lastActionPastTense,
+            initialTimestamp: Date.now()
+          }
 
-            if (lastActionInput) {
-              newActionsHourly.input = lastActionInput;
-            };
-            userData.actionsHourly.push(newActionsHourly);
-            rewriteData('actionsHourly', userData.actionsHourly);
-            lastActionInput = null;
-            actionFunction();
+          if (lastActionInput) {
+            newActionsHourly.input = lastActionInput;
+          };
+          userData.actionsHourly.push(newActionsHourly);
+          rewriteData('actionsHourly', userData.actionsHourly);
+          lastActionInput = null;
+          actionFunction();
 
-            congratsAlert('five minutes', lastActionName);
+          congratsAlert('five minutes', lastActionName);
 
         }
       },
@@ -568,45 +567,86 @@ let tree = [{
         nextKey: 'howOften',
         action: function() {
 
-            let newActionsFiveMinutes = {
-              action: lastActionName,
-              actionPastTense: lastActionPastTense,
-              initialTimestamp: Date.now()
-            }
+          let newActionsFiveMinutes = {
+            action: lastActionName,
+            actionPastTense: lastActionPastTense,
+            initialTimestamp: Date.now()
+          }
 
-            if (lastActionInput) {
-              newActionsFiveMinutes.input = lastActionInput;
-            };
+          if (lastActionInput) {
+            newActionsFiveMinutes.input = lastActionInput;
+          };
 
-            userData.actionsFiveMinutes.push(newActionsFiveMinutes);
-            rewriteData('actionsFiveMinutes', userData.actionsFiveMinutes);
-            lastActionInput = null;
-            actionFunction();
+          userData.actionsFiveMinutes.push(newActionsFiveMinutes);
+          rewriteData('actionsFiveMinutes', userData.actionsFiveMinutes);
+          lastActionInput = null;
+          actionFunction();
 
-            congratsAlert('60 seconds', lastActionName);
+          congratsAlert('60 seconds', lastActionName);
 
         }
       }
     ]
   },
   {
-    // LARK will have to format this so that it creates an input field and button will submit response and pushe it to
-    key: 'userInput',
+    key: 'viewCode_0',
     choices: [{
-        display: 'just once',
+        display: 'more',
         // make this go tonhow often before initial
+        nextKey: 'viewCode_0',
+        action: function() {
+          moreCode();
+        }
+      },
+      {
+        display: 'make sparkly',
+        nextKey: 'viewCode_1',
+        action: function() {
+          makeSparkly();
+        }
+      },
+      {
+        display: 'okay, done',
         nextKey: 'initial',
-        action: function() {}
+        action: function() {
+          codeSparkleDiv.style.display = "none";
+          codeDiv.style.display = "none";
+          codeSpan.innerHTML = ``;
+          printOnceBool = true;
+          printActiveActions();
+          stateChange('mainMenu');
+        }
+      }
+    ]
+  },
+  {
+    key: 'viewCode_1',
+    choices: [{
+        display: 'more',
+        // make this go tonhow often before initial
+        nextKey: 'viewCode_0',
+        action: function() {
+          moreCode();
+        }
       },
       {
-        display: 'hourly',
-        nextKey: 'howOften',
-        action: function() {}
+        display: 'stop sparkly',
+        nextKey: 'viewCode_0',
+        action: function() {
+          stopSparkly();
+        }
       },
       {
-        display: 'every five minutes',
-        nextKey: 'howOften',
-        action: function() {}
+        display: 'okay, done',
+        nextKey: 'initial',
+        action: function() {
+          codeSparkleDiv.style.display = "none";
+          codeDiv.style.display = "none";
+          codeSpan.innerHTML = ``;
+          printOnceBool = true;
+          printActiveActions();
+          stateChange('mainMenu');
+        }
       }
     ]
   }
@@ -628,10 +668,9 @@ function nextMenu() {
         choiceMenuTitle.style.display = "none";
         choice0.innerHTML = tree[i].choices[0].display;
         choice1.innerHTML = tree[i].choices[1].display;
-        // choice2.innerHTML = tree[i].choices[2].display;
+        choice2.innerHTML = tree[i].choices[2].display;
         choice3.style.display = "none";
       } else {
-
         choiceMenuTitle.style.display = "block";
         choiceMenuTitle.style.backgroundColor = '#00aa00';
         choiceMenuTitle.style.color = '#000';

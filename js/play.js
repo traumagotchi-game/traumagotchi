@@ -1,11 +1,7 @@
 /* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
 Assistance: Angelabelle Abarientos
 DeepMachineIncantation Text: Porpentine Charity Heartscape
-
-Special thanks to Dan Schiffman's Coding Train for teaching me everything I
-needed to know to build this.
-
-When it is completed in October 2018, all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+Special thanks to Dan Schiffman's Coding Train & Processing Foundation
 
 _ .-') _     ('-.     ('-.     _ (`-.
 ( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
@@ -130,8 +126,16 @@ let game3;
 
 let gameCounter = 1;
 
-// controls
-// let keyCodePressed;
+// code back
+let codeSpan;
+let codeDiv;
+let codeArrayIndex = 0;
+let codeSparkle;
+let codeSparkleDiv;
+let sparkleOffset = 0;
+let sparkleOn;
+
+
 
 // alert menu
 // (this is for pop up that occupies same space as care and game menu. could name differently?)
@@ -239,6 +243,14 @@ let actionAngle = 0;
 let actionAnimating = false;
 let swipeLeftComplete = false;
 
+// SHRINE load models and vars
+let machineWorldFeelingsCompostShrineCenter;
+let machineWorldText = 'seed';
+let lastTextAnimationFrame;
+let shrineTgotchiCounter = 33;
+let shrineTgotchiX = -200;
+let tgotchiEntryComplete = false;
+
 let cameraX = 0;
 let cameraY = 0;
 let cameraZ = 0;
@@ -338,13 +350,7 @@ let sound_snake_0;
 let sound_snake_1;
 let sound_wack;
 
-// SHRINE load models and vars
-let machineWorldFeelingsCompostShrineCenter;
-let machineWorldText = 'seed';
-let lastTextAnimationFrame;
-let shrineTgotchiCounter = 33;
-let shrineTgotchiX = -200;
-let tgotchiEntryComplete = false;
+
 
 
 function preload() {
@@ -653,11 +659,17 @@ function setup() {
 
   //console
   consoleText = document.querySelector("#consoleText")
-  writeConsoleText(`Log into the Traumagrid. ミ☆`);
+  writeConsoleText(`Hold on...   </br> </br> ............ it takes a second to tap in ミ☆`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
   timer = document.querySelector("#timer");
+
+  // code elements
+  codeSpan = document.querySelector("#codeSpan");
+  codeSparkle = document.querySelector("#codeSparkle");
+  codeDiv = document.querySelector("#codeDiv");
+  codeSparkleDiv = document.querySelector("#codeSparkleDiv");
 
   // game canvas overlay
   gameIntroOverlay = document.querySelector("#gameIntroOverlay");
@@ -669,15 +681,13 @@ function setup() {
   gameEndOverlay = document.querySelector("#gameEndOverlay");
   finalScore = document.querySelector("#finalScore");
 
-  // alert menu
+  // menus
   alertMenu = document.querySelector("#alertMenu");
-
-
   careMenu = document.querySelector("#careMenu");
   releaseWordsMenu = document.querySelector("#releaseWordsMenu");
   setIntentionMenu = document.querySelector("#setIntentionMenu");
 
-  // care menu decision tree!
+  // care menu decision tree
   treeLength = tree.length;
 
   choiceMenuTitle = document.querySelector("#menuTitle");
@@ -749,6 +759,7 @@ function setup() {
     });
   }
 
+
   // Initialize Firebase
   let config = {
     apiKey: "AIzaSyDf1V8E4N8LGUYDX1QQ1tURMQXCCULuefQ",
@@ -813,6 +824,8 @@ function draw() {
     switch (state) {
       case 'login':
         displayLoginScreen();
+        writeToConsoleBool = true;
+        writeConsoleText(`ok ready to login`);
         // displayShrine(); // comment out
         break;
       case 'mainMenu':
@@ -824,22 +837,14 @@ function draw() {
         gameIntroOverlay.style.display = "none";
         pointsOverlay.style.display = "none";
         gameEndOverlay.style.display = "none";
-        menuItem2.style.display = "none"
         break;
       case 'shrine':
-        menuItem2.style.display = "block"
         displayShrine();
         break;
-        // case 'community':
-        //   careMenu.style.display = "none";
-        //   releaseWordsMenu.style.display = "block";
-        //   writeToConsoleBool = true;
-        //   writeConsoleText(`Traumagotchi need community to heal. </br>`);
-        //   break;
       case 'care':
-        menuItem2.style.display = "block"
         displayMainCanvas();
-
+        printOnceBool = true;
+        printActiveActions();
 
         switch (executeAction) {
           case 'landingPage':
@@ -951,6 +956,12 @@ function draw() {
             break;
         }
         break;
+      case 'viewCode':
+        writeToConsoleBool = true;
+        writeConsoleText(``);
+        displayMainCanvas();
+        // not sure a function needs to be called in draw loop.....
+        break;
         // case 'game':
         //
         //   careMenu.style.display = "none";
@@ -974,6 +985,7 @@ function stateChange(_state) {
   switch (_state) {
 
     case 'mainMenu':
+
       if (y.style.animation == "fadein 1s") {
         y.style.animation = "fadeout 1s";
       }
@@ -996,6 +1008,17 @@ function stateChange(_state) {
       break;
 
     case 'care':
+      if (y.style.animation == "fadein 1s") {
+        y.style.animation = "fadeout 1s";
+      }
+      setTimeout(function() {
+        y.style.background = "url(../assets/backgrounds/bg_staticGrid_0.png)";
+        // y.style.background = "#ff0000";
+        y.style.animation = "fadein 1s";
+      }, 100);
+      break;
+
+    case 'viewCode':
       if (y.style.animation == "fadein 1s") {
         y.style.animation = "fadeout 1s";
       }
@@ -1128,7 +1151,8 @@ function login() {
       userData.timeStamp.push(currentLoginTime);
       firstLoginTime = userData.timeStamp[0];
 
-      executeAction = 'initialLoginCareMenu';
+      printRecentActivity();
+      // executeAction = 'initialLoginCareMenu';
 
 
       loginMenu.remove();
@@ -1251,7 +1275,7 @@ function printActiveActions() {
   if (printOnceBool === true) {
     if (userData.actionsHourly.length === 1 && userData.actionsFiveMinutes.length === 1) {
       writeToConsoleBool = true;
-      writeConsoleText(`${userName} doesn't have any regular care actions yet! play games to get points and schedule repeating actions...`)
+      writeConsoleText(`${userName} doesn't have any regular care actions yet! schedule virtualSelfCare so it can keep busy when you log off...`)
     } else {
       // hourly list of actions
       if (userData.actionsHourly.length > 1) {
@@ -1279,7 +1303,7 @@ function printActiveActions() {
         }
       }
       writeToConsoleBool = true;
-      writeConsoleText(`${userName}'s current actions are... </br> ${actionsFiveMinutesList} </br> ${actionsHourlyList}`)
+      writeConsoleText(`${userName}'s current virtualSelfCare actions are: </br> ${actionsFiveMinutesList} </br> ${actionsHourlyList}`)
     }
     printOnceBool = false;
   }

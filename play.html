@@ -29,6 +29,7 @@
 	<script src="js/play.js"></script>
 	<script src="js/graphics.js"></script>
 	<script src="js/load.js"></script>
+	<script src="js/displayCode.js"></script>
 
 	<script src="libraries/spritoon.js"></script>
 	<script src="libraries/matter.min.js"></script>
@@ -47,18 +48,23 @@
 
 <body>
 
-	<div id="fakeBackground">
+	<div class="fullScreen" id="fakeBackground">
+		<!-- <iframe src="js/play.js" name="iframe" id="codeIframe" style="background:#00FF00; width:100%; height:100%;" marginheight='100px'></iframe> -->
+
 	</div>
 
-	<!-- <ul class="topMenu">
-		<li id="loginStatus">not logged in</li>
-		<li id="pointStats"></li>
-		<li id="logout"><a href="index.html" class="chartreuseLink">logout</a></li>
-	</ul> -->
+	<div class="fullScreen" id="codeDiv">
+
+		<p><span id="codeSpan"></span></p>
+	</div>
+
+	<div class="fullScreen" id="codeSparkleDiv">
+		<p id="codeSparkle"></p>
+	</div>
+
+
 	<div class="main-content">
-		<!-- <div class="container" id="header">
-			<img class="image margin-bottom" src="assets/sprites/traumagotchiTitle/traumagotchiTitle_8.png" alt="Traumagotchi" style="max-width: 600px;">
-		</div> -->
+
 		<div class="container" id="gameArea">
 			<div class="" id="leftColumn">
 				<div class="" id="traumagotchiTitle">
@@ -116,9 +122,10 @@
 					<button type="button" id="menuItem1">community</button>
 					<button type="button" id="menuItem2">care</button>
 					<button type="button" id="menuItem3">play</button> -->
-					<button type="button" id="menuItem0">VISIT つ━━✫・*。 <br>traumaCompostShrine </button>
+					<button type="button" id="menuItem0">VISIT   <br>☁ミ✲｡･ ﾟtraumaCompostShrine </button>
 					<button type="button" id="menuItem1">SCHEDULE ↴↴<br> ▂ ▃ ▄ virtualSelfCare </button>
-					<button type="button" id="menuItem2" style="display: none;"></button>
+					<button type="button" id="menuItem2">VIEW CODE <br>つ━━✫・*。healing incantations</button>
+					<!-- <button type="button" id="menuItem2" style="display: none;"></button> -->
 					<button type="button" id="menuItem3" style="display: none;"></button>
 				</div>
 				<div class="blackDiv" id="gameMenu">
