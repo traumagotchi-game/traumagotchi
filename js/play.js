@@ -3,6 +3,13 @@ Assistance: Angelabelle Abarientos
 DeepMachineIncantation Text: Porpentine Charity Heartscape
 Special thanks to Dan Schiffman's Coding Train & Processing Foundation
 
+
+The intention for this site is for all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+
+This is still a work in progress...
+
+
+
 _ .-') _     ('-.     ('-.     _ (`-.
 ( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
 \     .'_ (,------.(,------. _.`     \
@@ -30,6 +37,13 @@ __   __ _______ _______ __   __ ___ __    _ _______
 |  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
 |  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
 '--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+If you want to convert your code into magic... check out this Babel script...
+
+https://astexplorer.net/#/gist/8a09031fedac68d04d73c5fc20b038c7/9144b99ff37bbbacb21ada59ae445d53a241c4f9
+
+Github gist w/ code
+https://gist.github.com/8a09031fedac68d04d73c5fc20b038c7/9144b99ff37bbbacb21ada59ae445d53a241c4f9
 
 MIT License
 

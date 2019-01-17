@@ -2,19 +2,12 @@
 Assistance: Angelabelle Abarientos
 DeepMachineIncantation Text: Porpentine Charity Heartscape
 
-Special thanks to Dan Schiffman's Coding Train for teaching me everything I
-needed to know to build this.
+Special thanks to Dan Schiffman's Coding Train & Processing Foundation
 
 The intention for this site is for all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
 
 This is still a work in progress...
 
-If you want to convert your code into magic... check out this Babel script...
-
-https://astexplorer.net/#/gist/5b67df039435f125544e7ee798338b93/214114fba48170c2a125ff647e1aaf5fa4f1fe6a
-
-Github gist w/ code
-https://gist.github.com/5b67df039435f125544e7ee798338b93/214114fba48170c2a125ff647e1aaf5fa4f1fe6a
 
 _ .-') _     ('-.     ('-.     _ (`-.
 ( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
@@ -43,6 +36,14 @@ __   __ _______ _______ __   __ ___ __    _ _______
 |  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
 |  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
 '--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+If you want to convert your code into magic... check out this Babel script...
+
+https://astexplorer.net/#/gist/5b67df039435f125544e7ee798338b93/214114fba48170c2a125ff647e1aaf5fa4f1fe6a
+
+Github gist w/ code
+https://gist.github.com/5b67df039435f125544e7ee798338b93/214114fba48170c2a125ff647e1aaf5fa4f1fe6a
+
 
 MIT License
 
