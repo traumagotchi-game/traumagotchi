@@ -987,6 +987,7 @@ function menu5() {
   agreeButton.mouseClicked(function() {
     setTimeout(function() {
       state = 'menu6';
+      createTgotchiNode();
       menu6();
     }, 750);
   })
@@ -1025,7 +1026,7 @@ function menu6() {
   let nowPlay = select("#nowPlay");
   nowPlay.mouseClicked(function() {
     // // comment out to disable pushing to firebase
-    createTgotchiNode();
+    // createTgotchiNode();
     window.location.href = 'play.html';
   })
 }
