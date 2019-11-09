@@ -31,6 +31,23 @@ body {
   overflow-y: hidden;
 }
 
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+}
+
+.embed-container iframe, .embed-container object, .embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #aboutBody {
   overflow-y: scroll;
   font-size: 16px;
@@ -69,7 +86,6 @@ a {
   /*display: block;*/
 }
 
-
 /* all inputs */
 
 input, textarea {
@@ -79,7 +95,6 @@ input, textarea {
   color: #75c155;
   outline-color: #aeff00;
 }
-
 
 /* jscolor class */
 
@@ -317,13 +332,11 @@ canvas {
   font-family: 'Courier New', 'Courier';
 }
 
-
 /* width */
 
 ::-webkit-scrollbar {
   width: 7px;
 }
-
 
 /* Track */
 
@@ -331,13 +344,11 @@ canvas {
   background: #333333;
 }
 
-
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
   background: #00ff00;
 }
-
 
 /* Handle on hover */
 
@@ -358,7 +369,6 @@ canvas {
   cursor: pointer;
 }
 
-
 /* menu at top right with login status */
 
 .topMenu {
@@ -370,7 +380,6 @@ canvas {
   z-index: 2;
   position: relative;
 }
-
 
 /* choices on homepage: load or new traumagotchi */
 
@@ -437,7 +446,6 @@ canvas {
   padding: .5em .5em .5em 1.5em;
 }
 
-
 /* customization of new traumagotchi */
 
 .customizationMenu .slider {
@@ -448,7 +456,6 @@ canvas {
 .customizationMenu p {
   padding-top: 15px;
 }
-
 
 /* for radio button images */
 
@@ -573,7 +580,6 @@ button:hover {
   padding: auto;
 }
 
-
 /* changes the placeholder text for inputs */
 
 ::placeholder {
@@ -581,14 +587,12 @@ button:hover {
   opacity: 1;
 }
 
-
 /* text input background */
 
 #name, #passwordInput, #userInputField {
   background-color: #161616;
   padding: 10px;
 }
-
 
 /*check box in new.html creation */
 
@@ -618,16 +622,13 @@ button:hover {
   background-color: #Aeff00;
 }
 
-
 /* if you want to include an image in replace of the checkmark*/
 
 .myCheckbox input:checked~span {
   background: url("../assets/image/check.png");
 }
 
-
 /*check box in play.html creation */
-
 
 /* #communityCheckboxes input {
   position: absolute;
@@ -647,7 +648,6 @@ button:hover {
 #communityCheckboxes input:checked~span {
   background: url("../assets/image/check.png");
 } */
-
 
 /* new custome slider */
 
@@ -682,7 +682,6 @@ input[type=range]:focus {
   /* Add cool effects to your sliders! */
 }
 
-
 /* match media for large screens */
 
 @media (min-width: 500px) and (min-height: 500px) {
@@ -703,7 +702,6 @@ input[type=range]:focus {
 a {
   outline: none;
 }
-
 
 /* temporary solution to remove text from color pickers input */
 
