@@ -115,7 +115,7 @@ function setup() {
   canvas = createCanvas(canvasDiv.offsetWidth, 100);
   canvas.parent("canvasDiv");
 
-  windowResized();
+
   // canvas = createCanvas(windowWidth, windowHeight);
   // // canvas.id("canvasFullScreen");
   // canvas.parent("canvasDivResponsive");
@@ -131,11 +131,11 @@ function setup() {
   setInterval(changeAlert, 4000);
 
   // media query event handler
-  // if (matchMedia) {
-  //   const mq = window.matchMedia("(min-width: 500px) and (min-height: 500px)");
-  //   mq.addListener(WidthChange);
-  //   WidthChange(mq);
-  // }
+  if (matchMedia) {
+    const mq = window.matchMedia("(min-width: 500px) and (min-height: 500px)");
+    mq.addListener(WidthChange);
+    WidthChange(mq);
+  }
 
   refresh();
 }
@@ -160,46 +160,26 @@ function windowResized() {
 
   resizeCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
 
-  if (windowWidth > 600) {
+}
+
+function WidthChange(mq) {
+
+  if (mq.matches) {
     // window width is at least 500px
-    document.querySelector("#newTgotchi").style.display = 'block';
-    document.querySelector("#loadTgotchi").style.display = 'block';
-    document.querySelector("#playThru").style.display = 'none';
+    document.querySelector("#newTgotchi").style.visibility = 'visible';
+    document.querySelector("#loadTgotchi").style.visibility = 'visible';
     // document.querySelector("#homepageSplashyText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
     // song.setVolume(0.3);
     // song.loop();
     browser = true;
 
   } else {
-    document.querySelector("#newTgotchi").style.display = 'none';
-    document.querySelector("#loadTgotchi").style.display = 'none';
-    document.querySelector("#playThru").style.display = 'block';
+    document.querySelector("#newTgotchi").style.visibility = 'hidden';
+    document.querySelector("#loadTgotchi").style.visibility = 'hidden';
     document.querySelector("#homepageSplashyText").innerHTML = `Sorry phone, to make a Traumagotchi you have to be on a computer.`;
     browser = false;
 
   }
-}
-
-function WidthChange(mq) {
-
-  // if (mq.matches) {
-  //   // window width is at least 500px
-  //   document.querySelector("#newTgotchi").style.visibility = 'visible';
-  //   document.querySelector("#loadTgotchi").style.visibility = 'visible';
-  //   document.querySelector("#playThru").style.display = 'none';
-  //   // document.querySelector("#homepageSplashyText").innerHTML = `best experienced on full-screen in chrome </br> =)`;
-  //   // song.setVolume(0.3);
-  //   // song.loop();
-  //   browser = true;
-  //
-  // } else {
-  //   document.querySelector("#newTgotchi").style.visibility = 'hidden';
-  //   document.querySelector("#loadTgotchi").style.visibility = 'hidden';
-  //   document.querySelector("#playThru").style.display = 'block';
-  //   document.querySelector("#homepageSplashyText").innerHTML = `Sorry phone, to make a Traumagotchi you have to be on a computer.`;
-  //   browser = false;
-  //
-  // }
 }
 
 
@@ -227,9 +207,9 @@ function updateLoop() {
 
 }
 
-function changeAlert() {
-  document.querySelector("#homepageSplashyText").innerHTML = alertArray[alertIndex % alertArray.length];
-  alertIndex++;
+function changeAlert(){
+    document.querySelector("#homepageSplashyText").innerHTML = alertArray[alertIndex % alertArray.length];
+    alertIndex++;
 }
 
 function checkFrameStates() {
