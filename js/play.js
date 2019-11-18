@@ -1225,12 +1225,12 @@ function printRecentActivity() {
   if (printOnceBool === true) {
     let minutesElapsed = Math.floor((currentLoginTime - lastLoginTime) / 60000);
 
-    if (userData.actionsHourly.length === 1 && userData.actionsFiveMinutes.length === 1) {
+    if (userData.actionsHourly && userData.actionsHourly.length === 1 && userData.actionsFiveMinutes.length === 1) {
       writeToConsoleBool = true;
       writeConsoleText(`since you saw them last ${minutesElapsed} minutes ago, ${userName} has been waiting for you to task it with things to do...`)
     } else {
       // hourly list of actions
-      if (userData.actionsHourly.length > 1) {
+      if (userData.actionsHourly && userData.actionsHourly.length > 1) {
         // actionsHourlySinceLast = 'hourly: </br>'
         for (let i = 1; i < userData.actionsHourly.length; i++) {
           // this fires every minute for testing
@@ -1253,7 +1253,7 @@ function printRecentActivity() {
           }
         }
       }
-      if (userData.actionsFiveMinutes.length > 1) {
+      if (userData.actionsFiveMinutes && userData.actionsFiveMinutes.length > 1) {
         //five minutely list of actions
         // actionsFiveMinutesSinceLast = 'every five minutes: </br>'
         for (let i = 1; i < userData.actionsFiveMinutes.length; i++) {
