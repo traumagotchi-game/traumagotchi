@@ -59,7 +59,10 @@ function saveTgotchiData() {
           pixelSize: sliderSize.value(),
           pixelColor: pixelColor,
           backgroundColor: backgroundColor
-        }
+        },
+        actionsHourly: ["nothing"],
+        actionsFiveMinutes: ["nope"]
+
       }
 
       irlRl = true;
