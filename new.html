@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-<!-- Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
+<!-- /* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
 Assistance: Angelabelle Abarientos
 DeepMachineIncantation Text: Porpentine Charity Heartscape
 Special thanks to Dan Schiffman's Coding Train & Processing Foundation
 
 
-The intention for this site is for all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+This is the development version, actual site transforms all the function and variable names with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
 
-This is still a work in progress...
+This — like the process of healing — is ALWAYS a work-in-progress
 
 
 
@@ -39,6 +39,11 @@ __   __ _______ _______ __   __ ___ __    _ _______
 |  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
 |  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
 '--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+
+
+*/
+
 -->
 
 <head>
@@ -85,13 +90,16 @@ __   __ _______ _______ __   __ ___ __    _ _______
 						</h1>
 					</div>
 				</div>
-
-				<div id="consoleDiv">
-					<span id="consoleText"></span>
+				<!-- <div id="consoleDiv" style="overflow: auto;">
+					<p id="consoleText" style="margin: 0;"></p>
 					<span id="consoleNext"></span>
-				</div>
+				</div> -->
 			</div>
 			<div class="customizationMenu" id="rightColumn" style="margin-top: 0;">
+				<div class="" id="divMenu00" style="text-align: left; font-size: 16px;">
+					<p id="consoleText"></p>
+					<span id="consoleNext"></span>
+				</div>
 				<div class="" id="divMenu0">
 					<p>CREATE VIRTUAL SHADOW</p>
 					<p>pixel size</p>
@@ -118,7 +126,7 @@ __   __ _______ _______ __   __ ___ __    _ _______
 						<label class="myCheckbox">
 							<input type="checkbox" id="cubeCheckbox" name="cube" value="cube">
 							<span class="checkmark"></span>
-							</label>
+						</label>
 						<label for="cube">box</label><br>
 
 						<label class="myCheckbox">
@@ -153,22 +161,22 @@ __   __ _______ _______ __   __ ___ __    _ _______
 					<p style="font-size: 16px;">select disk image</p>
 					<div class="align-left" id="processorRadio">
 						<label>
-								<input type="radio" name="processor" value="X13" />
-								<img src="assets/stills/processor_0.png">
-							</label>
+							<input type="radio" name="processor" value="X13" />
+							<img src="assets/stills/processor_0.png">
+						</label>
 						<label for="processor">X3: Cool core for optimum 5HT + T3:T4 ratio</label><br>
 						<label>
-								<input type="radio"  name="processor" value="S133" />
-								<img src="assets/stills/processor_2.png">
-							</label>
+							<input type="radio" name="processor" value="S133" />
+							<img src="assets/stills/processor_2.png">
+						</label>
 						<label for="processor">S13: Gapped logic for astral data</label><br>
 						<label>
 							<label>
-								<input type="radio"  name="processor" value="D33P" />
+								<input type="radio" name="processor" value="D33P" />
 								<img src="assets/stills/processor_1.png">
 							</label>
-						<label for="processor">D33333333P: Deep </label>
-						<label>
+							<label for="processor">D33333333P: Deep </label>
+							<label>
 					</div>
 					<button type="button" id="saveProcessor">next</button>
 				</div>
@@ -176,27 +184,27 @@ __   __ _______ _______ __   __ ___ __    _ _______
 					<p>SELECT CHARM</p>
 					<div class="" id="charmRadio">
 						<label>
-						  <input type="radio"  name="charm" value="arrow" />
-						  <img src="assets/charms/charm_arrow.png">
+							<input type="radio" name="charm" value="arrow" />
+							<img src="assets/charms/charm_arrow.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="heart" />
+							<input type="radio" name="charm" value="heart" />
 							<img src="assets/charms/charm_heart.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="eye" />
+							<input type="radio" name="charm" value="eye" />
 							<img src="assets/charms/charm_eye.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="no" />
+							<input type="radio" name="charm" value="no" />
 							<img src="assets/charms/charm_no.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="wink" />
+							<input type="radio" name="charm" value="wink" />
 							<img src="assets/charms/charm_wink.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="hesher" />
+							<input type="radio" name="charm" value="hesher" />
 							<img src="assets/charms/charm_hesher.png">
 						</label>
 						<!-- <label>
@@ -208,7 +216,7 @@ __   __ _______ _______ __   __ ___ __    _ _______
 							<img src="assets/charms/charm_crescent.png">
 						</label> -->
 						<label>
-							<input type="radio"  name="charm" value="triangle" />
+							<input type="radio" name="charm" value="triangle" />
 							<img src="assets/charms/charm_triangle.png">
 						</label>
 						<!-- <label>
@@ -216,23 +224,23 @@ __   __ _______ _______ __   __ ___ __    _ _______
 							<img src="assets/charms/charm_shield.png">
 						</label> -->
 						<label>
-							<input type="radio"  name="charm" value="sword" />
+							<input type="radio" name="charm" value="sword" />
 							<img src="assets/charms/charm_sword.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="moon" />
+							<input type="radio" name="charm" value="moon" />
 							<img src="assets/charms/charm_moon.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="sad" />
+							<input type="radio" name="charm" value="sad" />
 							<img src="assets/charms/charm_sad.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="palmTree" />
+							<input type="radio" name="charm" value="palmTree" />
 							<img src="assets/charms/charm_palmTree.png">
 						</label>
 						<label>
-							<input type="radio"  name="charm" value="wave" />
+							<input type="radio" name="charm" value="wave" />
 							<img src="assets/charms/charm_wave.png">
 						</label>
 						<!-- <label>
@@ -240,7 +248,7 @@ __   __ _______ _______ __   __ ___ __    _ _______
 							<img src="assets/charms/charm_cross.png">
 						</label> -->
 						<label>
-							<input type="radio"  name="charm" value="heel" />
+							<input type="radio" name="charm" value="heel" />
 							<img src="assets/charms/charm_heel.png">
 						</label>
 					</div>
@@ -254,7 +262,8 @@ __   __ _______ _______ __   __ ___ __    _ _______
 				</div>
 				<div class="" id="divMenu5">
 					<p id="tgotchiComplete"></p>
-					<p style="font-size: 16px; font-family: 'Courier New', 'Courier';">By signing this contract you agree to: open a clear conduit from your heart and brain for the purposes of inter-networked collective healing for your Traumagotchi avatar.</br>
+					<p style="font-size: 16px; font-family: 'Courier New', 'Courier';">By signing this contract you agree to: open a clear conduit from your heart and brain for the purposes of inter-networked collective healing for your Traumagotchi
+						avatar.</br>
 						</br>(your soul, psychoplasm, current reincarnation species, heart-to-feather ratio, and other ethereal assets will not be shared with other astral planes)
 					</p>
 

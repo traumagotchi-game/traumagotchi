@@ -1,3 +1,49 @@
+/* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
+Assistance: Angelabelle Abarientos
+DeepMachineIncantation Text: Porpentine Charity Heartscape
+Special thanks to Dan Schiffman's Coding Train & Processing Foundation
+
+
+This is the development version, actual site transforms all the function and variable names with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+
+This — like the process of healing — is ALWAYS a work-in-progress
+
+
+
+_ .-') _     ('-.     ('-.     _ (`-.
+( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
+\     .'_ (,------.(,------. _.`     \
+,`'--..._) |  .---' |  .---'(__...--''
+|  |  \  ' |  |     |  |     |  /  | |
+|  |   ' |(|  '--. (|  '--.  |  |_.' |
+|  |   / : |  .--'  |  .--'  |  .___.'
+|  '--'  / |  `---. |  `---. |  |
+`-------'  `------' `------' `--'
+
+__   __ _______ _______ __   __ ___ __    _ _______
+|  |_|  |   _   |       |  | |  |   |  |  | |       |
+|       |  |_|  |       |  |_|  |   |   |_| |    ___|
+|       |       |       |       |   |       |   |___
+|       |       |      _|       |   |  _    |    ___|
+| ||_|| |   _   |     |_|   _   |   | | |   |   |___
+|_|   |_|__| |__|_______|__| |__|___|_|  |__|_______|
+
+,---.    ,---.   ____      .-_'''-.  .-./`)     _______
+|    \  /    | .'  __ `.  '_( )_   \ \ .-.')   /   __  \
+|  ,  \/  ,  |/   '  \  \|(_ o _)|  '/ `-' \  | ,_/  \__)
+|  |\_   /|  ||___|  /  |. (_,_)/___| `-'`"`,-./  )
+|  _( )_/ |  |   _.-`   ||  |  .-----..---. \  '_ '`)
+| (_ o _) |  |.'   _    |'  \  '-   .'|   |  > (_)  )  __
+|  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
+|  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
+'--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+
+
+*/
+
+
+
 "use strict";
 
 
@@ -167,7 +213,7 @@ function displayShrineTgotchi(_tgotchi) {
 
   if (shrineTgotchiX == -200) {
     writeToConsoleBool = true;
-    writeConsoleText(`There are currently ${numberTgotchi} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
+    writeConsoleText(`There are currently ${numberTgotchi + 606} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
     ---> Traumagotchi named ${keys[shrineTgotchiCounter]} is leaving a quiet offering. `)
   } else if (shrineTgotchiX >= 42) {
     writeToConsoleBool = true;
@@ -1039,6 +1085,7 @@ function drawGrid() {
 
 }
 
+
 function drawLoadingScreenGrid() {
 
   graphicsGrid.background(0);
@@ -1134,6 +1181,113 @@ function drawLoadingScreenGrid() {
   box(width / 4);
   // plane(graphicsGrid.width, graphicsGrid.height);
   pop();
+
+  // push();
+  // texture(graphicsBG);
+  // // translate(0, 0, 0);
+  // translate(0, 0, -width / 5);
+  // box(graphicsBG.width, graphicsBG.height);
+  // pop();
+}
+
+
+function drawLoadingScreenGridNew() {
+
+  graphicsGrid.background(0);
+  // hsb mode
+  // graphicsGrid.background(180, 360, 25);
+
+  graphicsGrid.stroke(0, 255, 0);
+  graphicsGrid.strokeWeight(6);
+  // graphicsGrid.rect(100, 100, 100, 100);
+
+  // draw outline
+  graphicsGrid.line(0, 0, 0, graphicsGrid.height);
+  graphicsGrid.line(0, 0, graphicsGrid.width, 0);
+  graphicsGrid.line(0, graphicsGrid.height, 0, 0);
+  graphicsGrid.line(graphicsGrid.width, 0, 0, 0);
+
+  // draw lines from middle
+  // draw lines to top
+  for (let x = gridOffset; x < graphicsGrid.width; x += graphicsGrid.width / 5) {
+    graphicsGrid.line(x, 0, x, graphicsGrid.width);
+  }
+  // to right
+  for (let y = 0; y < graphicsGrid.height; y += graphicsGrid.height / 10) {
+    graphicsGrid.line(0, y, graphicsGrid.height, y);
+  }
+
+
+  // to move forward in space
+  gridOffset -= 2;
+  if (gridOffset >= graphicsGrid.width / 10) {
+    gridOffset = 0;
+
+  }
+
+
+  push()
+  rotateZ(angleTgotchi / 2);
+  // bottom grid
+  push();
+  texture(graphicsGrid);
+  translate(0, width / 2 - width / 4, -width / 8);
+  rotateX(PI / 2);
+  rotateZ(PI * 3 / 2);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // top grid
+  push();
+  translate(0, -width / 2 + width / 4, -width / 8);
+  rotateX(PI / 2);
+  rotateZ(PI);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // left grid
+  push();
+  translate(-width / 2 + width / 6, 0, -width / 8);
+  rotateY(PI / 2);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  // right grid
+  push();
+  translate(width / 2 - width / 6, 0, -width / 8);
+  rotateY(PI / 2);
+  rotateZ(PI * 3 / 2);
+  box(graphicsGrid.width, graphicsGrid.height, 10, 10);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+  pop();
+
+  graphicsBG.noStroke();
+  graphicsBG.colorMode(RGB);
+  graphicsBG.background(20, 20, 20);
+  // graphicsBG.background(40, 0, 80);
+  graphicsBG.textSize(14);
+  graphicsBG.textAlign(CENTER);
+  graphicsBG.strokeWeight(0);
+  graphicsBG.fill(0, 255, 0);
+
+  graphicsBG.text(`LOADING TRAUMAGRID`, 0, graphicsBG.width / 3, graphicsBG.width, graphicsBG.height);
+
+  push();
+  texture(graphicsBG);
+  translate(0, 0, 0);
+  rotateX(angleTgotchi * 2);
+  rotateY(angleTgotchi * 1.8);
+  // rotateZ(PI / 2);
+  box(width / 4);
+  // plane(graphicsGrid.width, graphicsGrid.height);
+  pop();
+
+
 
   // push();
   // texture(graphicsBG);

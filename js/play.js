@@ -4,9 +4,9 @@ DeepMachineIncantation Text: Porpentine Charity Heartscape
 Special thanks to Dan Schiffman's Coding Train & Processing Foundation
 
 
-The intention for this site is for all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+This is the development version, actual site transforms all the function and variable names with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
 
-This is still a work in progress...
+This — like the process of healing — is ALWAYS a work-in-progress
 
 
 
@@ -38,34 +38,8 @@ __   __ _______ _______ __   __ ___ __    _ _______
 |  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
 '--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
 
-If you want to convert your code into magic... check out this Babel script...
 
-https://astexplorer.net/#/gist/8a09031fedac68d04d73c5fc20b038c7/9144b99ff37bbbacb21ada59ae445d53a241c4f9
 
-Github gist w/ code
-https://gist.github.com/8a09031fedac68d04d73c5fc20b038c7/9144b99ff37bbbacb21ada59ae445d53a241c4f9
-
-MIT License
-
-Copyright (c) 2018 Lark Like Alder
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 */
 
 'use strict';
@@ -165,8 +139,6 @@ let stepTextArray = [{
 let loginLandingPage = false;
 let writeToConsoleBool = true;
 let printOnceBool = true;
-
-
 
 // care menu
 let careMenu;
@@ -672,8 +644,13 @@ function setup() {
   loginButton.mouseClicked(login);
 
   //console
-  consoleText = document.querySelector("#consoleText")
-  writeConsoleText(`Hold on...   </br> </br> ............ it takes a second to tap in ミ☆`);
+  consoleText = document.querySelector("#consoleText");
+
+
+
+  writeConsoleTextInterval([`Hold on...   </br> </br> ............ it takes a second to tap in ミ☆`, `many many many traumagotchi are busy busy busy ...`, `there is so so so </br> so </br> so </br> so </br> soooooooooo much trauma to process`, `meep </br> </br> While you wait, here's a story:`, `You wake up feeling like shit. This is normal, but this time the shit is coming out. Like really coming out, and it’s bringing everything with it.`]);
+  //
+  // writeConsoleText(`Hold on...   </br> </br> ............ it takes a second to tap in ミ☆`);
 
   // game menu
   gameMenu = document.querySelector("#gameMenu");
@@ -1179,6 +1156,10 @@ function login() {
   }
 }
 
+function ready(){
+}
+
+
 function cameraControl() {
 
   camera(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
@@ -1195,6 +1176,31 @@ function cameraControl() {
 }
 
 
+function writeConsoleTextInterval(textArray) {
+
+  let i = 0;
+
+
+  let consoleTextTimeout = setTimeout(function repeatingFunc() {
+    if (!keys) {
+
+      consoleText.innerHTML = textArray[i];
+
+      if(i >= textArray.length - 1){
+        i = 0;
+      } else {
+        i++;
+      }
+
+      writeToConsoleBool = false;
+      setTimeout(repeatingFunc, 5000);
+    } else {
+      // stop writing to console.
+      clearTimeout(consoleTextTimeout);
+    }
+  }, 1500);
+}
+
 function writeConsoleText(text) {
 
   if (writeToConsoleBool === true) {
@@ -1202,22 +1208,6 @@ function writeConsoleText(text) {
     consoleText.innerHTML = text;
     writeToConsoleBool = false;
   }
-  // from step text in new.js
-  // consoleText.html(stepTextArray[step].text);
-  // if (stepTextArray[step].end) {
-  //   consoleNext.html("");
-  // } else {
-  //   consoleNext.html(">");
-  // }
-  //
-  // consoleNext.mouseClicked(function() {
-  //   step++
-  //   consoleText.html(stepTextArray[step].text);
-  //   if (stepTextArray[step].end) {
-  //     consoleNext.html("");
-  //   }
-  // });
-
 }
 
 function printRecentActivity() {

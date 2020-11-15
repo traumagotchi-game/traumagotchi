@@ -1,3 +1,48 @@
+/* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
+Assistance: Angelabelle Abarientos
+DeepMachineIncantation Text: Porpentine Charity Heartscape
+Special thanks to Dan Schiffman's Coding Train & Processing Foundation
+
+
+This is the development version, actual site transforms all the function and variable names with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+
+This — like the process of healing — is ALWAYS a work-in-progress
+
+
+
+_ .-') _     ('-.     ('-.     _ (`-.
+( (  OO) )  _(  OO)  _(  OO)   ( (OO  )
+\     .'_ (,------.(,------. _.`     \
+,`'--..._) |  .---' |  .---'(__...--''
+|  |  \  ' |  |     |  |     |  /  | |
+|  |   ' |(|  '--. (|  '--.  |  |_.' |
+|  |   / : |  .--'  |  .--'  |  .___.'
+|  '--'  / |  `---. |  `---. |  |
+`-------'  `------' `------' `--'
+
+__   __ _______ _______ __   __ ___ __    _ _______
+|  |_|  |   _   |       |  | |  |   |  |  | |       |
+|       |  |_|  |       |  |_|  |   |   |_| |    ___|
+|       |       |       |       |   |       |   |___
+|       |       |      _|       |   |  _    |    ___|
+| ||_|| |   _   |     |_|   _   |   | | |   |   |___
+|_|   |_|__| |__|_______|__| |__|___|_|  |__|_______|
+
+,---.    ,---.   ____      .-_'''-.  .-./`)     _______
+|    \  /    | .'  __ `.  '_( )_   \ \ .-.')   /   __  \
+|  ,  \/  ,  |/   '  \  \|(_ o _)|  '/ `-' \  | ,_/  \__)
+|  |\_   /|  ||___|  /  |. (_,_)/___| `-'`"`,-./  )
+|  _( )_/ |  |   _.-`   ||  |  .-----..---. \  '_ '`)
+| (_ o _) |  |.'   _    |'  \  '-   .'|   |  > (_)  )  __
+|  (_,_)  |  ||  _( )_  | \  `-'`   | |   | (  .  .-'_/  )
+|  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
+'--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
+
+
+
+*/
+
+
 "use strict";
 
 function selectGames() {

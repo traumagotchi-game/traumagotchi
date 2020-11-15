@@ -1,13 +1,13 @@
 /* Code by Lark Alder aka Lark VCR aka Virtually Conflicted Reality
 Assistance: Angelabelle Abarientos
 DeepMachineIncantation Text: Porpentine Charity Heartscape
-
 Special thanks to Dan Schiffman's Coding Train & Processing Foundation
 
 
-The intention for this site is for all the function and variable names will be replaced with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
+This is the development version, actual site transforms all the function and variable names with words of DeepMachineIncantation. While the website is active, the code executes these incantations and casts virtual spells for healing trauma.
 
-This is still a work in progress...
+This — like the process of healing — is ALWAYS a work-in-progress
+
 
 
 _ .-') _     ('-.     ('-.     _ (`-.
@@ -38,34 +38,8 @@ __   __ _______ _______ __   __ ___ __    _ _______
 |  |      |  |\ (_ o _) /  \        / |   |  `-'`-'     /
 '--'      '--' '.(_,_).'    `'-...-'  '---'    `._____.'
 
-If you want to convert your code into magic... check out this Babel script...
 
-https://astexplorer.net/#/gist/8a09031fedac68d04d73c5fc20b038c7/9144b99ff37bbbacb21ada59ae445d53a241c4f9
 
-Github gist w/ code
-https://gist.github.com/8a09031fedac68d04d73c5fc20b038c7/9144b99ff37bbbacb21ada59ae445d53a241c4f9
-
-MIT License
-
-Copyright (c) 2018 Lark Like Alder
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 */
 
 'use strict';
@@ -121,6 +95,9 @@ let consoleText;
 let consoleNext;
 let step;
 let stepTextArray = [{
+  text: "༄ؘ ۪۪۫۫ ▹▫◃ ۪۪۫۫ ༄ؘ ˑ </br> </br>This is more fun with a webcam on and best experienced on Chrome or Firefox </br></br>༄ؘ ۪۪۫۫ ▹▫◃ ۪۪۫۫ ༄ؘ ˑ",
+  end: false
+}, {
   text: "You wake up feeling like shit. This is normal, but this time the shit is coming out. Like really coming out, and it’s bringing everything with it.",
   end: false
 }, {
@@ -128,16 +105,27 @@ let stepTextArray = [{
   end: false
 }, {
   text: "But like all terrible things, global warming and so on, you were born into the ones that already happened so you’re used to them, and the rest is just a little beyond your own mortality. So you get out of bed and inspect the mess.",
-  end: true
+  end: false
+}, {
+  text: "It’s still connected to you by a strand of hyper-mucus. Like watching bad parenting in fast forward, it soaks up your neuroses with a jiggly wiggle...",
+  end: false
+}, {
+  text: "Splat some blap into that glap!",
+  end: false
 }, {
   text: "",
   end: true
-}, {
-  text: "It’s still connected to you by a strand of hyper-mucus. Like watching bad parenting in fast forward, it soaks up your neuroses with a jiggly wiggle...",
-  end: true
 }];
+let dialogueComplete = false;
+let loadingTextArray = ["You wake up feeling like shit. This is normal, but this time the shit is coming out. Like really coming out, and it’s bringing everything with it.",
+  "It starts in your nasal cavity, and ends on your floor. Most people have a floor, no matter how desperate their circumstances are. The earth is just designed that way, at least until the landlords turn us into hovering braincubes who need to pay $90 just to faceplant.",
+  "But like all terrible things, global warming and so on, you were born into the ones that already happened so you’re used to them, and the rest is just a little beyond your own mortality. So you get out of bed and inspect the mess.",
+  "It’s still connected to you by a strand of hyper-mucus. Like watching bad parenting in fast forward, it soaks up your neuroses with a jiggly wiggle...", "Splat some blap into that glap!"
+];
+let writeToConsoleBool = true;
 
 
+let divMenu00;
 let divMenu0;
 let divMenu1;
 let divMenu2;
@@ -192,15 +180,6 @@ let counter = 0;
 // let angle = 0;
 let angleBreathe = 0;
 
-// function soundLoaded(song) {
-//   // L O A D A U D I O
-//   song1 = song;
-//   song1.loop();
-//   song1.setVolume(0.3);
-//   loading = false;
-//   // sound_click = loadSound('assets/audio/sfx/click.mp3');
-//   // sound_fizzDown_hiPitch = loadSound('assets/audio/sfx/fizzDown_hiPitch.mp3');
-// }
 
 function loadItem(index, filename) {
   loadSound(filename, soundLoaded);
@@ -236,43 +215,27 @@ function setup() {
   loadItem(1, 'assets/audio/sfx/click.mp3');
   loadItem(2, 'assets/audio/sfx/fizzDown_hiPitch.mp3');
 
-  // song1 = loadSound('assets/audio/music/EagleInk_Aja_loop.mp3', soundLoaded);
-  // sound_click = loadSound('assets/audio/sfx/click.mp3', soundLoaded);
 
-  // song1.loop();
-
-  // sound_click.setVolume(0.4);
-  // sound_fizzDown_hiPitch.setVolume(0.2);
-  // playBGmusic();
-
-  // click.playMode('restart');
-
-  // load sound with call back not buffering well
-  // song = loadSound('assets/audio/music/EagleInk_aja_loop.mp3', playBGmusic);
-
-
-  // use canvasDiv size to set size of p5 canvas
   canvasDiv = document.querySelector("#canvasDiv");
-  // set height of canvasDiv (else defaults to 0 bc canvas layers are set to position:absolute so they can stack)
-  // this is for responsive layout: height adjusts
-  // canvasDiv.style.height = `${canvasDiv.offsetWidth * 3 / 4}px`;
+
   canvasDiv.style.height = `450px`;
 
-  // canvas = createCanvas(windowWidth / 2, windowWidth * 3 / 8, WEBGL);
-  // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetWidth * 3 / 4, WEBGL);
   canvas = createCanvas(600, 450, WEBGL);
   canvas.parent("canvasDiv");
   canvas.class("gameCanvas");
   canvas.id("p5Canvas");
 
 
-  // let canvasDivWidth = (canvasDiv.offsetWidth + parseFloat(canvasDiv.currentStyle.marginLeft) + parseFloat(canvasDiv.currentStyle.marginRight)) / 2 - 300;
-  // console.log(canvasDiv.offsetWidth);
-  // canvas.style(`left:${canvasDivWidth}px`);
-
-  charmDistance = diameter;
 
   frameRate(30);
+
+
+  //console
+  consoleText = document.querySelector("#consoleText");
+
+
+
+  // writeConsoleTextInterval(loadingTextArray);
 
   // add sound to buttons
   let buttons = document.querySelectorAll("button, [type='checkbox'], [type='radio'], select, [href]");
@@ -332,7 +295,8 @@ function setup() {
   // initialize console text
   consoleText = select("#consoleText");
   consoleNext = select("#consoleNext");
-  writeConsoleStory(state);
+  writeConsoleStory();
+
 
   capture = createCapture(VIDEO);
   capture.size(320, 240);
@@ -351,6 +315,8 @@ function setup() {
   graphicsCharm = createGraphics(diameter / 2, diameter / 2);
   graphicsGrid.background(0);
 
+  charmDistance = diameter;
+
   // initialize bg graphics array
   for (let i = 0; i < 32; i++) {
     graphicsBGArray[i] = [];
@@ -362,6 +328,7 @@ function setup() {
 
   // these are menus for different customization states
   // might need to translate these to natice JS dom
+  divMenu00 = select("#divMenu00");
   divMenu0 = select("#divMenu0");
   divMenu1 = select("#divMenu1");
   divMenu2 = select("#divMenu2");
@@ -404,14 +371,6 @@ function setup() {
   ref.on('value', gotData, errData);
 }
 
-// for now, hard-coding canvas size and not making it responsive
-// function windowResized() {
-//   canvasDiv = document.querySelector("#canvasDiv");
-//   canvasDiv.style.height = `${canvasDiv.offsetWidth * 3 / 4}px`;
-//
-//   resizeCanvas(canvasDiv.offsetWidth, canvasDiv.offsetWidth * 3 / 4);
-//   // resizeCanvas(windowWidth / 2, windowWidth * 3 / 8);
-// }
 
 
 function WidthChange(mq) {
@@ -437,7 +396,7 @@ function draw() {
   if (loading || !keys) {
     background(0);
     cameraControl();
-    drawLoadingScreenGrid();
+    drawLoadingScreenGridNew();
 
   } else {
 
@@ -484,6 +443,12 @@ function draw() {
   }
 }
 
+function ready() {
+  if (dialogueComplete) {
+    divMenu00.remove();
+    divMenu0.show();
+  }
+}
 
 function playBGmusic() {
   if (!song1.isPlaying()) {
@@ -584,41 +549,58 @@ function cameraControl() {
 
 }
 
-function writeConsoleStory(state) {
-  // // could make this cleaner by storing steps as object keys rather than array indexes
-  // switch (state) {
-  //   case 'menu0':
-  //     step = 0;
-  //     break;
-  //   case 'menu1':
-  //     step = 3;
-  //     break;
-  //   case 'menu2':
-  //     step = 4;
-  //     break;
-  //   case 'menu3':
-  //     step = 3;
-  //     break;
-  //   default:
-  //     // make default a blank step
-  //     step = 3;
-  // }
-  //
-  // consoleText.html(stepTextArray[step].text);
-  // if (stepTextArray[step].end) {
-  //   consoleNext.html("");
-  // } else {
-  //   consoleNext.html(">");
-  // }
-  //
-  // consoleNext.mouseClicked(function() {
-  //   step++
-  //   consoleText.html(stepTextArray[step].text);
-  //   if (stepTextArray[step].end) {
-  //     consoleNext.html("");
-  //   }
-  // });
+function writeConsoleStory(step = 0) {
 
+
+  consoleText.html(stepTextArray[step].text);
+  if (stepTextArray[step].end) {
+    consoleNext.html("");
+  } else {
+    consoleNext.html("next >");
+  }
+
+  consoleNext.mouseClicked(function() {
+    step++
+    consoleText.html(stepTextArray[step].text);
+    if (stepTextArray[step].end) {
+      if (!keys) {
+        consoleText.html("... meep still loading  ... </br></br>ᵒʰ(⑉・̆⌓・̆⑉)ɴᴏ");
+        consoleNext.html("");
+        dialogueComplete = true;
+      } else {
+        divMenu00.remove();
+        divMenu0.show();
+      }
+    }
+  });
+}
+
+
+function writeConsoleTextInterval(textArray) {
+
+  let i = 0;
+
+
+  let consoleTextTimeout = setTimeout(function repeatingFunc() {
+    if (i < textArray.length) {
+      consoleText.innerHTML = textArray[i];
+      i++;
+      writeToConsoleBool = false;
+      setTimeout(repeatingFunc, 10000);
+    } else {
+      // stop writing to console.
+      clearTimeout(consoleTextTimeout);
+    }
+  }, 3333);
+}
+
+function writeConsoleText(text) {
+
+  if (writeToConsoleBool === true) {
+
+    consoleText.innerHTML = text;
+    writeToConsoleBool = false;
+  }
 }
 
 function setPixelColor(jscolor) {
@@ -660,9 +642,12 @@ function captureWebcamGraphics() {
       if (capture.pixels[i * 8]) {
         let darkness = (255 - capture.pixels[i * 8]) / 255;
         let radius = stepSize * darkness;
+
         graphics.rectMode(CENTER);
         graphics.rect(x, y, radius, radius);
         pixelArray.push([x, y, radius]);
+        // pixelArray.push([x, y, Math.round(radius * 100) / 100]);
+
       }
     }
   }
@@ -785,7 +770,6 @@ function castCircle() {
 }
 
 function menu1() {
-  writeConsoleStory(state);
 
   divMenu0.remove();
 
@@ -850,7 +834,6 @@ function menu1() {
 }
 
 function menu2() {
-  writeConsoleStory(state);
   // remove original menu
 
   divMenu1.remove();
@@ -891,7 +874,6 @@ function menu2() {
 }
 
 function menu3() {
-  writeConsoleStory(state);
   // remove original menu
 
   divMenu2.remove();
@@ -923,7 +905,6 @@ function menu3() {
 }
 
 function menu4() {
-  writeConsoleStory(state);
   // remove original menu
 
   divMenu3.remove();
@@ -964,7 +945,6 @@ function menu4() {
 }
 
 function menu5() {
-  writeConsoleStory(state);
   // remove original menu
 
   document.querySelector("#tgotchiComplete").innerHTML = `Your Traumagotchi, ${userName}, is soothed by ${userData.password}.`
@@ -1002,7 +982,6 @@ function menu5() {
 }
 
 function menu6() {
-  writeConsoleStory(state);
   // remove original menu
 
   divMenu5.remove();
@@ -1033,7 +1012,6 @@ function menu6() {
 
 // cast circle menu
 // function menu6() {
-//   writeConsoleStory(state);
 //   // remove original menu
 //
 //   divMenu5.remove();
