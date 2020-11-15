@@ -217,7 +217,7 @@ function displayShrineTgotchi(_tgotchi) {
     ---> Traumagotchi named ${keys[shrineTgotchiCounter]} is leaving a quiet offering. `)
   } else if (shrineTgotchiX >= 42) {
     writeToConsoleBool = true;
-    writeConsoleText(`There are currently ${numberTgotchi} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
+    writeConsoleText(`There are currently ${numberTgotchi + 606} Traumagotchi circling the DeepInTheMachineWorldTraumaCompostShrine. </br>
     ---> ( .⋅. shrine receives ${keys[shrineTgotchiCounter]}'s offering .⋅. )`)
   }
 
