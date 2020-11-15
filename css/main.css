@@ -89,7 +89,7 @@ input, textarea {
   border-style: ridge;
 }
 
-#divMenu0, #divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #divMenu6, #careMenu, #releaseWordsMenu, #setIntentionMenu, #gameMenu, #gameIntroOverlay, #pointsOverlay, #gameEndOverlay, #timer, #pointStats {
+#divMenu0, #divMenu1, #divMenu2, #divMenu3, #divMenu4, #divMenu5, #divMenu6, #loginMenu, #careMenu, #releaseWordsMenu, #setIntentionMenu, #gameMenu, #gameIntroOverlay, #pointsOverlay, #gameEndOverlay, #timer, #pointStats {
   display: none;
 }
 

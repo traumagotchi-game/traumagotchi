@@ -64,10 +64,13 @@ let userName;
 let currentLoginTime;
 let lastLoginTime;
 let firstLoginTime;
+let loading = true;
 
 
 // DOM
 
+let loadingDiv;
+let loadingText;
 let loginMenu;
 let inputName;
 let inputPassword;
@@ -635,7 +638,9 @@ function setup() {
   pointStats = document.querySelector("#pointStats");
 
 
-  //login Menu
+  //login / loading Menu
+  loadingDiv = select("#loadingDiv");
+  loadingText = select("#loadingText");
   loginMenu = select("#loginMenu");
   inputName = select("#name");
   inputPassword = select("#passwordInput");
@@ -648,7 +653,7 @@ function setup() {
 
 
 
-  writeConsoleTextInterval([`Hold on...   </br> </br> ............ it takes a second to tap in ミ☆`, `many many many traumagotchi are busy busy busy ...`, `there is so so so </br> so </br> so </br> so </br> soooooooooo much trauma to process`, `meep </br> </br> While you wait, here's a story:`, `You wake up feeling like shit. This is normal, but this time the shit is coming out. Like really coming out, and it’s bringing everything with it.`]);
+  writeConsoleTextInterval([`this might take a sec`, `hundreds of traumagotchi are busy 🐝 busy 🐝 busy ...`, `there is so </br> so </br> so </br> soooooooooo much trauma to process`, `and the healing process is not finite`, `no end point just always ∞ healing ∞ `, `good we have traumagotchi to help!`, `they are working very hard.`]);
   //
   // writeConsoleText(`Hold on...   </br> </br> ............ it takes a second to tap in ミ☆`);
 
@@ -815,6 +820,8 @@ function draw() {
     switch (state) {
       case 'login':
         displayLoginScreen();
+        loadingDiv.hide();
+        loginMenu.show();
         writeToConsoleBool = true;
         writeConsoleText(`ok ready to login`);
         // displayShrine(); // comment out
@@ -1152,11 +1159,12 @@ function login() {
       createPOnce(`hm spelling error?`, "loginMenu")
     }
   } else {
-    createPOnce(`slow connection... </br> take a deep breathe and try again`, "loginMenu")
+    createPOnce(`oof still loading, sit tight...`, "loginMenu")
   }
 }
 
 function ready(){
+
 }
 
 
@@ -1193,7 +1201,7 @@ function writeConsoleTextInterval(textArray) {
       }
 
       writeToConsoleBool = false;
-      setTimeout(repeatingFunc, 5000);
+      setTimeout(repeatingFunc, 3000);
     } else {
       // stop writing to console.
       clearTimeout(consoleTextTimeout);
